@@ -24,10 +24,5 @@ namespace WpfApplication1
         {
             InitializeComponent();
         }
-
-        private void asdf(object sender, RoutedEventArgs e)
-        {
-            var x = sender as Button;
-        }
     }
 }
