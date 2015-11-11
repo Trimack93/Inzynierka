@@ -29,21 +29,21 @@
                 <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
                     <StackPanel>
                         <Image Source="/Resources/Learning.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
-                        <TextBlock Text="Nauka" FontFamily="Calibri" FontSize="20" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                        <TextBlock Text="Nauka" FontFamily="Calibri" FontSize="20" Foreground="Snow" HorizontalAlignment="Center" />
                     </StackPanel>
                 </Button>
 
                 <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="50,0,50,0">
                     <StackPanel>
                         <Image Source="/Resources/Exam.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
-                        <TextBlock Text="Egzamin" FontFamily="Calibri" FontSize="20" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,10,0,0" />
+                        <TextBlock Text="Egzamin" FontFamily="Calibri" FontSize="20" Foreground="Snow" HorizontalAlignment="Center" Margin="0,10,0,0" />
                     </StackPanel>
                 </Button>
 
                 <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
                     <StackPanel>
                         <Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
-                        <TextBlock Text="Graf niestandardowy" FontFamily="Calibri" FontSize="20" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                        <TextBlock Text="Graf niestandardowy" FontFamily="Calibri" FontSize="20" Foreground="Snow" HorizontalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </StackPanel>

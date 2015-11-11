@@ -29,55 +29,55 @@
             
             <StackPanel HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="0,0,50,0">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Learning.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Przeszukiwanie wszerz" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/1.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Przeszukiwanie wszerz" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="0,0,50,0">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Exam.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Przeszukiwanie w głąb" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,10,0,0" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/2.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Przeszukiwanie w głąb" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="0,0,50,0">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Sortowanie topologiczne" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/3.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Sortowanie topologiczne" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Algorytm Kruskala" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/4.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Algorytm Kruskala" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="0,0,50,0">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Wykrywanie dwudzielności" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/5.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Wykrywanie dwudzielności" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="0,0,50,0">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Algorytm Dijkstry" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/6.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Algorytm Dijkstry" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
-                        <StackPanel>
-                            <!--<Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />-->
-                            <TextBlock Text="Algorytm Bellmana-Forda" FontFamily="Calibri" FontSize="14" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
-                        </StackPanel>
+                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Padding="0,0,0,10">
+                        <Grid>
+                            <Image Source="/Resources/7.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                            <TextBlock Text="Algorytm Bellmana-Forda" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                        </Grid>
                     </Button>
                 </StackPanel>
             </StackPanel>
