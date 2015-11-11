@@ -14,12 +14,12 @@
                             Padding="{TemplateBinding Padding}"
                             BorderBrush="Black"
                             Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
                         </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.9" />
+                                <Setter TargetName="border" Property="Opacity" Value="0.95" />
                             </Trigger>
 
                             <MultiTrigger>

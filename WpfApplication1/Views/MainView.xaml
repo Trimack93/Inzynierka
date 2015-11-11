@@ -26,15 +26,32 @@
             <TextBlock Text="Wybierz tryb:" FontFamily="Calibri" FontSize="20" Foreground="Cornsilk" HorizontalAlignment="Center" Margin="0,0,0,25" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Rectangle Width="210" Height="210" Stroke="Black" Fill="#FF22B14C" />
-                <Rectangle Width="210" Height="210" Stroke="Black" Fill="#FF22B14C" Margin="50,0,50,0" />
-                <Rectangle Width="210" Height="210" Stroke="Black" Fill="#FF22B14C" />
+                <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource ButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
+                    <StackPanel>
+                        <Image Source="/Resources/Learning.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
+                        <TextBlock Text="Nauka" FontFamily="Calibri" FontSize="20" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource ButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="50,0,50,0">
+                    <StackPanel>
+                        <Image Source="/Resources/Exam.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
+                        <TextBlock Text="Egzamin" FontFamily="Calibri" FontSize="20" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0,10,0,0" />
+                    </StackPanel>
+                </Button>
+
+                <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource ButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
+                    <StackPanel>
+                        <Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
+                        <TextBlock Text="Graf niestandardowy" FontFamily="Calibri" FontSize="20" Foreground="Snow" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-            <Button Content="O AUTORZE" Height="35" Width="120" Margin="0,0,20,20" Background="LimeGreen" TextBlock.FontWeight="DemiBold" Style="{StaticResource ButtonStyle}" />
-            <Button Content="RED TEST" Height="35" Width="120" Margin="0,0,20,20" Background="Red" Style="{StaticResource ButtonStyle}" />
+            <Button Content="O AUTORZE" Height="35" Width="120" Margin="0,0,20,20" Background="LimeGreen" VerticalAlignment="Center" Style="{StaticResource ButtonStyle}" TextBlock.FontWeight="DemiBold" />
+            <Button Content="RED TEST" Height="35" Width="120" Margin="0,0,20,20" Background="Red" VerticalAlignment="Center" Style="{StaticResource ButtonStyle}" />
 
         </StackPanel>
     </Grid>
