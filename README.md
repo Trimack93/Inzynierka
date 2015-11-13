@@ -1,2 +1,2 @@
-# Inzynierka
+# In¿ynierka
 Algorytmy grafowe

@@ -19,9 +19,16 @@ namespace WpfApplication1.Views
     /// </summary>
     public partial class ChooseAlgorithmView : Window
     {
-        public ChooseAlgorithmView()
+        public ChooseAlgorithmView(string windowName)
         {
             InitializeComponent();
+
+            this.Title = windowName + " - wybierz algorytm";
+        }
+
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -24,5 +24,30 @@ namespace WpfApplication1.Views
         {
             InitializeComponent();
         }
+
+        private void LearningButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+
+            ChooseAlgorithmView algorithmView = new ChooseAlgorithmView("Tryb nauki");
+            algorithmView.ShowDialog();
+
+            this.Show();
+        }
+
+        private void ExamButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+
+            ChooseAlgorithmView algorithmView = new ChooseAlgorithmView("Tryb egzaminu");
+            algorithmView.ShowDialog();
+
+            this.Show();
+        }
+
+        private void CustomGraphButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Wait for it.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

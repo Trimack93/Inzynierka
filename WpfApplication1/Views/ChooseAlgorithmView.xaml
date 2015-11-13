@@ -107,7 +107,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
-            <Button Content="Powrót" Height="25" Width="80" Margin="10,0,0,10" Background="Orange" VerticalAlignment="Center" Style="{StaticResource BaseButtonStyle}" TextBlock.FontWeight="DemiBold" />
+            <Button Content="Powrót" Height="25" Width="80" Click="ReturnButton_Click" Background="Orange" VerticalAlignment="Center" Margin="10,0,0,10" TextBlock.FontWeight="DemiBold" Style="{StaticResource BaseButtonStyle}" />
         </StackPanel>
     </Grid>
 </Window>
