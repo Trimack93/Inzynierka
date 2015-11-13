@@ -7,6 +7,28 @@
         mc:Ignorable="d"
         Title="Algorytmy grafowe - projekt inżynierski" Width="1024" Height="768" Background="RoyalBlue"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style x:Key="ChooseModeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Width" Value="210" />
+            <Setter Property="Height" Value="210" />
+            <Setter Property="Background" Value="LimeGreen" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Padding" Value="0,0,0,15" />
+        </Style>
+
+        <Style x:Key="ChooseModeTextblockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Foreground" Value="Snow" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="ChooseModeImageStyle" TargetType="{x:Type Image}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Stretch" Value="None" />
+        </Style>
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -26,32 +48,32 @@
             <TextBlock Text="Wybierz tryb:" FontFamily="Calibri" FontSize="20" Foreground="Cornsilk" HorizontalAlignment="Center" Margin="0,0,0,25" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
+                <Button Style="{StaticResource ChooseModeButtonStyle}">
                     <StackPanel>
-                        <Image Source="/Resources/Learning.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
-                        <TextBlock Text="Nauka" FontFamily="Calibri" FontSize="20" Foreground="Snow" HorizontalAlignment="Center" />
+                        <Image Source="/Resources/Learning.png" Style="{StaticResource ChooseModeImageStyle}" />
+                        <TextBlock Text="Nauka" Style="{StaticResource ChooseModeTextblockStyle}" />
                     </StackPanel>
                 </Button>
 
-                <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15" Margin="50,0,50,0">
+                <Button Style="{StaticResource ChooseModeButtonStyle}" Margin="50,0,50,0">
                     <StackPanel>
-                        <Image Source="/Resources/Exam.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
-                        <TextBlock Text="Egzamin" FontFamily="Calibri" FontSize="20" Foreground="Snow" HorizontalAlignment="Center" Margin="0,10,0,0" />
+                        <Image Source="/Resources/Exam.png" Style="{StaticResource ChooseModeImageStyle}" />
+                        <TextBlock Text="Egzamin" Style="{StaticResource ChooseModeTextblockStyle}" Margin="0,10,0,0" />
                     </StackPanel>
                 </Button>
 
-                <Button Width="210" Height="210" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" VerticalAlignment="Bottom" Padding="0,0,0,15">
+                <Button Style="{StaticResource ChooseModeButtonStyle}">
                     <StackPanel>
-                        <Image Source="/Resources/Custom_graph.png" VerticalAlignment="Top" HorizontalAlignment="Center" Stretch="None" />
-                        <TextBlock Text="Graf niestandardowy" FontFamily="Calibri" FontSize="20" Foreground="Snow" HorizontalAlignment="Center" />
+                        <Image Source="/Resources/Custom_graph.png" Style="{StaticResource ChooseModeImageStyle}" />
+                        <TextBlock Text="Graf niestandardowy" Style="{StaticResource ChooseModeTextblockStyle}" />
                     </StackPanel>
                 </Button>
             </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-            <Button Content="O AUTORZE" Height="35" Width="120" Margin="0,0,20,20" Background="LimeGreen" VerticalAlignment="Center" Style="{StaticResource NavigationButtonStyle}" TextBlock.FontWeight="DemiBold" />
-            <Button Content="RED TEST" Height="35" Width="120" Margin="0,0,20,20" Background="Red" VerticalAlignment="Center" Style="{StaticResource NavigationButtonStyle}" />
+            <Button Content="O AUTORZE" Height="35" Width="120" Margin="0,0,20,20" Background="LimeGreen" VerticalAlignment="Center" Style="{StaticResource BaseButtonStyle}" TextBlock.FontWeight="DemiBold" />
+            <Button Content="RED TEST" Height="35" Width="120" Margin="0,0,20,20" Background="Red" VerticalAlignment="Center" Style="{StaticResource BaseButtonStyle}" />
         </StackPanel>
     </Grid>
 </Window>

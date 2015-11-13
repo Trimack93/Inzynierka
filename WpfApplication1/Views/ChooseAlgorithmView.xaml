@@ -7,6 +7,31 @@
         mc:Ignorable="d"
         Title="Wybierz algorytm" Width="1024" Height="640" Background="RoyalBlue"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+
+        <Style x:Key="ChooseAlgorithmButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}">
+            <Setter Property="Width" Value="165" />
+            <Setter Property="Height" Value="165" />
+            <Setter Property="Background" Value="LimeGreen" />
+            <Setter Property="Padding" Value="0,0,0,10" />
+        </Style>
+
+        <Style x:Key="ChooseAlgorithmTextblockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="Snow" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+
+        <Style x:Key="ChooseAlgorithmImageStyle" TargetType="{x:Type Image}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Stretch" Value="None" />
+        </Style>
+        
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -24,59 +49,57 @@
 
         <StackPanel Grid.Row="2">
             <TextBlock Text="Wybierz algorytm:" FontFamily="Calibri" FontSize="20" Foreground="Cornsilk" HorizontalAlignment="Center" Margin="0,0,0,15" />
-
-            <!-- TODO: Nowy styl buttona -->
             
             <StackPanel HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/1.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Przeszukiwanie wszerz" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/1.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Przeszukiwanie wszerz" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/2.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Przeszukiwanie w głąb" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/2.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Przeszukiwanie w głąb" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/3.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Sortowanie topologiczne" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/3.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Sortowanie topologiczne" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}">
                         <Grid>
-                            <Image Source="/Resources/4.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Algorytm Kruskala" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/4.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Algorytm Kruskala" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/5.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Wykrywanie dwudzielności" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/5.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Wykrywanie dwudzielności" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Margin="0,0,50,0" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/6.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Algorytm Dijkstry" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/6.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Algorytm Dijkstry" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
 
-                    <Button Width="165" Height="165" Background="LimeGreen" Style="{StaticResource NavigationButtonStyle}" Padding="0,0,0,10">
+                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}">
                         <Grid>
-                            <Image Source="/Resources/7.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
-                            <TextBlock Text="Algorytm Bellmana-Forda" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            <Image Source="/Resources/7.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
+                            <TextBlock Text="Algorytm Bellmana-Forda" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
                         </Grid>
                     </Button>
                 </StackPanel>
@@ -84,7 +107,54 @@
         </StackPanel>
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
-            <Button Content="Powrót" Height="25" Width="80" Margin="10,0,0,10" Background="Orange" VerticalAlignment="Center" Style="{StaticResource NavigationButtonStyle}" TextBlock.FontWeight="DemiBold" />
+            <Button Content="Powrót" Height="25" Width="80" Margin="10,0,0,10" Background="Orange" VerticalAlignment="Center" Style="{StaticResource BaseButtonStyle}" TextBlock.FontWeight="DemiBold" />
         </StackPanel>
     </Grid>
 </Window>
+
+    
+    
+<!--<DataTemplate x:Key="ButtonContentTemplate">
+    --><!--<Grid>
+                <Image Source="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                <TextBlock Text="{Binding}" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+            </Grid>--><!--
+</DataTemplate>
+
+<Style x:Key="ChooseAlgorithmButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="Width" Value="165" />
+    <Setter Property="Height" Value="165" />
+    <Setter Property="Background" Value="LimeGreen" />
+    <Setter Property="Padding" Value="0,0,0,10" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Button}">
+                <Border Name="border"
+                            BorderThickness="1.5"
+                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="Black"
+                            Background="LimeGreen">
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                        <ContentPresenter.Content>
+                            <Grid>
+                                <Image Source="/Resources/2.png" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" />
+                                <TextBlock Text="{TemplateBinding Content}" FontFamily="Calibri" FontSize="14" Foreground="Snow" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                            </Grid>
+                        </ContentPresenter.Content>
+                    </ContentPresenter>
+                </Border>
+
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Opacity" Value="0.95" />
+                    </Trigger>
+
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="border" Property="Background" Value="Chartreuse" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>-->
