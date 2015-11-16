@@ -48,21 +48,26 @@
             <TextBlock Text="Wybierz tryb:" FontFamily="Calibri" FontSize="20" Foreground="Cornsilk" HorizontalAlignment="Center" Margin="0,0,0,25" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Style="{StaticResource ChooseModeButtonStyle}" Click="LearningButton_Click">
+                <Button Style="{StaticResource ChooseModeButtonStyle}" Click="LearningButton_Click"
+                        ToolTip="Tryb nauki pozwala na przećwiczenie wybranego algorytmu przed podejściem do egzaminu.\n
+                        W trybie tym wyświetlane są krok po kroku instrukcje wyjaśniające istotę działania algorytmu.">
                     <StackPanel>
                         <Image Source="/Resources/Learning.png" Style="{StaticResource ChooseModeImageStyle}" />
                         <TextBlock Text="Nauka" Style="{StaticResource ChooseModeTextblockStyle}" />
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource ChooseModeButtonStyle}" Click="ExamButton_Click" Margin="50,0,50,0">
+                <Button Style="{StaticResource ChooseModeButtonStyle}" Click="ExamButton_Click" Margin="50,0,50,0"
+                        ToolTip="W trybie egzaminu można sprawdzić wiedzę zdobytą podczas nauki w konfrontacji z Elite grafami godnymi kolokwium z AiSD.">
                     <StackPanel>
                         <Image Source="/Resources/Exam.png" Style="{StaticResource ChooseModeImageStyle}" />
                         <TextBlock Text="Egzamin" Style="{StaticResource ChooseModeTextblockStyle}" Margin="0,10,0,0" />
                     </StackPanel>
                 </Button>
 
-                <Button Style="{StaticResource ChooseModeButtonStyle}" Click="CustomGraphButton_Click">
+                <Button Style="{StaticResource ChooseModeButtonStyle}" Click="CustomGraphButton_Click"
+                        ToolTip="Tryb ten umożliwia przećwiczenie wybranego algorytmu na wygenerowanym przez siebie grafie.\n
+                        Przed użyciem zalecane jest sprawdzenie wymagań wybranego algorytmu odnośnie grafu w dokumentacji aplikacji.">
                     <StackPanel>
                         <Image Source="/Resources/Custom_graph.png" Style="{StaticResource ChooseModeImageStyle}" />
                         <TextBlock Text="Graf niestandardowy" Style="{StaticResource ChooseModeTextblockStyle}" />

@@ -84,6 +84,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Utilities\StringToNewlineStringConverter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Views\ChooseAlgorithmView.xaml.cs">
       <DependentUpon>ChooseAlgorithmView.xaml</DependentUpon>
