@@ -75,6 +75,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LearningView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,8 +90,12 @@
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\StringToNewlineStringConverter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="Views\ChooseAlgorithmView.xaml.cs">
       <DependentUpon>ChooseAlgorithmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LearningView.xaml.cs">
+      <DependentUpon>LearningView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -157,6 +165,9 @@
     <Resource Include="Resources\5.png" />
     <Resource Include="Resources\6.png" />
     <Resource Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\SequenceEnd.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

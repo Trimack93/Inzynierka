@@ -78,7 +78,6 @@
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Button Content="O AUTORZE" Height="35" Width="120" Margin="0,0,20,20" Background="LimeGreen" VerticalAlignment="Center" Style="{StaticResource BaseButtonStyle}" TextBlock.FontWeight="DemiBold" />
-            <Button Content="RED TEST" Height="35" Width="120" Margin="0,0,20,20" Background="Red" VerticalAlignment="Center" Style="{StaticResource BaseButtonStyle}" />
         </StackPanel>
     </Grid>
 </Window>

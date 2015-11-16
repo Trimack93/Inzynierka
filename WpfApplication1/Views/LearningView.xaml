@@ -1,0 +1,54 @@
+﻿<Window x:Class="WpfApplication1.Views.LearningView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1.Views"
+        xmlns:vm="clr-namespace:WpfApplication1.ViewModels"
+        mc:Ignorable="d"
+        Title="Algorytmy grafowe" Width="1024" Height="768" Background="RoyalBlue"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:LearningViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="{Binding AlgorithmName}" FontFamily="Footlight MT Light" FontSize="30" Foreground="Cornsilk"
+                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,10,0,15" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Rectangle Grid.Column="0" Width="726" Height="660" HorizontalAlignment="Left" Fill="LightGray" Margin="7,0,0,0"></Rectangle>
+
+                <Grid Grid.Column="1" HorizontalAlignment="Right" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Width="250" Height="350" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-28,12,0">
+                        <TextBlock Text="Instrukcje" FontWeight="Bold" FontSize="16" Foreground="DodgerBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
+                        <Line X1="15" Y1="10" X2="235" Y2="10" Stroke="Gold" StrokeThickness="1.5" />
+
+                        <TextBlock Text="{Binding Instructions, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="5,10,5,0" />
+                    </StackPanel>
+
+                    <Image Source="/Resources/SequenceEnd.png" Stretch="None" Grid.Row="2" />
+                    <Button Content="KONIEC" TextBlock.FontWeight="DemiBold" Background="Red" Click="CloseButton_Click"
+                            Grid.Row="4" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" Style="{StaticResource BaseButtonStyle}" />
+                    <Button Content="O AUTORZE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" 
+                            Grid.Row="5" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource BaseButtonStyle}" />
+                </Grid>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
