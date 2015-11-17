@@ -49,5 +49,11 @@ namespace WpfApplication1.Views
         {
             MessageBox.Show("Wait for it.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutView view = new AboutView();
+            view.ShowDialog();
+        }
     }
 }

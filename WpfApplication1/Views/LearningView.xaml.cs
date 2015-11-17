@@ -38,5 +38,11 @@ namespace WpfApplication1.Views
         {
             this.Close();
         }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutView view = new AboutView();
+            view.ShowDialog();
+        }
     }
 }

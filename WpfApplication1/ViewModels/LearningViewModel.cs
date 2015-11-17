@@ -12,7 +12,7 @@ namespace WpfApplication1.ViewModels
         public string AlgorithmName { get; private set; } = "[Nazwa algorytmu]";
         public string Instructions { get; set; } = @"Instrukcja dla aktualnie wykonywanej sekwencji. asdf asdf
                                    Test nowej linii
-                                   fdsgsdfg";
+                                   fdsgsdfg";                                   // move to model of each algorithm
 
         public LearningViewModel()
         {

@@ -45,7 +45,7 @@
                     <Image Source="/Resources/SequenceEnd.png" Stretch="None" Grid.Row="2" />
                     <Button Content="KONIEC" TextBlock.FontWeight="DemiBold" Background="Red" Click="CloseButton_Click"
                             Grid.Row="4" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" Style="{StaticResource BaseButtonStyle}" />
-                    <Button Content="O AUTORZE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" 
+                    <Button Content="O PROGRAMIE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" Click="AboutButton_Click"
                             Grid.Row="5" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource BaseButtonStyle}" />
                 </Grid>
             </Grid>
