@@ -1,17 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfApplication1.Views
 {
@@ -47,7 +41,15 @@ namespace WpfApplication1.Views
 
         private void CustomGraphButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Wait for it.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            string path = Path.GetFullPath("../../Resources/Graphs");
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Custom graph files (*.huu)|*.huu";
+            dlg.InitialDirectory = path;
+            
+            bool? result = dlg.ShowDialog();
+
+            MessageBox.Show("Czy plik został otwarty: " + result.ToString());
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)

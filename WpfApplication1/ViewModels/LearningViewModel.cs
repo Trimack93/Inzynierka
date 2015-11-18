@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication1.ViewModels
 {
-    public class LearningViewModel : INotifyPropertyChanged
+    public class LearningViewModel : BaseViewModel
     {
         public string AlgorithmName { get; private set; } = "[Nazwa algorytmu]";
         public string Instructions { get; set; } = @"Instrukcja dla aktualnie wykonywanej sekwencji. asdf asdf
@@ -20,16 +20,6 @@ namespace WpfApplication1.ViewModels
         public LearningViewModel(string algorithmName)
         {
             this.AlgorithmName = algorithmName;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;              // Take a copy to prevent thread issues
-
-            if (handler != null)
-                handler( this, new PropertyChangedEventArgs(propertyName) );
         }
     }
 }
