@@ -12,6 +12,39 @@
         <vm:LearningViewModel />
     </Window.DataContext>
 
+    <Window.Resources>
+        <Style x:Key="EndSequenceButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                            BorderThickness="1.5"
+                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="Black">
+                            <ContentPresenter>
+                                <ContentPresenter.Content>
+                                    <Image Source="/Resources/SequenceEnd.png" Stretch="Fill" />
+                                </ContentPresenter.Content>
+                            </ContentPresenter>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.9" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="BorderThickness" Value="3" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="Gold" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <StackPanel>
             <TextBlock Text="{Binding AlgorithmName}" FontFamily="Footlight MT Light" FontSize="30" Foreground="Cornsilk"
@@ -42,7 +75,8 @@
                         <TextBlock Text="{Binding Instructions, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="5,10,5,0" />
                     </StackPanel>
 
-                    <Image Source="/Resources/SequenceEnd.png" Stretch="None" Grid.Row="2" />
+                    <Button Grid.Row="2" Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}" />
+                    
                     <Button Content="KONIEC" TextBlock.FontWeight="DemiBold" Background="Red" Click="CloseButton_Click"
                             Grid.Row="4" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" Style="{StaticResource BaseButtonStyle}" />
                     <Button Content="O PROGRAMIE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" Click="AboutButton_Click"
