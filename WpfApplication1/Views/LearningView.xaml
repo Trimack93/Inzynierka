@@ -14,6 +14,7 @@
 
     <Window.Resources>
         <Style x:Key="EndSequenceButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -48,7 +49,7 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="{Binding AlgorithmName}" FontFamily="Footlight MT Light" FontSize="30" Foreground="Cornsilk"
-                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,10,0,15" />
+                       HorizontalAlignment="Center" Margin="0,10,0,15" />
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -75,7 +76,11 @@
                         <TextBlock Text="{Binding Instructions, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="5,10,5,0" />
                     </StackPanel>
 
-                    <Button Grid.Row="2" Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}" />
+                    <Button Grid.Row="2" Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
+                            ToolTip="Po naciśnięciu tego przycisku zakończysz obecnie wykonywaną sekwencję.\n
+                            Spowoduje to sprawdzenie, czy wykonałeś wszystkie kroki zgodnie z wybranym algorytmem.\n
+                            W przypadku wykrycia nieprawidłowości zostaniesz o tym poinformowany, a graf zostanie przywrócony do postaci,\n
+                            w jakiej znajdował się na początku sekwencji." />
                     
                     <Button Content="KONIEC" TextBlock.FontWeight="DemiBold" Background="Red" Click="CloseButton_Click"
                             Grid.Row="4" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" Style="{StaticResource BaseButtonStyle}" />

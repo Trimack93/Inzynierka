@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphAlgorithms", "WpfApplication1\GraphAlgorithms.csproj", "{3D6E3915-5C5C-4183-8258-ABC1078ADFFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphGenerator", "GraphGenerator\GraphGenerator.csproj", "{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D6E3915-5C5C-4183-8258-ABC1078ADFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D6E3915-5C5C-4183-8258-ABC1078ADFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D6E3915-5C5C-4183-8258-ABC1078ADFFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
