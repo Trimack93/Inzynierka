@@ -1,4 +1,6 @@
-﻿using GraphGenerator.Utilities;
+﻿using Common.Utilities;
+using Common.ViewModels;
+using GraphGenerator.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +13,7 @@ using System.Windows.Media;
 
 namespace GraphGenerator.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : BaseViewModel
     {
         private ObservableCollection<SolidColorBrush> _Colors = new ObservableCollection<SolidColorBrush>();
         public ObservableCollection<SolidColorBrush> Colors
@@ -48,20 +50,5 @@ namespace GraphGenerator.ViewModels
         {
             get { return new RelayCommand(ChangeCompatibilityExecute, CanChangeCompatibility); }
         }
-
-        #region INotifyPropertyChanged
-        //---------------------------------------
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;              // Take a copy to prevent thread issues
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #endregion
     }
 }

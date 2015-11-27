@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace WpfApplication1.Utilities
+namespace Common.Utilities
 {
     public class RelayCommand : ICommand
     {
@@ -12,7 +12,7 @@ namespace WpfApplication1.Utilities
         #endregion
 
         #region Constructors
-        public RelayCommand(Action execute): this(execute, null) {}
+        public RelayCommand(Action execute) : this(execute, null) { }
 
         public RelayCommand(Action execute, Func<Boolean> canExecute)
         {

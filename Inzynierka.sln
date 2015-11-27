@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphAlgorithms", "WpfAppli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphGenerator", "GraphGenerator\GraphGenerator.csproj", "{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{46152B9C-9654-4BCB-A35A-94ED2FC26C1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A5B998C-CA53-4680-B9FE-A5018B3F81A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46152B9C-9654-4BCB-A35A-94ED2FC26C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46152B9C-9654-4BCB-A35A-94ED2FC26C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46152B9C-9654-4BCB-A35A-94ED2FC26C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46152B9C-9654-4BCB-A35A-94ED2FC26C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

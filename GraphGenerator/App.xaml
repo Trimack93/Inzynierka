@@ -6,124 +6,87 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <conv:CenterBorderGapMaskConverter x:Key="CenterBorderGapMaskConverter" />
+        <ResourceDictionary>
+            <conv:CenterBorderGapMaskConverter x:Key="CenterBorderGapMaskConverter" />
+            
+            <!-- GroupBox style with centered header -->
+            <!-- Downloaded from StackOverflow: http://stackoverflow.com/questions/4235252/wpf-groupbox-header-customization -->
+            <Style x:Key="GroupBoxStyle" TargetType="{x:Type GroupBox}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GroupBox}">
+                            <Grid SnapsToDevicePixels="true">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="6"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="6"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="6"/>
+                                </Grid.RowDefinitions>
 
-        <!-- Base button style providing default darken effect on MouseOver and lighten effect on MousePressed, also border style formatting -->
-        <Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
-            <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ButtonBase}">
-                        <Border Name="border"
-                            BorderThickness="3"
-                            Padding="{TemplateBinding Padding}"
-                            BorderBrush="Black"
-                            Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.95" />
-                            </Trigger>
-
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsPressed" Value="True" />
-                                    <Condition Property="Background" Value="LimeGreen" />
-                                </MultiTrigger.Conditions>
-
-                                <Setter TargetName="border" Property="Background" Value="Chartreuse" />
-                            </MultiTrigger>
-
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsPressed" Value="True" />
-                                    <Condition Property="Background" Value="Gold" />
-                                </MultiTrigger.Conditions>
-
-                                <Setter TargetName="border" Property="Background" Value="Yellow" />
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- GroupBox style with centered header -->
-        <!-- Downloaded from StackOverflow: http://stackoverflow.com/questions/4235252/wpf-groupbox-header-customization -->
-        <Style x:Key="GroupBoxStyle" TargetType="{x:Type GroupBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupBox}">
-                        <Grid SnapsToDevicePixels="true">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="6"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="6"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Border CornerRadius="4"
+                                <Border CornerRadius="4"
                                     Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     BorderBrush="Transparent"
                                     Background="{TemplateBinding Background}"/>
-                            
-                            <!-- Tutaj właściwości Header'a, ContentPresenter.Content pozwala ustawic Grida z TextBlockiem, który przechowuje tytuł GroupBox'a -->
-                            <Border x:Name="Header"
+
+                                <!-- Tutaj właściwości Header'a, ContentPresenter.Content pozwala ustawic Grida z TextBlockiem, który przechowuje tytuł GroupBox'a -->
+                                <Border x:Name="Header"
                                     Padding="10,0,10,0"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="2">
-                                <ContentPresenter ContentSource="Header"
+                                    <ContentPresenter ContentSource="Header"
                                         RecognizesAccessKey="True"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </Border>
-                            
-                            <ContentPresenter Grid.Row="2"
+                                </Border>
+
+                                <ContentPresenter Grid.Row="2"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="3"
                                 Margin="{TemplateBinding Padding}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            
-                            <Border CornerRadius="4"
+
+                                <Border CornerRadius="4"
                                     Grid.Row="1"
                                     Grid.RowSpan="3"
                                     Grid.ColumnSpan="5"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     BorderBrush="Black">
 
-                                <Border.OpacityMask>
-                                    <MultiBinding Converter="{StaticResource CenterBorderGapMaskConverter}">
-                                        <Binding ElementName="Header" Path="ActualWidth"/>
-                                        <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth"/>
-                                        <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight"/>
-                                    </MultiBinding>
-                                </Border.OpacityMask>
+                                    <Border.OpacityMask>
+                                        <MultiBinding Converter="{StaticResource CenterBorderGapMaskConverter}">
+                                            <Binding ElementName="Header" Path="ActualWidth"/>
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth"/>
+                                            <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight"/>
+                                        </MultiBinding>
+                                    </Border.OpacityMask>
 
-                                <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    <Border BorderThickness="{TemplateBinding BorderThickness}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         CornerRadius="3">
-                                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                        <Border BorderThickness="{TemplateBinding BorderThickness}"
                                             BorderBrush="Black"
                                             CornerRadius="2"/>
+                                    </Border>
                                 </Border>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
 
-        </Style>
-
+            <!-- Common styles used by every project in the solution -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common;component/CommonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

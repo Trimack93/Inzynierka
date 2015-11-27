@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
-namespace WpfApplication1.ViewModels
+namespace Common.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

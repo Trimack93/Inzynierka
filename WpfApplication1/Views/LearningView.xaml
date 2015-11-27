@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:WpfApplication1.ViewModels"
         mc:Ignorable="d"
         Title="Algorytmy grafowe" Width="1024" Height="768" Background="RoyalBlue"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:LearningViewModel />
