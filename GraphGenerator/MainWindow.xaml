@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
         mc:Ignorable="d"
         Title="Generator grafów" Width="1024" Height="768" Background="RoyalBlue"
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
@@ -65,14 +65,14 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Background="LimeGreen" Click="Button_Click" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" Command="{Binding AddNode}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <Image Source="/Resources/NodeButton.png" Stretch="None" />
                                 <TextBlock Text="Wierzchołek" Foreground="Black" HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
-                        <Button Background="LimeGreen" Click="Button_Click" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}"  Command="{Binding AddEdge}" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <!--<Line X1="4" Y1="54" X2="60" Y2="10" Width="64" Height="64" Stroke="Black" StrokeThickness="5.5" />-->
                                 <Image Source="/Resources/EdgeButton.png" Stretch="None" />
@@ -128,7 +128,7 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Background="Gold" Click="Button_Click" Grid.Row="6" Margin="0,10,0,0" Style="{StaticResource InterfaceButtonStyle}">
+                    <Button Background="Gold" Grid.Row="6" Margin="0,10,0,0" Style="{StaticResource InterfaceButtonStyle}">
                         <StackPanel>
                             <Image Source="/Resources/OpenButton.png" Stretch="None" />
                             <TextBlock Text="Otwórz" Foreground="Black" HorizontalAlignment="Center" />
