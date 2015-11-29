@@ -39,6 +39,19 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="BorderThickness" Value="3" />
         </Style>
+
+        <Style x:Key="CanvasRectangleStyle" TargetType="{x:Type Rectangle}">
+            <Setter Property="Stroke" Value="Snow" />
+            <Setter Property="StrokeThickness" Value="0.2" />
+            <Setter Property="Fill" Value="Transparent" />                  <!-- Without this, bottom edge is bugged, lol -->
+            
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Stroke" Value="Gold" />
+                    <Setter Property="StrokeThickness" Value="1" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -87,7 +100,7 @@
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AlgorithmNameTextblockStyle}" />    <!-- Apply style to all TextBlock's in container -->
                                 <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource CompatibilitySquareStyle}" />
                             </Grid.Resources>
-                            
+
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30" />
                                 <RowDefinition Height="30" />
@@ -110,7 +123,7 @@
                             <Rectangle Grid.Row="4" Fill="{Binding Colors[4]}" />
                             <Rectangle Grid.Row="5" Fill="{Binding Colors[5]}" />
                             <Rectangle Grid.Row="6" Fill="{Binding Colors[6]}" />
-                            
+
                             <TextBlock Text="Przeszukiwanie wszerz" Grid.Row="0" />
                             <TextBlock Text="Przeszukiwanie w głąb" Grid.Row="1" />
                             <TextBlock Text="Sortowanie topologiczne" Grid.Row="2" />
@@ -136,7 +149,27 @@
                     </Button>
                 </Grid>
 
-                <Rectangle Grid.Column="1" Width="726" Height="660" Fill="LightGray" Margin="0,0,15,0"></Rectangle>
+                <ItemsControl ItemsSource="{Binding CanvasRectangles}" Grid.Column="1" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >          <!-- 11x10 -->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Background="LightGray" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="{Binding SideLength}" Height="{Binding SideLength}" Style="{StaticResource CanvasRectangleStyle}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
             </Grid>
         </StackPanel>
     </Grid>

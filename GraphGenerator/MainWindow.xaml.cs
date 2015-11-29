@@ -23,6 +23,8 @@ namespace GraphGenerator
         public MainWindow()
         {
             InitializeComponent();
+
+            //Canvas canvas = this.FindName("DrawingCanvas") as Canvas;
         }
     }
 }

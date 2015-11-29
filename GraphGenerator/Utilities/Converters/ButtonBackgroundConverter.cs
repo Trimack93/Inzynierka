@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace GraphGenerator.Utilities
+namespace GraphGenerator.Utilities.Converters
 {
     class ButtonBackgroundConverter : IValueConverter
     {

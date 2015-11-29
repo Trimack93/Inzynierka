@@ -13,7 +13,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GraphGenerator.Utilities
+namespace GraphGenerator.Utilities.Converters
 {
     class CenterBorderGapMaskConverter : IMultiValueConverter
     {

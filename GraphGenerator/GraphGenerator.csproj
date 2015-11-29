@@ -56,9 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\ButtonState.cs" />
-    <Compile Include="Utilities\ButtonBackgroundConverter.cs" />
-    <Compile Include="Utilities\CenterBorderGapMaskConverter.cs" />
+    <Compile Include="Models\CanvasRectangle.cs" />
+    <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
+    <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

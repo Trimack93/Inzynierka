@@ -91,7 +91,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Utilities\StringToNewlineStringConverter.cs" />
+    <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>

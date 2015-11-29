@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace WpfApplication1.Utilities
+namespace WpfApplication1.Utilities.Converters
 {
     public class StringToNewlineStringConverter : IValueConverter
     {

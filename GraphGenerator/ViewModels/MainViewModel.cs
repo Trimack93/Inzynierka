@@ -1,31 +1,56 @@
-﻿using Common.Utilities;
-using Common.ViewModels;
-using GraphGenerator.Models;
-using GraphGenerator.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+
+using Common.Utilities;
+using Common.ViewModels;
+using GraphGenerator.Models;
 
 namespace GraphGenerator.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private ObservableCollection<SolidColorBrush> _Colors = new ObservableCollection<SolidColorBrush>();
+        public MainViewModel()
+        {
+            Colors.Add(Brushes.Green);
+            Colors.Add(Brushes.Red);
+            Colors.Add(Brushes.Green);
+            Colors.Add(Brushes.Green);
+            Colors.Add(Brushes.Red);
+            Colors.Add(Brushes.Green);
+            Colors.Add(Brushes.Red);
+
+            int columnsCount = this.CanvasWidth / this.RectangleSize;
+            int rowsCount = this.CanvasHeight / this.RectangleSize;
+
+            for (int i = 0; i < columnsCount; i++)
+                for (int j = 0; j < rowsCount; j++)
+                {
+                    CanvasRectangles.Add( new CanvasRectangle(i * this.RectangleSize, j * this.RectangleSize, this.RectangleSize) );
+                }
+        }
+
+        //----------------------------------
 
         private bool _NodeButtonIsPressed = false;
         private bool _EdgeButtonIsPressed = false;
 
-        public ObservableCollection<SolidColorBrush> Colors
-        {
-            get { return _Colors; }
-            private set { _Colors = value; }
-        }
+        private ObservableCollection<SolidColorBrush> _Colors = new ObservableCollection<SolidColorBrush>();
+        private ObservableCollection<CanvasRectangle> _CanvasRectangles = new ObservableCollection<CanvasRectangle>();
+
+        //----------------------------------
+
+        // TODO: get properties from View
+        public int CanvasWidth { get { return 726; } }
+        public int CanvasHeight { get { return 660; } }
+        public int RectangleSize { get { return 66; } }
 
         public bool NodeButtonIsPressed
         {
@@ -37,7 +62,6 @@ namespace GraphGenerator.ViewModels
                 RaisePropertyChanged("NodeButtonIsPressed");
             }
         }
-
         public bool EdgeButtonIsPressed
         {
             get { return _EdgeButtonIsPressed; }
@@ -49,16 +73,18 @@ namespace GraphGenerator.ViewModels
             }
         }
 
-        public MainViewModel()
+        public ObservableCollection<SolidColorBrush> Colors
         {
-            Colors.Add( Brushes.Green );
-            Colors.Add( Brushes.Red );
-            Colors.Add( Brushes.Green );
-            Colors.Add( Brushes.Green );
-            Colors.Add( Brushes.Red);
-            Colors.Add( Brushes.Green );
-            Colors.Add( Brushes.Red);   
+            get { return _Colors; }
+            private set { _Colors = value; }
         }
+        public ObservableCollection<CanvasRectangle> CanvasRectangles
+        {
+            get { return _CanvasRectangles; }
+            private set { _CanvasRectangles = value; }
+        }
+
+        //----------------------------------
 
         // GUI update test
         void ChangeCompatibilityExecute()
@@ -68,44 +94,40 @@ namespace GraphGenerator.ViewModels
             else
                 Colors[2] = Brushes.Green;
         }
-
         void AddNodeExecute()
         {
             EdgeButtonIsPressed = false;
             NodeButtonIsPressed = !NodeButtonIsPressed;
         }
-
         void AddEdgeExecute()
         {
             NodeButtonIsPressed = false;
             EdgeButtonIsPressed = !EdgeButtonIsPressed;
         }
 
-        bool CanAddNode()
+        bool CanChangeCompatibility()
         {
             return true;                        // O
         }
-
-        bool CanAddEdge()
+        bool CanAddNode()
         {
             return true;                        // M
         }
-
-        bool CanChangeCompatibility()
+        bool CanAddEdge()
         {
             return true;                        // G
         }
+
+        //----------------------------------
 
         public ICommand AddNode
         {
             get { return new RelayCommand(AddNodeExecute, CanAddNode); }
         }
-
         public ICommand AddEdge
         {
             get { return new RelayCommand(AddEdgeExecute, CanAddEdge); }
         }
-
         public ICommand ChangeCompatibility
         {
             get { return new RelayCommand(ChangeCompatibilityExecute, CanChangeCompatibility); }

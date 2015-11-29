@@ -11,9 +11,15 @@ namespace Common.Models
     public class Node
     {
         public int ID { get; set; }
+
         public string Name { get; set; }                // a, b, c, d etc.
         public object Value { get; set; }               // 7, 6/9 or abcd
         public Color Color { get; set; }
+        
+        // Position
+        public int X { get; set; }                      // Grid column
+        public int Y { get; set; }                      // Grid row
+
         public List<Edge> Edges { get; set; }
     }
 }
