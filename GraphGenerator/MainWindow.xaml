@@ -40,17 +40,99 @@
             <Setter Property="BorderThickness" Value="3" />
         </Style>
 
-        <Style x:Key="CanvasRectangleStyle" TargetType="{x:Type Rectangle}">
-            <Setter Property="Stroke" Value="Snow" />
-            <Setter Property="StrokeThickness" Value="0.2" />
-            <Setter Property="Fill" Value="Transparent" />                  <!-- Without this, bottom edge is bugged, lol -->
-            
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Stroke" Value="Gold" />
-                    <Setter Property="StrokeThickness" Value="1" />
-                </Trigger>
-            </Style.Triggers>
+        <Style x:Key="CanvasButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="border"
+                            BorderBrush="Snow"
+                            BorderThickness="0.2"
+                            Background="Transparent">
+                            <ContentControl VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <StackPanel>
+                                    <TextBlock Text="Tutaj bydzie GRAF" TextWrapping="Wrap" TextAlignment="Center" FontSize="10" />
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0" TextBlock.FontSize="9">
+                                        <TextBlock Text="X: " />
+                                        <TextBlock Text="{Binding GetGridX}" />
+                                        <TextBlock Text=", Y: "  />
+                                        <TextBlock Text="{Binding GetGridY}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </ContentControl>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <!--  Need to give binding a reference to ItemsControl, because by default it tries to get property from the model class of ItemsSource collection  -->
+                                    <!-- ItemsControl has the DataContext from ViewModel, and this is the context we want to retrieve -->
+                                    <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.EdgeButtonIsPressed}" Value="True">-->
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="True" />
+                                    
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                    <Condition Binding="{Binding DoesContainNode}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            </MultiDataTrigger>
+                            
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                    <Condition Binding="{Binding DoesContainNode}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderBrush" Value="Red" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                    <Condition Binding="{Binding DoesContainNode}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderBrush" Value="Red" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                    <Condition Binding="{Binding DoesContainNode}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
+                            </MultiDataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -58,7 +140,7 @@
         <StackPanel>
             <TextBlock Text="Generator grafów" FontFamily="Footlight MT Light" FontSize="30" Foreground="Cornsilk"
                        HorizontalAlignment="Center" Margin="0,10,0,15" />
-
+            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -149,7 +231,11 @@
                     </Button>
                 </Grid>
 
-                <ItemsControl ItemsSource="{Binding CanvasRectangles}" Grid.Column="1" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >          <!-- 11x10 -->
+                <!--<Canvas Background="LightGray" Grid.Column="1" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0">
+                    <Button Width="66" Height="66" Style="{StaticResource CanvasButtonStyle}" />
+                </Canvas>-->
+
+                <ItemsControl ItemsSource="{Binding CanvasRectangles}" Grid.Column="1" Name="CanvasItemsControl" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >           <!--11x10--> 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas Background="LightGray" />
@@ -158,14 +244,14 @@
                     
                     <ItemsControl.ItemContainerStyle>
                         <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                            <Setter Property="Canvas.Left" Value="{Binding X}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                     
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Rectangle Width="{Binding SideLength}" Height="{Binding SideLength}" Style="{StaticResource CanvasRectangleStyle}" />
+                            <Button Width="{Binding SideLength}" Height="{Binding SideLength}" Style="{StaticResource CanvasButtonStyle}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

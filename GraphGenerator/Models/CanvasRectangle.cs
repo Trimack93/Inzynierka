@@ -11,6 +11,7 @@ namespace GraphGenerator.Models
         public int X { get; set; }
         public int Y { get; set; }
         public int SideLength { get; set; }
+        public bool DoesContainNode { get; set; } = false;
 
         public CanvasRectangle(int x, int y, int sideLength)
         {
@@ -18,5 +19,9 @@ namespace GraphGenerator.Models
             this.Y = y;
             this.SideLength = sideLength;
         }
+
+        // probably to be deleted
+        public int GetGridX { get { return X / SideLength; } }
+        public int GetGridY { get { return Y / SideLength; } }
     }
 }

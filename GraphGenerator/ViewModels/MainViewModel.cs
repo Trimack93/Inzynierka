@@ -30,11 +30,13 @@ namespace GraphGenerator.ViewModels
             int columnsCount = this.CanvasWidth / this.RectangleSize;
             int rowsCount = this.CanvasHeight / this.RectangleSize;
 
-            for (int i = 0; i < columnsCount; i++)
-                for (int j = 0; j < rowsCount; j++)
+            for (int i = 0; i < rowsCount; i++)
+                for (int j = 0; j < columnsCount; j++)
                 {
-                    CanvasRectangles.Add( new CanvasRectangle(i * this.RectangleSize, j * this.RectangleSize, this.RectangleSize) );
+                    CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize));
                 }
+
+            CanvasRectangles[12].DoesContainNode = true;
         }
 
         //----------------------------------
