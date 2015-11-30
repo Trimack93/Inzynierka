@@ -12,6 +12,7 @@ using System.Windows.Media;
 using Common.Utilities;
 using Common.ViewModels;
 using GraphGenerator.Models;
+using Common.Models;
 
 namespace GraphGenerator.ViewModels
 {
@@ -35,8 +36,36 @@ namespace GraphGenerator.ViewModels
                 {
                     CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize));
                 }
+            
+            CanvasRectangles[0].Node = new Node();
+            CanvasRectangles[69].Node = new Node();
+            CanvasRectangles[24].Node = new Node();
+            CanvasRectangles[15].Node = new Node();
 
-            CanvasRectangles[12].DoesContainNode = true;
+            CanvasRectangles[0].DoesContainNode = true;
+            CanvasRectangles[69].DoesContainNode = true;
+            CanvasRectangles[24].DoesContainNode = true;
+            CanvasRectangles[15].DoesContainNode = true;
+
+            CanvasRectangles[0].Node.Name = "a";
+            CanvasRectangles[69].Node.Name = "b";
+            CanvasRectangles[24].Node.Name = "c";
+            CanvasRectangles[15].Node.Name = "d";
+
+            CanvasRectangles[0].Node.Value = 6;
+            CanvasRectangles[69].Node.Value = 9;
+            CanvasRectangles[24].Node.Value = 15;
+            CanvasRectangles[15].Node.Value = 666;
+
+            CanvasRectangles[0].Node.NameHorizontalAlignment = HorizontalAlignment.Center;
+            CanvasRectangles[69].Node.NameHorizontalAlignment = HorizontalAlignment.Right;
+            CanvasRectangles[24].Node.NameHorizontalAlignment = HorizontalAlignment.Left;
+            CanvasRectangles[15].Node.NameHorizontalAlignment = HorizontalAlignment.Center;
+
+            CanvasRectangles[0].Node.NameVerticalAlignment = VerticalAlignment.Top;
+            CanvasRectangles[69].Node.NameVerticalAlignment = VerticalAlignment.Center;
+            CanvasRectangles[24].Node.NameVerticalAlignment = VerticalAlignment.Center;
+            CanvasRectangles[15].Node.NameVerticalAlignment = VerticalAlignment.Bottom;
         }
 
         //----------------------------------

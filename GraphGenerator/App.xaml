@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <conv:CenterBorderGapMaskConverter x:Key="CenterBorderGapMaskConverter" />
             <conv:ButtonBackgroundConverter x:Key="ButtonBackgroundConverter" />
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             
             <!-- GroupBox style with centered header -->
             <!-- Downloaded from StackOverflow: http://stackoverflow.com/questions/4235252/wpf-groupbox-header-customization -->

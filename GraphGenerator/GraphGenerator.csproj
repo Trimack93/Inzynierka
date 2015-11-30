@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\CanvasRectangle.cs" />
+    <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
     <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

@@ -9,7 +9,7 @@ namespace Common.Models
 {
     public enum Direction
     {
-        AB, BA, Bidirectional                                           // Probably will stick with Onedirectional, Bidirectional
+        Onedirectional, Bidirectional                                           // Probably won't be used at all
     }
     
     // Krawędź

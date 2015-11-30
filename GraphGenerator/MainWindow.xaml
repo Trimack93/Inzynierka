@@ -14,6 +14,7 @@
         <vm:MainViewModel />
     </Window.DataContext>
 
+    <!-- Gotta refactor hard -->
     <Window.Resources>
         <Style x:Key="CompatibilitySquareStyle" TargetType="{x:Type Rectangle}">
             <Setter Property="Grid.Column" Value="0" />
@@ -48,17 +49,45 @@
                             BorderBrush="Snow"
                             BorderThickness="0.2"
                             Background="Transparent">
-                            <ContentControl VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <StackPanel>
-                                    <TextBlock Text="Tutaj bydzie GRAF" TextWrapping="Wrap" TextAlignment="Center" FontSize="10" />
+                            <ContentControl Visibility="{Binding DoesContainNode, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Grid>
+                                    <Grid.Resources>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="HorizontalAlignment" Value="Left" />
+                                                        <Condition Property="VerticalAlignment" Value="Center" />
+                                                    </MultiTrigger.Conditions>
+                                                    
+                                                    <Setter Property="Margin" Value="7,0,0,0" />
+                                                </MultiTrigger>
+                                                
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="HorizontalAlignment" Value="Center" />
+                                                        <Condition Property="VerticalAlignment" Value="Bottom" />
+                                                    </MultiTrigger.Conditions>
 
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0" TextBlock.FontSize="9">
-                                        <TextBlock Text="X: " />
-                                        <TextBlock Text="{Binding GetGridX}" />
-                                        <TextBlock Text=", Y: "  />
-                                        <TextBlock Text="{Binding GetGridY}" />
-                                    </StackPanel>
-                                </StackPanel>
+                                                    <Setter Property="Margin" Value="0,0,0,3" />
+                                                </MultiTrigger>
+                                                
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="HorizontalAlignment" Value="Right" />
+                                                        <Condition Property="VerticalAlignment" Value="Center" />
+                                                    </MultiTrigger.Conditions>
+
+                                                    <Setter Property="Margin" Value="0,0,7,0" />
+                                                </MultiTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Resources>
+                                    
+                                    <TextBlock Text="{Binding Node.Name}" HorizontalAlignment="{Binding Node.NameHorizontalAlignment}" VerticalAlignment="{Binding Node.NameVerticalAlignment}" />
+                                    <Ellipse Width="30" Height="30" Stroke="Black" StrokeThickness="1" />
+                                    <TextBlock Text="{Binding Node.Value}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" />
+                                </Grid>
                             </ContentControl>
                         </Border>
 
