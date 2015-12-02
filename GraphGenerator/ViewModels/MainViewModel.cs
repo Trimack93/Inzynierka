@@ -9,14 +9,13 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-using Common.Utilities;
-using Common.ViewModels;
 using GraphGenerator.Models;
 using Common.Models;
+using Common.Utilities;
 
 namespace GraphGenerator.ViewModels
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseNotifyPropertyChanged
     {
         public MainViewModel()
         {
@@ -34,38 +33,25 @@ namespace GraphGenerator.ViewModels
             for (int i = 0; i < rowsCount; i++)
                 for (int j = 0; j < columnsCount; j++)
                 {
-                    CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize));
+                    CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize, i*11 + j));
                 }
-            
-            CanvasRectangles[0].Node = new Node();
-            CanvasRectangles[69].Node = new Node();
-            CanvasRectangles[24].Node = new Node();
-            CanvasRectangles[15].Node = new Node();
+
+            CanvasRectangles[0].Node = new Node()
+                { Name = "a", Value = 6, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
+
+            CanvasRectangles[69].Node = new Node()
+                { Name = "b", Value = 9, NameHorizontalAlignment = HorizontalAlignment.Right, NameVerticalAlignment = VerticalAlignment.Center };
+
+            CanvasRectangles[24].Node = new Node()
+                { Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
+
+            CanvasRectangles[15].Node = new Node()
+                { Name = "d", Value = 666, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
 
             CanvasRectangles[0].DoesContainNode = true;
             CanvasRectangles[69].DoesContainNode = true;
             CanvasRectangles[24].DoesContainNode = true;
             CanvasRectangles[15].DoesContainNode = true;
-
-            CanvasRectangles[0].Node.Name = "a";
-            CanvasRectangles[69].Node.Name = "b";
-            CanvasRectangles[24].Node.Name = "c";
-            CanvasRectangles[15].Node.Name = "d";
-
-            CanvasRectangles[0].Node.Value = 6;
-            CanvasRectangles[69].Node.Value = 9;
-            CanvasRectangles[24].Node.Value = 15;
-            CanvasRectangles[15].Node.Value = 666;
-
-            CanvasRectangles[0].Node.NameHorizontalAlignment = HorizontalAlignment.Center;
-            CanvasRectangles[69].Node.NameHorizontalAlignment = HorizontalAlignment.Right;
-            CanvasRectangles[24].Node.NameHorizontalAlignment = HorizontalAlignment.Left;
-            CanvasRectangles[15].Node.NameHorizontalAlignment = HorizontalAlignment.Center;
-
-            CanvasRectangles[0].Node.NameVerticalAlignment = VerticalAlignment.Top;
-            CanvasRectangles[69].Node.NameVerticalAlignment = VerticalAlignment.Center;
-            CanvasRectangles[24].Node.NameVerticalAlignment = VerticalAlignment.Center;
-            CanvasRectangles[15].Node.NameVerticalAlignment = VerticalAlignment.Bottom;
         }
 
         //----------------------------------
@@ -117,6 +103,31 @@ namespace GraphGenerator.ViewModels
 
         //----------------------------------
 
+        private void AddNode(int rectangleID)
+        {
+            if (CanvasRectangles[rectangleID].DoesContainNode == false)
+            {
+                CanvasRectangles[rectangleID].Node = new Node()
+                {
+                    Name = "test",
+                    Value = 12,
+                    NameHorizontalAlignment = HorizontalAlignment.Center,
+                    NameVerticalAlignment = VerticalAlignment.Top
+                };
+
+                CanvasRectangles[rectangleID].DoesContainNode = true;
+            }
+        }
+
+        private void AddEdge(int ID)
+        {
+            //TODO
+            if (CanvasRectangles[ID].DoesContainNode)
+                MessageBox.Show("Wait for it", "Work in progress", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        }
+
+        //----------------------------------
+
         // GUI update test
         void ChangeCompatibilityExecute()
         {
@@ -125,43 +136,60 @@ namespace GraphGenerator.ViewModels
             else
                 Colors[2] = Brushes.Green;
         }
-        void AddNodeExecute()
+        void AddNodeClickExecute()
         {
             EdgeButtonIsPressed = false;
             NodeButtonIsPressed = !NodeButtonIsPressed;
         }
-        void AddEdgeExecute()
+        void AddEdgeClickExecute()
         {
             NodeButtonIsPressed = false;
             EdgeButtonIsPressed = !EdgeButtonIsPressed;
         }
 
-        bool CanChangeCompatibility()
+        void ClickRectangleExecute(int rectangleID)
         {
-            return true;                        // O
+            if (this.NodeButtonIsPressed)
+                AddNode(rectangleID);
+            if (this.EdgeButtonIsPressed)
+                AddEdge(rectangleID);
         }
-        bool CanAddNode()
+
+        //bool CanChangeCompatibility()
+        //{
+        //    return true;                        // O
+        //}
+        //bool CanClickAddNode()
+        //{
+        //    return true;                        // M
+        //}
+        //bool CanClickAddEdge()
+        //{
+        //    return true;                        // G
+        //}
+
+        bool CanClickRectangle()
         {
-            return true;                        // M
-        }
-        bool CanAddEdge()
-        {
-            return true;                        // G
+            return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
         }
 
         //----------------------------------
 
-        public ICommand AddNode
+        public ICommand AddNodeClick
         {
-            get { return new RelayCommand(AddNodeExecute, CanAddNode); }
+            get { return new RelayCommand<object>( p => AddNodeClickExecute() ); }
         }
-        public ICommand AddEdge
+        public ICommand AddEdgeClick
         {
-            get { return new RelayCommand(AddEdgeExecute, CanAddEdge); }
+            get { return new RelayCommand<object>( p => AddEdgeClickExecute() ); }
         }
         public ICommand ChangeCompatibility
         {
-            get { return new RelayCommand(ChangeCompatibilityExecute, CanChangeCompatibility); }
+            get { return new RelayCommand<object>( p => ChangeCompatibilityExecute() ); }
+        }
+        public ICommand ClickRectangle
+        {
+            get { return new RelayCommand<int>( param => ClickRectangleExecute(param), CanClickRectangle ); }
         }
     }
 }

@@ -92,6 +92,10 @@
                         </Border>
 
                         <ControlTemplate.Triggers>
+                            <!--<Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}" />
+                            </Trigger>-->
+                            
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <!--  Need to give binding a reference to ItemsControl, because by default it tries to get property from the model class of ItemsSource collection  -->
@@ -140,6 +144,12 @@
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
                             </MultiDataTrigger>
 
+                            <!--<Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Snow" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="0.2" />
+                            </Trigger>-->
+
+                            <!-- Implementing it properly is impossible without hundreds styling code lines, so GTFO -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
@@ -189,14 +199,14 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" Command="{Binding AddNode}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" Command="{Binding AddNodeClick}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <Image Source="/Resources/NodeButton.png" Stretch="None" />
                                 <TextBlock Text="Wierzchołek" Foreground="Black" HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
-                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}"  Command="{Binding AddEdge}" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}"  Command="{Binding AddEdgeClick}" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <!--<Line X1="4" Y1="54" X2="60" Y2="10" Width="64" Height="64" Stroke="Black" StrokeThickness="5.5" />-->
                                 <Image Source="/Resources/EdgeButton.png" Stretch="None" />
@@ -280,7 +290,7 @@
                     
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Width="{Binding SideLength}" Height="{Binding SideLength}" Style="{StaticResource CanvasButtonStyle}" />
+                            <Button Width="{Binding SideLength}" Height="{Binding SideLength}" Command="{Binding ElementName=CanvasItemsControl, Path=DataContext.ClickRectangle}" CommandParameter="{Binding ID}" Style="{StaticResource CanvasButtonStyle}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

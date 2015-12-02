@@ -4,17 +4,29 @@ using System.Windows.Input;
 
 namespace Common.Utilities
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand<T> : ICommand
     {
-        #region Members
-        readonly Func<Boolean> _canExecute;
-        readonly Action _execute;
+        #region Fields
+
+        private readonly Action<T> _execute = null;
+        private readonly Func<Boolean> _canExecute = null;
+
         #endregion
 
         #region Constructors
-        public RelayCommand(Action execute) : this(execute, null) { }
 
-        public RelayCommand(Action execute, Func<Boolean> canExecute)
+        /// <summary>
+        /// Creates a new command that can always execute.
+        /// </summary>
+        /// <param name="execute">The execution logic.</param>
+        public RelayCommand(Action<T> execute) : this(execute, null) { }
+
+        /// <summary>
+        /// Creates a new command with conditional execution.
+        /// </summary>
+        /// <param name="execute">The execution logic.</param>
+        /// <param name="canExecute">The execution status logic.</param>
+        public RelayCommand(Action<T> execute, Func<Boolean> canExecute)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
@@ -22,9 +34,16 @@ namespace Common.Utilities
             _execute = execute;
             _canExecute = canExecute;
         }
+
         #endregion
 
         #region ICommand Members
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute == null ? true : _canExecute();
+        }
+
         public event EventHandler CanExecuteChanged
         {
             add
@@ -39,16 +58,11 @@ namespace Common.Utilities
             }
         }
 
-        [DebuggerStepThrough]
-        public Boolean CanExecute(Object parameter)
+        public void Execute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute();
+            _execute( (T)parameter );
         }
 
-        public void Execute(Object parameter)
-        {
-            _execute();
-        }
         #endregion
     }
 }

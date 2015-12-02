@@ -6,25 +6,81 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
+using Common.Utilities;
+
 namespace Common.Models
 {
-
     // Wierzchołek
-    public class Node
+    public class Node : BaseNotifyPropertyChanged
     {
-        public int ID { get; set; }
+        private int _ID;
 
-        public string Name { get; set; }                // a, b, c, d etc.
-        public object Value { get; set; }               // 7, 6/9 or abcd
-        public Color Color { get; set; }
+        private string _Name;
+        private object _Value;
+        private Color _Color;
+
+        private HorizontalAlignment _NameHorizontalAlignment;
+        private VerticalAlignment _NameVerticalAlignment;
+
+        //---------------------------------
+
+        public int ID
+        {
+            get { return _ID; }
+            set
+            {
+                _ID = value;
+                RaisePropertyChanged("ID");
+            }
+        }
+
+        public string Name                          // a, b, c, d etc.
+        {
+            get { return _Name; }
+            set
+            {
+                _Name = value;
+                RaisePropertyChanged("Name");
+            }
+        }
+        public object Value                         // 7, 6/9 or abcd
+        {
+            get { return _Value; }
+            set
+            {
+                _Value = value;
+                RaisePropertyChanged("Value");
+            }
+        }
+        public Color Color                          // Node color (used in some algorithms)
+        {
+            get { return _Color; }
+            set
+            {
+                _Color = value;
+                RaisePropertyChanged("Color");
+            }
+        }
         
-        // Position (probably for deletion)
-        //public int X { get; set; }                      // Grid column
-        //public int Y { get; set; }                      // Grid row
+        public HorizontalAlignment NameHorizontalAlignment
+        {
+            get { return _NameHorizontalAlignment; }
+            set
+            {
+                _NameHorizontalAlignment = value;
+                RaisePropertyChanged("NameHorizontalAlignment");
+            }
+        }
+        public VerticalAlignment NameVerticalAlignment
+        {
+            get { return _NameVerticalAlignment; }
+            set
+            {
+                _NameVerticalAlignment = value;
+                RaisePropertyChanged("NameVerticalAlignment");
+            }
+        }
 
-        public HorizontalAlignment NameHorizontalAlignment { get; set; }
-        public VerticalAlignment NameVerticalAlignment { get; set; }
-
-        public List<Edge> Edges { get; set; }
+        public List<Edge> Edges { get; set; }           // Make it ObservableCollection?
     }
 }
