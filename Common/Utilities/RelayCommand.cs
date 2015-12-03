@@ -6,15 +6,9 @@ namespace Common.Utilities
 {
     public class RelayCommand<T> : ICommand
     {
-        #region Fields
-
         private readonly Action<T> _execute = null;
         private readonly Func<Boolean> _canExecute = null;
-
-        #endregion
-
-        #region Constructors
-
+        
         /// <summary>
         /// Creates a new command that can always execute.
         /// </summary>
@@ -34,10 +28,6 @@ namespace Common.Utilities
             _execute = execute;
             _canExecute = canExecute;
         }
-
-        #endregion
-
-        #region ICommand Members
 
         public bool CanExecute(object parameter)
         {
@@ -62,7 +52,5 @@ namespace Common.Utilities
         {
             _execute( (T)parameter );
         }
-
-        #endregion
     }
 }

@@ -1,9 +1,9 @@
-﻿<Window x:Class="GraphGenerator.MainWindow"
+﻿<Window x:Class="GraphGenerator.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GraphGenerator"
+        xmlns:local="clr-namespace:GraphGenerator.Views"
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
         mc:Ignorable="d"
         Title="Generator grafów" Width="1024" Height="768" Background="RoyalBlue"
@@ -109,6 +109,7 @@
 
                                 <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                             </MultiDataTrigger>
                             
                             <MultiDataTrigger>
@@ -120,6 +121,7 @@
 
                                 <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
@@ -131,6 +133,7 @@
 
                                 <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
@@ -142,14 +145,9 @@
 
                                 <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
                                 <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                             </MultiDataTrigger>
 
-                            <!--<Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="Snow" />
-                                <Setter TargetName="border" Property="BorderThickness" Value="0.2" />
-                            </Trigger>-->
-
-                            <!-- Implementing it properly is impossible without hundreds styling code lines, so GTFO -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
@@ -157,6 +155,7 @@
                                 </MultiDataTrigger.Conditions>
 
                                 <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-2.5, -2.5, -2.5, -2.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                             </MultiDataTrigger>
 
                             <MultiDataTrigger>
@@ -166,7 +165,13 @@
                                 </MultiDataTrigger.Conditions>
 
                                 <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-2.5, -2.5, -2.5, -2.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                             </MultiDataTrigger>
+
+                            <!--<Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Snow" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="0.2" />
+                            </Trigger>-->
                         </ControlTemplate.Triggers>
 
                     </ControlTemplate>
@@ -199,14 +204,14 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" Command="{Binding AddNodeClick}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}, ConverterParameter=MainWindowButton}" Command="{Binding AddNodeClick}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <Image Source="/Resources/NodeButton.png" Stretch="None" />
                                 <TextBlock Text="Wierzchołek" Foreground="Black" HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
-                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}"  Command="{Binding AddEdgeClick}" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}, ConverterParameter=MainWindowButton}"  Command="{Binding AddEdgeClick}" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <!--<Line X1="4" Y1="54" X2="60" Y2="10" Width="64" Height="64" Stroke="Black" StrokeThickness="5.5" />-->
                                 <Image Source="/Resources/EdgeButton.png" Stretch="None" />

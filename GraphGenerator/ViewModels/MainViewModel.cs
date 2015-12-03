@@ -12,6 +12,7 @@ using System.Windows.Media;
 using GraphGenerator.Models;
 using Common.Models;
 using Common.Utilities;
+using GraphGenerator.Views;                 // MVVM rape xD
 
 namespace GraphGenerator.ViewModels
 {
@@ -107,6 +108,10 @@ namespace GraphGenerator.ViewModels
         {
             if (CanvasRectangles[rectangleID].DoesContainNode == false)
             {
+                // temporary call
+                AddNodeView nodeView = new AddNodeView();
+                nodeView.ShowDialog();
+
                 CanvasRectangles[rectangleID].Node = new Node()
                 {
                     Name = "test",

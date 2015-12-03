@@ -48,7 +48,15 @@ namespace Common.Models
             get { return _Value; }
             set
             {
-                _Value = value;
+                if (value.ToString().Length <= 3)               // Value must contain max 3 chars
+                    _Value = value;
+                else
+                {
+                    string val = value.ToString();
+
+                    _Value = val.Remove(val.Length - 1, 1);     // Remove last character
+                }
+
                 RaisePropertyChanged("Value");
             }
         }
