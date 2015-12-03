@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphGenerator.Views"
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
         Title="Generator grafów" Width="1024" Height="768" Background="RoyalBlue"
         ResizeMode="CanMinimize"
@@ -204,14 +206,14 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}, ConverterParameter=MainWindowButton}" Command="{Binding AddNodeClick}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" Command="{Binding AddNodeClick}" Margin="0,0,10,0" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <Image Source="/Resources/NodeButton.png" Stretch="None" />
                                 <TextBlock Text="Wierzchołek" Foreground="Black" HorizontalAlignment="Center" />
                             </StackPanel>
                         </Button>
 
-                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}, ConverterParameter=MainWindowButton}"  Command="{Binding AddEdgeClick}" Style="{StaticResource InterfaceButtonStyle}">
+                        <Button Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}"  Command="{Binding AddEdgeClick}" Style="{StaticResource InterfaceButtonStyle}">
                             <StackPanel>
                                 <!--<Line X1="4" Y1="54" X2="60" Y2="10" Width="64" Height="64" Stroke="Black" StrokeThickness="5.5" />-->
                                 <Image Source="/Resources/EdgeButton.png" Stretch="None" />

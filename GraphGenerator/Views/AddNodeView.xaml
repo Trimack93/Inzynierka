@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Dodaj nowy wierzchołek"
         Height="400" Width="250" Background="RoyalBlue"
-        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" >
 
     <Window.DataContext>
         <vm:AddNodeViewModel />
@@ -109,9 +109,9 @@
             <TextBlock Text="{Binding Node.Value}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" />
         </Grid>
 
-        <Button Content="Zatwierdź"
+        <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True"
                 Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Background="LimeGreen" Margin="0,0,80,0" />
-        <Button Content="Anuluj"
+        <Button Content="Anuluj" IsCancel="True"
                 Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
     </Grid>
     

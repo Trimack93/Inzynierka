@@ -10,10 +10,11 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
+using MvvmDialogs;
 
 namespace GraphGenerator.ViewModels
 {
-    public class AddNodeViewModel : BaseNotifyPropertyChanged
+    public class AddNodeViewModel : BaseNotifyPropertyChanged, IModalDialogViewModel
     {
         public AddNodeViewModel()
         {
@@ -22,7 +23,7 @@ namespace GraphGenerator.ViewModels
             Node.NameHorizontalAlignment = HorizontalAlignment.Center;
             Node.NameVerticalAlignment = VerticalAlignment.Top;
 
-            ButtonColors.Add(Brushes.LightGray);
+            ButtonColors.Add(Brushes.LimeGreen);
             ButtonColors.Add(Brushes.LightGray);
             ButtonColors.Add(Brushes.LightGray);
             ButtonColors.Add(Brushes.LightGray);
@@ -31,6 +32,7 @@ namespace GraphGenerator.ViewModels
         //----------------------------------
 
         private Node _Node = new Node();
+        private bool? dialogResult = false;
         private ObservableCollection<SolidColorBrush> _ButtonColors = new ObservableCollection<SolidColorBrush>();
 
         //----------------------------------
@@ -42,6 +44,15 @@ namespace GraphGenerator.ViewModels
             {
                 _Node = value;
                 RaisePropertyChanged("Node");
+            }
+        }
+        public bool? DialogResult
+        {
+            get { return dialogResult; }
+            private set
+            {
+                dialogResult = value;
+                RaisePropertyChanged("DialogResult");
             }
         }
         public ObservableCollection<SolidColorBrush> ButtonColors
@@ -92,6 +103,10 @@ namespace GraphGenerator.ViewModels
             ButtonColors[2] = Brushes.LightGray;
             ButtonColors[3] = Brushes.LimeGreen;
         }
+        void OkClickExecute()
+        {
+            this.DialogResult = true;
+        }
 
         //----------------------------------
 
@@ -110,6 +125,10 @@ namespace GraphGenerator.ViewModels
         public ICommand SelectBottomCenterAlignment
         {
             get { return new RelayCommand<object>(p => SelectBottomCenterAlignmentExecute()); }
+        }
+        public ICommand OkClick
+        {
+            get { return new RelayCommand<object>(p => OkClickExecute()); }
         }
     }
 }

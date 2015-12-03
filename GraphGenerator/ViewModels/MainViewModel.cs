@@ -12,13 +12,27 @@ using System.Windows.Media;
 using GraphGenerator.Models;
 using Common.Models;
 using Common.Utilities;
-using GraphGenerator.Views;                 // MVVM rape xD
+using MvvmDialogs;
 
 namespace GraphGenerator.ViewModels
 {
     public class MainViewModel : BaseNotifyPropertyChanged
     {
+        [Obsolete("Use only for design mode", true)]
         public MainViewModel()
+        {
+            Init();
+        }
+
+        public MainViewModel(IDialogService dialogService)
+        {
+            this.dialogService = dialogService;
+            //this.dialogService = new DialogService(null, (s) => { return Type.GetType("GraphGenerator.Views.AddNode"); });
+
+            Init();
+        }
+
+        private void Init()
         {
             Colors.Add(Brushes.Green);
             Colors.Add(Brushes.Red);
@@ -34,7 +48,7 @@ namespace GraphGenerator.ViewModels
             for (int i = 0; i < rowsCount; i++)
                 for (int j = 0; j < columnsCount; j++)
                 {
-                    CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize, i*11 + j));
+                    CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize, i * 11 + j));
                 }
 
             CanvasRectangles[0].Node = new Node()
@@ -62,6 +76,8 @@ namespace GraphGenerator.ViewModels
 
         private ObservableCollection<SolidColorBrush> _Colors = new ObservableCollection<SolidColorBrush>();
         private ObservableCollection<CanvasRectangle> _CanvasRectangles = new ObservableCollection<CanvasRectangle>();
+
+        private readonly IDialogService dialogService;
 
         //----------------------------------
 
@@ -108,19 +124,25 @@ namespace GraphGenerator.ViewModels
         {
             if (CanvasRectangles[rectangleID].DoesContainNode == false)
             {
-                // temporary call
-                AddNodeView nodeView = new AddNodeView();
-                nodeView.ShowDialog();
+                var dialogViewModel = new AddNodeViewModel();
 
-                CanvasRectangles[rectangleID].Node = new Node()
+                bool? success = dialogService.ShowDialog(this, dialogViewModel);
+
+                // If user provided the node parameters successfully
+                if (success.HasValue && success.Value)
                 {
-                    Name = "test",
-                    Value = 12,
-                    NameHorizontalAlignment = HorizontalAlignment.Center,
-                    NameVerticalAlignment = VerticalAlignment.Top
-                };
+                    Node node = dialogViewModel.Node;
 
-                CanvasRectangles[rectangleID].DoesContainNode = true;
+                    CanvasRectangles[rectangleID].Node = new Node()
+                    {
+                        Name = node.Name,
+                        Value = node.Value,
+                        NameHorizontalAlignment = node.NameHorizontalAlignment,
+                        NameVerticalAlignment = node.NameVerticalAlignment
+                    };
+
+                    CanvasRectangles[rectangleID].DoesContainNode = true;
+                }
             }
         }
 
