@@ -13,7 +13,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GraphGenerator.Utilities.Converters
+namespace Common.Utilities.Converters
 {
     class CenterBorderGapMaskConverter : IMultiValueConverter
     {
@@ -36,7 +36,7 @@ namespace GraphGenerator.Utilities.Converters
             double width = (double)values[1];
             double height = (double)values[2];
 
-            if ( (width == 0.0) || (height == 0.0) )
+            if ((width == 0.0) || (height == 0.0))
                 return null;
 
             Grid visual = new Grid();

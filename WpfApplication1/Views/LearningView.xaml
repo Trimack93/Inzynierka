@@ -9,11 +9,14 @@
         Title="Algorytmy grafowe" Width="1024" Height="768" Background="RoyalBlue"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
+    
     <Window.DataContext>
         <vm:LearningViewModel />
     </Window.DataContext>
 
     <Window.Resources>
+        
+        <!-- Can't move it to Styles, because image path from there will be different - during runtime it works, but designer can't resolve this -->
         <Style x:Key="EndSequenceButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
             <Setter Property="Template">
@@ -23,11 +26,11 @@
                             BorderThickness="1.5"
                             Padding="{TemplateBinding Padding}"
                             BorderBrush="Black">
-                            <ContentPresenter>
-                                <ContentPresenter.Content>
-                                    <Image Source="/Resources/SequenceEnd.png" Stretch="Fill" />
-                                </ContentPresenter.Content>
-                            </ContentPresenter>
+
+                            <Grid>
+                                <Image Source="/Resources/SequenceEnd.png" Stretch="Fill" />
+                            </Grid>
+
                         </Border>
 
                         <ControlTemplate.Triggers>
@@ -45,6 +48,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
     </Window.Resources>
 
     <Grid>

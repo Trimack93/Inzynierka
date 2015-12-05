@@ -99,7 +99,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
@@ -145,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Utilities\Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Learning.png" />

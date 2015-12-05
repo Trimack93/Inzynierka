@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace WpfApplication1.Utilities.Converters
+namespace Common.Utilities.Converters
 {
     public class StringToNewlineStringConverter : IValueConverter
     {
@@ -15,7 +15,7 @@ namespace WpfApplication1.Utilities.Converters
         {
             string stringValue = value as string;
 
-            if ( string.IsNullOrEmpty(stringValue) )
+            if (string.IsNullOrEmpty(stringValue))
                 return value;
 
             string validNewLine = stringValue.Replace("\\n", "\n");                 // String in XAML identificates "\n" as "\\n" by default, so we need to change it first

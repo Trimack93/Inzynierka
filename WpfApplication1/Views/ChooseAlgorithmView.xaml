@@ -17,20 +17,6 @@
             <Setter Property="Padding" Value="0,0,0,10" />
             <EventSetter Event="Click" Handler="AlgorithmButton_Click" />
         </Style>
-
-        <Style x:Key="ChooseAlgorithmTextblockStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="FontFamily" Value="Calibri" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="Snow" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
-        </Style>
-
-        <Style x:Key="ChooseAlgorithmImageStyle" TargetType="{x:Type Image}">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Stretch" Value="None" />
-        </Style>
         
     </Window.Resources>
     
