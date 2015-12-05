@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphGenerator.Views"
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         mc:Ignorable="d"
         Title="Dodaj nowy wierzchołek"
         Height="400" Width="250" Background="RoyalBlue"
@@ -63,45 +64,10 @@
         </Grid>
         
         <TextBlock Text="Podgląd:" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
-        
-        <!-- TODO: use Node User Control -->
-        <Grid Grid.Row="5" Width="66" Height="66" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Grid.Resources>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Style.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="HorizontalAlignment" Value="Left" />
-                                <Condition Property="VerticalAlignment" Value="Center" />
-                            </MultiTrigger.Conditions>
 
-                            <Setter Property="Margin" Value="7,0,0,0" />
-                        </MultiTrigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="HorizontalAlignment" Value="Center" />
-                                <Condition Property="VerticalAlignment" Value="Bottom" />
-                            </MultiTrigger.Conditions>
-
-                            <Setter Property="Margin" Value="0,0,0,3" />
-                        </MultiTrigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="HorizontalAlignment" Value="Right" />
-                                <Condition Property="VerticalAlignment" Value="Center" />
-                            </MultiTrigger.Conditions>
-
-                            <Setter Property="Margin" Value="0,0,7,0" />
-                        </MultiTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
-
-            <TextBlock Text="{Binding Node.Name}" HorizontalAlignment="{Binding Node.NameHorizontalAlignment}" VerticalAlignment="{Binding Node.NameVerticalAlignment}" />
-            <Ellipse Width="30" Height="30" Stroke="Black" StrokeThickness="1" />
-            <TextBlock Text="{Binding Node.Value}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" />
+        <Grid Grid.Row="5" Width="66" Height="66" Grid.ColumnSpan="2">
+            <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}"
+                            NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}" />
         </Grid>
 
         <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True"

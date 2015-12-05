@@ -32,5 +32,36 @@
         <Setter Property="Foreground" Value="Snow" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+    
+    <Style x:Key="NodeNameTextblockStyle" TargetType="{x:Type TextBlock}">
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="HorizontalAlignment" Value="Left" />
+                    <Condition Property="VerticalAlignment" Value="Center" />
+                </MultiTrigger.Conditions>
+
+                <Setter Property="Margin" Value="7,0,0,0" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="HorizontalAlignment" Value="Center" />
+                    <Condition Property="VerticalAlignment" Value="Bottom" />
+                </MultiTrigger.Conditions>
+
+                <Setter Property="Margin" Value="0,0,0,3" />
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="HorizontalAlignment" Value="Right" />
+                    <Condition Property="VerticalAlignment" Value="Center" />
+                </MultiTrigger.Conditions>
+
+                <Setter Property="Margin" Value="0,0,7,0" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
 
 </ResourceDictionary>

@@ -36,7 +36,7 @@ namespace Common.Utilities.Converters
             double width = (double)values[1];
             double height = (double)values[2];
 
-            if ((width == 0.0) || (height == 0.0))
+            if ( (width == 0.0) || (height == 0.0) )
                 return null;
 
             Grid visual = new Grid();

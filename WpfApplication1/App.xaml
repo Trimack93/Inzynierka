@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="/Common;component/Styles/Images.xaml" />
                 <ResourceDictionary Source="/Common;component/Styles/Tooltips.xaml" />
                 <ResourceDictionary Source="/Common;component/Styles/GroupBoxes.xaml" />
+                <ResourceDictionary Source="/Common;component/Styles/CustomControls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\InterfaceButton.cs" />
+    <Compile Include="Controls\NodeControl.cs" />
     <Compile Include="Models\Edge.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -93,6 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CustomControls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -36,7 +36,7 @@ namespace Common.Controls
         }
 
         public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
-            "ImageSource", typeof(ImageSource), typeof(InterfaceButton), new UIPropertyMetadata(null) );
+            "ImageSource", typeof(ImageSource), typeof(InterfaceButton), new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             "Title", typeof(string), typeof(InterfaceButton), new UIPropertyMetadata(null));

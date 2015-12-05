@@ -15,7 +15,7 @@ namespace Common.Utilities.Converters
         {
             string stringValue = value as string;
 
-            if (string.IsNullOrEmpty(stringValue))
+            if ( string.IsNullOrEmpty(stringValue) )
                 return value;
 
             string validNewLine = stringValue.Replace("\\n", "\n");                 // String in XAML identificates "\n" as "\\n" by default, so we need to change it first
