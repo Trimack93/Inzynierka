@@ -22,6 +22,8 @@ namespace Common.Models
         private HorizontalAlignment _NameHorizontalAlignment;
         private VerticalAlignment _NameVerticalAlignment;
 
+        private bool _canChangeHorizontalAlignment = true;
+
         //---------------------------------
 
         public int ID
@@ -41,6 +43,11 @@ namespace Common.Models
             {
                 _Name = value;
                 RaisePropertyChanged("Name");
+
+                if (Name.Length > 2)
+                    CanChangeHorizontalAlignment = false;
+                else
+                    CanChangeHorizontalAlignment = true;
             }
         }
         public object Value                         // 7, 6/9 or abcd
@@ -48,15 +55,7 @@ namespace Common.Models
             get { return _Value; }
             set
             {
-                if (value.ToString().Length <= 3)               // Value must contain max 3 chars
-                    _Value = value;
-                else
-                {
-                    string val = value.ToString();
-
-                    _Value = val.Remove(val.Length - 1, 1);     // Remove last character
-                }
-
+                _Value = value;
                 RaisePropertyChanged("Value");
             }
         }
@@ -86,6 +85,16 @@ namespace Common.Models
             {
                 _NameVerticalAlignment = value;
                 RaisePropertyChanged("NameVerticalAlignment");
+            }
+        }
+
+        public bool CanChangeHorizontalAlignment
+        {
+            get { return _canChangeHorizontalAlignment; }
+            set
+            {
+                _canChangeHorizontalAlignment = value;
+                RaisePropertyChanged("CanChangeHorizontalAlignment");
             }
         }
 

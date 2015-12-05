@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,7 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\InterfaceButton.cs" />
+    <Compile Include="Controls\ValidableTextbox.xaml.cs">
+      <DependentUpon>ValidableTextbox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\NodeControl.cs" />
+    <Compile Include="Controls\ValidableTextboxObsolete.cs" />
     <Compile Include="Models\Edge.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -90,6 +95,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ValidableTextbox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

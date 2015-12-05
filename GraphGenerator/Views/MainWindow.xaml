@@ -17,7 +17,6 @@
         <vm:MainViewModel />
     </Window.DataContext>
 
-    <!-- Gotta refactor hard -->
     <Window.Resources>
 
         <Style x:Key="CanvasButtonStyle" TargetType="{x:Type Button}">

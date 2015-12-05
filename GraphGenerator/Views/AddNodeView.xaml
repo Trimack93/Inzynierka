@@ -9,7 +9,8 @@
         mc:Ignorable="d"
         Title="Dodaj nowy wierzchołek"
         Height="400" Width="250" Background="RoyalBlue"
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" >
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Name="AddNodeWindow">
 
     <Window.DataContext>
         <vm:AddNodeViewModel />
@@ -37,12 +38,22 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Podaj wartość wierzchołka:" Grid.Row="0" Grid.Column="0" />
-        <TextBox Text="{Binding Node.Value, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />       <!-- UpdateSourceTrigger causes update of property after each pressed key -->
+        <!--<TextBox Text="{Binding Node.Value, UpdateSourceTrigger=PropertyChanged}" MaxLength="3"
+                 Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />-->       <!-- UpdateSourceTrigger causes update of property after each pressed key -->
+
+        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="3"
+                           Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Podaj nazwę wierzchołka:" Grid.Row="1" Grid.Column="0" />
-        <TextBox Text="{Binding Node.Name, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
+        <!--<TextBox Text="{Binding Node.Name, UpdateSourceTrigger=PropertyChanged}" MaxLength="10"
+                 Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />-->
+        
+        <!--<controls:ValidableTextbox ValidableText="{Binding Node.Name}" MaxLength="10"
+                                   Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0"
+                                   Name="asdf" />-->
+
+        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="10"
+                           Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Wybierz położenie nazwy wierzchołka:" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,-10" />
 
@@ -56,9 +67,9 @@
             <Button Grid.Row="0" Width="15" Height="30" Command="{Binding SelectTopCenterAlignment}"
                     Background="{Binding ButtonColors[0]}" BorderBrush="Black" BorderThickness="1" />
             <Button Grid.Row="1" Margin="0,0,45,0" Width="30" Height="15" Command="{Binding SelectCenterLeftAlignment}"
-                    Background="{Binding ButtonColors[1]}" BorderBrush="Black" BorderThickness="1" />
+                    Background="{Binding ButtonColors[1]}" BorderBrush="Black" BorderThickness="1" Style="{StaticResource ChooseHorizontalAlignmentButtonStyle}" />
             <Button Grid.Row="1" Margin="45,0,0,0" Width="30" Height="15" Command="{Binding SelectCenterRightAlignment}"
-                    Background="{Binding ButtonColors[2]}" BorderBrush="Black" BorderThickness="1" />
+                    Background="{Binding ButtonColors[2]}" BorderBrush="Black" BorderThickness="1" Style="{StaticResource ChooseHorizontalAlignmentButtonStyle}" />
             <Button Grid.Row="2" Width="15" Height="30" Command="{Binding SelectBottomCenterAlignment}"
                     Background="{Binding ButtonColors[3]}" BorderBrush="Black" BorderThickness="1" />
         </Grid>
