@@ -52,7 +52,7 @@
                                    Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0"
                                    Name="asdf" />-->
 
-        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="10"
+        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="7"
                            Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Wybierz położenie nazwy wierzchołka:" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,-10" />
