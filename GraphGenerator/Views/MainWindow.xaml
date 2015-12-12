@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphGenerator.Views"
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
+        xmlns:model="clr-namespace:GraphGenerator.Models"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         md:DialogServiceViews.IsRegistered="True"
@@ -206,26 +207,32 @@
                     <Button Width="66" Height="66" Style="{StaticResource CanvasButtonStyle}" />
                 </Canvas>-->
 
-                <ItemsControl ItemsSource="{Binding CanvasRectangles}" Grid.Column="1" Name="CanvasItemsControl" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >           <!--11x10--> 
+                <ItemsControl ItemsSource="{Binding CanvasRectangles}" Grid.Column="1" Name="CanvasItemsControl"
+                            Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >          <!--11x10-->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas Background="LightGray" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    
+
                     <ItemsControl.ItemContainerStyle>
                         <Style>
-                            <Setter Property="Canvas.Left" Value="{Binding X}" />
-                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            <Setter Property="Canvas.Left" Value="{Binding CanvasLeft}" />
+                            <Setter Property="Canvas.Top" Value="{Binding CanvasTop}" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
-                    
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type model:CanvasRectangle}">
                             <Button Width="{Binding SideLength}" Height="{Binding SideLength}" Style="{StaticResource CanvasButtonStyle}"
-                                    Command="{Binding ElementName=CanvasItemsControl, Path=DataContext.ClickRectangle}" CommandParameter="{Binding ID}" />
+                                    Command="{Binding ElementName=CanvasItemsControl, Path=DataContext.ClickRectangle}" CommandParameter="{Binding RectangleID}" />
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+
+                        <DataTemplate DataType="{x:Type model:CanvasEdge}">
+                            <controls:EdgeControl X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
+                                                  Edge="{Binding Edge}" />
+                        </DataTemplate>
+                    </ItemsControl.Resources>
                 </ItemsControl>
 
             </Grid>

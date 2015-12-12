@@ -57,6 +57,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Arrowheads\ArrowLine.cs" />
+    <Compile Include="Controls\Arrowheads\ArrowLineBase.cs" />
+    <Compile Include="Controls\EdgeControl.xaml.cs">
+      <DependentUpon>EdgeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InterfaceButton.cs" />
     <Compile Include="Controls\ValidableTextbox.xaml.cs">
       <DependentUpon>ValidableTextbox.xaml</DependentUpon>
@@ -96,6 +101,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EdgeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

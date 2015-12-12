@@ -9,12 +9,9 @@ using Common.Utilities;
 
 namespace GraphGenerator.Models
 {
-    public class CanvasRectangle : BaseNotifyPropertyChanged
+    public class CanvasRectangle : CanvasControlBase
     {
-        private int _ID;
-
-        private int _X;
-        private int _Y;
+        private int _RectangleID;
         private int _SideLength;
 
         private bool _DoesContainNode = false;
@@ -22,31 +19,13 @@ namespace GraphGenerator.Models
 
         //---------------------------------
 
-        public int ID
+        public int RectangleID
         {
-            get { return _ID; }
+            get { return _RectangleID; }
             set
             {
-                _ID = value;
-                RaisePropertyChanged("ID");
-            }
-        }
-        public int X
-        {
-            get { return _X; }
-            set
-            {
-                _X = value;
-                RaisePropertyChanged("X");
-            }
-        }
-        public int Y
-        {
-            get { return _Y; }
-            set
-            {
-                _Y = value;
-                RaisePropertyChanged("Y");
+                _RectangleID = value;
+                RaisePropertyChanged("RectangleID");
             }
         }
         public int SideLength
@@ -80,16 +59,10 @@ namespace GraphGenerator.Models
 
         //---------------------------------
 
-        public CanvasRectangle(int x, int y, int sideLength, int ID)
+        public CanvasRectangle(int ID, int x, int y, int sideLength) : base(x, y)
         {
-            this.X = x;
-            this.Y = y;
+            this.RectangleID = ID;
             this.SideLength = sideLength;
-            this.ID = ID;
         }
-
-        // probably to be deleted
-        //public int GetGridX { get { return X / SideLength; } }
-        //public int GetGridY { get { return Y / SideLength; } }
     }
 }

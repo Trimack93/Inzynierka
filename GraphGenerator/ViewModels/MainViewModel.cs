@@ -13,6 +13,7 @@ using GraphGenerator.Models;
 using Common.Models;
 using Common.Utilities;
 using MvvmDialogs;
+using Common.Controls;
 
 namespace GraphGenerator.ViewModels
 {
@@ -48,25 +49,58 @@ namespace GraphGenerator.ViewModels
             for (int i = 0; i < rowsCount; i++)
                 for (int j = 0; j < columnsCount; j++)
                 {
-                    CanvasRectangles.Add(new CanvasRectangle(j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize, i * 11 + j));
+                    CanvasRectangles.Add(new CanvasRectangle(i * columnsCount + j, j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize));
                 }
 
-            CanvasRectangles[0].Node = new Node()
-                { Name = "a", Value = 6, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
+            (CanvasRectangles[1] as CanvasRectangle).Node = new Node()
+                { ID = 0, Name = "a", Value = 6, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
 
-            CanvasRectangles[69].Node = new Node()
-                { Name = "b", Value = 9, NameHorizontalAlignment = HorizontalAlignment.Right, NameVerticalAlignment = VerticalAlignment.Center };
+            (CanvasRectangles[69] as CanvasRectangle).Node = new Node()
+                { ID = 1, Name = "b", Value = 9, NameHorizontalAlignment = HorizontalAlignment.Right, NameVerticalAlignment = VerticalAlignment.Center };
 
-            CanvasRectangles[24].Node = new Node()
-                { Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
+            (CanvasRectangles[24] as CanvasRectangle).Node = new Node()
+                { ID = 2, Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
 
-            CanvasRectangles[15].Node = new Node()
-                { Name = "d", Value = 666, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
+            (CanvasRectangles[15] as CanvasRectangle).Node = new Node()
+                { ID = 3, Name = "d", Value = 666, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
 
-            CanvasRectangles[0].DoesContainNode = true;
-            CanvasRectangles[69].DoesContainNode = true;
-            CanvasRectangles[24].DoesContainNode = true;
-            CanvasRectangles[15].DoesContainNode = true;
+            (CanvasRectangles[1] as CanvasRectangle).DoesContainNode = true;
+            (CanvasRectangles[69] as CanvasRectangle).DoesContainNode = true;
+            (CanvasRectangles[24] as CanvasRectangle).DoesContainNode = true;
+            (CanvasRectangles[15] as CanvasRectangle).DoesContainNode = true;
+
+            //--------------------
+
+            Edge randomEdge = new Edge()
+            {
+                ID = 0, Thickness = 2, Color = Brushes.Green, Value = "15"
+            };
+
+            Edge anotherRandomEdge = new Edge()
+            {
+                ID = 1, Thickness = 2, Color = Brushes.Red, Value = "43"
+            };
+
+            CanvasRectangles.Add(new CanvasEdge(150, 100, 60, 150, randomEdge));
+            CanvasRectangles.Add(new CanvasEdge(400, 230, 475, 300, anotherRandomEdge));
+
+            //--------------------
+
+            //CanvasRectangles.Add(new EdgeControl()
+            //{
+            //    X1 = 100, Y1 = 100, X2 = 150, Y2 = 150,
+            //    Edge = e
+            //});
+
+            //--------------------
+
+            //CanvasRectangles.Add(new EdgeControl()
+            //{
+            //    X1 = 100, Y1 = 100, X2 = 150, Y2 = 150,
+            //    EdgeThickness = 2, EdgeColor = Brushes.Green
+            //});
+
+            //CanvasRectangles.OfType<EdgeControl>().ToList()[0].SetValue(7);
         }
 
         //----------------------------------
@@ -75,7 +109,7 @@ namespace GraphGenerator.ViewModels
         private bool _EdgeButtonIsPressed = false;
 
         private ObservableCollection<SolidColorBrush> _Colors = new ObservableCollection<SolidColorBrush>();
-        private ObservableCollection<CanvasRectangle> _CanvasRectangles = new ObservableCollection<CanvasRectangle>();
+        private ObservableCollection<CanvasControlBase> _CanvasRectangles = new ObservableCollection<CanvasControlBase>();
 
         private readonly IDialogService dialogService;
 
@@ -112,7 +146,7 @@ namespace GraphGenerator.ViewModels
             get { return _Colors; }
             private set { _Colors = value; }
         }
-        public ObservableCollection<CanvasRectangle> CanvasRectangles
+        public ObservableCollection<CanvasControlBase> CanvasRectangles
         {
             get { return _CanvasRectangles; }
             private set { _CanvasRectangles = value; }
@@ -122,7 +156,9 @@ namespace GraphGenerator.ViewModels
 
         private void AddNode(int rectangleID)
         {
-            if (CanvasRectangles[rectangleID].DoesContainNode == false)
+            CanvasRectangle rectangle = CanvasRectangles[rectangleID] as CanvasRectangle;
+
+            if (rectangle.DoesContainNode == false)
             {
                 var dialogViewModel = new AddNodeViewModel();
 
@@ -133,7 +169,7 @@ namespace GraphGenerator.ViewModels
                 {
                     Node node = dialogViewModel.Node;
 
-                    CanvasRectangles[rectangleID].Node = new Node()
+                    rectangle.Node = new Node()
                     {
                         Name = node.Name,
                         Value = node.Value,
@@ -141,7 +177,7 @@ namespace GraphGenerator.ViewModels
                         NameVerticalAlignment = node.NameVerticalAlignment
                     };
 
-                    CanvasRectangles[rectangleID].DoesContainNode = true;
+                    rectangle.DoesContainNode = true;
                 }
             }
         }
@@ -149,7 +185,7 @@ namespace GraphGenerator.ViewModels
         private void AddEdge(int ID)
         {
             //TODO
-            if (CanvasRectangles[ID].DoesContainNode)
+            if ( (CanvasRectangles[ID] as CanvasRectangle).DoesContainNode )
                 MessageBox.Show("Wait for it", "Work in progress", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
