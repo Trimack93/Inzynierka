@@ -68,7 +68,7 @@ namespace GraphGenerator.Models
 
         //---------------------------------
         
-        public CanvasEdge(int x1, int y1, int x2, int y2, Edge ec) : base(0, 0)         // Arrows' coordinates must be relative to S=(0,0) point on canvas
+        public CanvasEdge(double x1, double y1, double x2, double y2, Edge ec) : base(0, 0)         // Arrows' coordinates must be relative to S=(0,0) point on canvas
         {
             this.X1 = x1;
             this.Y1 = y1;

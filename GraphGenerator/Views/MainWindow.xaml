@@ -8,6 +8,7 @@
         xmlns:model="clr-namespace:GraphGenerator.Models"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
+        xmlns:behav="clr-namespace:Common.Utilities.Behaviours;assembly=Common"
         md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
         Title="Generator grafów" Width="1024" Height="768" Background="RoyalBlue"
@@ -211,7 +212,11 @@
                             Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >          <!--11x10-->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas Background="LightGray" />
+                            <Canvas Background="LightGray"
+                                    MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" MouseUp="Canvas_MouseUp" />
+                                    <!--behav:CanvasBehaviour.CanvasMouseDownCommand="{Binding CanvasMouseDown}"
+                                    behav:CanvasBehaviour.CanvasMouseMoveCommand="{Binding CanvasMouseMove}"
+                                    behav:CanvasBehaviour.CanvasMouseUpCommand="{Binding CanvasMouseUp}" />-->
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 

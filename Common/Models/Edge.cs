@@ -7,15 +7,22 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Common.Models
-{
-    //public enum Direction
-    //{
-    //    Onedirectional, Bidirectional                                           // Probably won't be used at all
-    //}
-    
+{    
     // Krawędź
     public class Edge : BaseNotifyPropertyChanged
     {
+        public Edge()
+        {
+            Color = Brushes.Black;
+            Thickness = 2.0;
+        }
+        public Edge(int ID) : this()
+        {
+            this.ID = ID;
+        }
+
+        //---------------------------------
+
         private int _ID;
 
         private string _Value;
@@ -60,7 +67,6 @@ namespace Common.Models
                 RaisePropertyChanged("Thickness");
             }
         }
-        //public Direction Direction { get; set; }
 
         //---------------------------------
 

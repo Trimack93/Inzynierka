@@ -182,11 +182,60 @@ namespace GraphGenerator.ViewModels
             }
         }
 
-        private void AddEdge(int ID)
+        //private void AddEdge(int ID)
+        //{
+        //    //TODO
+        //    if ( (CanvasRectangles[ID] as CanvasRectangle).DoesContainNode )
+        //        MessageBox.Show("Wait for it", "Work in progress", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        //}
+
+        private int GetNewEdgeID()
         {
-            //TODO
-            if ( (CanvasRectangles[ID] as CanvasRectangle).DoesContainNode )
-                MessageBox.Show("Wait for it", "Work in progress", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            CanvasEdge lastEdge = CanvasRectangles.LastOrDefault(l => l is CanvasEdge) as CanvasEdge;
+
+            if (lastEdge != null)
+                return lastEdge.Edge.ID + 1;
+            else
+                return 0;
+        }
+
+        //----------------------------------
+
+        public void AddEdge(double x, double y)
+        {
+            if (this.EdgeButtonIsPressed)
+            {
+                int edgeID = GetNewEdgeID();
+
+                Edge edge = new Edge(edgeID);
+
+                CanvasRectangles.Add(new CanvasEdge(x, y, x, y, edge));
+            }
+        }
+        public void UpdateEdgePosition(double x2, double y2)
+        {
+            if (this.EdgeButtonIsPressed)
+            {
+                CanvasEdge edge = CanvasRectangles.LastOrDefault(l => l is CanvasEdge) as CanvasEdge;
+
+                if (edge != null)
+                {
+                    edge.X2 = x2;
+                    edge.Y2 = y2;
+                }
+            }
+        }
+        public void UpdateEdgeValue()
+        {
+            if (this.EdgeButtonIsPressed)
+            {
+                CanvasEdge edge = CanvasRectangles.LastOrDefault(l => l is CanvasEdge) as CanvasEdge;
+
+                if (edge != null)
+                {
+                    edge.Edge.Value = "69";         // TODO: Call modal window and get node's value
+                }
+            }
         }
 
         //----------------------------------
@@ -199,6 +248,7 @@ namespace GraphGenerator.ViewModels
             else
                 Colors[2] = Brushes.Green;
         }
+
         void AddNodeClickExecute()
         {
             EdgeButtonIsPressed = false;
@@ -214,26 +264,29 @@ namespace GraphGenerator.ViewModels
         {
             if (this.NodeButtonIsPressed)
                 AddNode(rectangleID);
-            if (this.EdgeButtonIsPressed)
-                AddEdge(rectangleID);
+            //if (this.EdgeButtonIsPressed)
+            //    AddEdge(rectangleID);
         }
 
-        //bool CanChangeCompatibility()
+        //void CanvasMouseDownExecute()
         //{
-        //    return true;                        // O
+        //    ;
         //}
-        //bool CanClickAddNode()
+        //void CanvasMouseMoveExecute()
         //{
-        //    return true;                        // M
+        //    ;
         //}
-        //bool CanClickAddEdge()
+        //void CanvasMouseUpExecute()
         //{
-        //    return true;                        // G
+        //    ;
         //}
+
+        //----------------------------------
 
         bool CanClickRectangle()
         {
-            return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
+            //return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
+            return this.NodeButtonIsPressed;
         }
 
         //----------------------------------
@@ -250,6 +303,20 @@ namespace GraphGenerator.ViewModels
         {
             get { return new RelayCommand<object>( p => ChangeCompatibilityExecute() ); }
         }
+
+        //public ICommand CanvasMouseDown
+        //{
+        //    get { return new RelayCommand<object>( p => CanvasMouseDownExecute() ); }
+        //}
+        //public ICommand CanvasMouseMove
+        //{
+        //    get { return new RelayCommand<object>(p => CanvasMouseMoveExecute()); }
+        //}
+        //public ICommand CanvasMouseUp
+        //{
+        //    get { return new RelayCommand<object>(p => CanvasMouseUpExecute()); }
+        //}
+
         public ICommand ClickRectangle
         {
             get { return new RelayCommand<int>( param => ClickRectangleExecute(param), CanClickRectangle ); }
