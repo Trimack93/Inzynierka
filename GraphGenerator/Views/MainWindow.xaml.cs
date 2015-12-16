@@ -50,7 +50,10 @@ namespace GraphGenerator.Views
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            (this.DataContext as MainViewModel).UpdateEdgeValue();
+            double x = e.GetPosition(this.CanvasItemsControl).X;
+            double y = e.GetPosition(this.CanvasItemsControl).Y;
+
+            (this.DataContext as MainViewModel).AddEdgeFinish(x, y);
         }
     }
 }

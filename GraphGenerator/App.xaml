@@ -7,7 +7,6 @@
 
         <ResourceDictionary>
             <conv:ButtonBackgroundConverter x:Key="ButtonBackgroundConverter" />
-            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
             <!-- Common styles used by every project in the solution -->
             <ResourceDictionary.MergedDictionaries>

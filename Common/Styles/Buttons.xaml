@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Common.Styles"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:controls="clr-namespace:Common.Controls"
+                    xmlns:conv="clr-namespace:Common.Utilities.Converters">
 
     <!-- Base button style providing default darken effect on MouseOver and lighten effect on MousePressed, also border style formatting -->
     <Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
@@ -113,6 +115,126 @@
                             <Setter TargetName="border" Property="Background" Value="Chartreuse" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CanvasButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <ControlTemplate.Resources>
+                        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+                    </ControlTemplate.Resources>
+                    
+                    <Border Name="border"
+                            BorderBrush="Snow"
+                            BorderThickness="0.2"
+                            Background="Transparent">
+                        <ContentControl Visibility="{Binding DoesContainNode, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Grid>
+                                <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}"
+                                                    NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}" />
+                            </Grid>
+                        </ContentControl>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}" />
+                            </Trigger>-->
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <!--  Need to give binding a reference to ItemsControl, because by default it tries to get property from the model class of ItemsSource collection  -->
+                                <!-- ItemsControl has the DataContext from ViewModel, and this is the context we want to retrieve -->
+                                <!--<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.EdgeButtonIsPressed}" Value="True">-->
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="True" />
+
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding DoesContainNode}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <MultiDataTrigger.EnterActions>
+
+                            </MultiDataTrigger.EnterActions>
+
+                            <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
+                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding DoesContainNode}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="border" Property="BorderBrush" Value="Red" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
+                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="True" />
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                                    <Condition Binding="{Binding DoesContainNode}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
+                                <Setter TargetName="border" Property="Margin" Value="-2.5, -2.5, -2.5, -2.5" />      <!--prevents button's content from resizing when BorderThickness is increasing-->
+                         
+                            </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding DoesContainNode}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="border" Property="BorderBrush" Value="Red" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
+                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding DoesContainNode}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
+                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
+                            <Setter TargetName="border" Property="Margin" Value="-2.5, -2.5, -2.5, -2.5" />
+                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                        </MultiDataTrigger>
+
+                        <!--<Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Snow" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="0.2" />
+                            </Trigger>-->
+                    </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

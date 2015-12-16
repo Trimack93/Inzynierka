@@ -113,6 +113,8 @@ namespace GraphGenerator.ViewModels
 
         private readonly IDialogService dialogService;
 
+        private bool isAddingNewNode = false;
+
         //----------------------------------
 
         // TODO: get properties from View
@@ -199,22 +201,38 @@ namespace GraphGenerator.ViewModels
                 return 0;
         }
 
+        private int GetCanvasRectangleID(double tmpX, double tmpY)
+        {
+            int x = (int) tmpX;
+            int y = (int) tmpY;
+            int columnsCount = this.CanvasWidth / this.RectangleSize;
+
+            return columnsCount * (y / this.RectangleSize) + (x / this.RectangleSize);
+        }
+
         //----------------------------------
 
         public void AddEdge(double x, double y)
         {
             if (this.EdgeButtonIsPressed)
             {
-                int edgeID = GetNewEdgeID();
+                int rectID = GetCanvasRectangleID(x, y);
+                CanvasRectangle rect = CanvasRectangles[rectID] as CanvasRectangle;
 
-                Edge edge = new Edge(edgeID);
+                if (rect.DoesContainNode)
+                {
+                    int edgeID = GetNewEdgeID();
+                    Edge edge = new Edge(edgeID);
 
-                CanvasRectangles.Add(new CanvasEdge(x, y, x, y, edge));
+                    CanvasRectangles.Add( new CanvasEdge(x, y, x, y, edge) );
+
+                    this.isAddingNewNode = true;
+                }
             }
         }
         public void UpdateEdgePosition(double x2, double y2)
         {
-            if (this.EdgeButtonIsPressed)
+            if (this.isAddingNewNode)
             {
                 CanvasEdge edge = CanvasRectangles.LastOrDefault(l => l is CanvasEdge) as CanvasEdge;
 
@@ -225,16 +243,26 @@ namespace GraphGenerator.ViewModels
                 }
             }
         }
-        public void UpdateEdgeValue()
+        public void AddEdgeFinish(double x, double y)
         {
-            if (this.EdgeButtonIsPressed)
+            if (this.isAddingNewNode)
             {
+                int rectID = GetCanvasRectangleID(x, y);
+                CanvasRectangle rect = CanvasRectangles[rectID] as CanvasRectangle;
+
                 CanvasEdge edge = CanvasRectangles.LastOrDefault(l => l is CanvasEdge) as CanvasEdge;
 
-                if (edge != null)
+                if (rect.DoesContainNode)
                 {
-                    edge.Edge.Value = "69";         // TODO: Call modal window and get node's value
+                    if (edge != null)
+                    {
+                        edge.Edge.Value = "69";         // TODO: Call modal window and get node's value
+                    }
                 }
+                else
+                    CanvasRectangles.Remove(edge);
+
+                this.isAddingNewNode = false;
             }
         }
 
@@ -285,8 +313,8 @@ namespace GraphGenerator.ViewModels
 
         bool CanClickRectangle()
         {
-            //return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
-            return this.NodeButtonIsPressed;
+            return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
+            //return this.NodeButtonIsPressed;
         }
 
         //----------------------------------

@@ -67,7 +67,6 @@
     <Compile Include="Models\CanvasControlBase.cs" />
     <Compile Include="Models\CanvasRectangle.cs" />
     <Compile Include="Models\CanvasEdge.cs" />
-    <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
     <Compile Include="ViewModels\AddNodeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

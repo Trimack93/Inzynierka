@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace GraphGenerator.Utilities.Converters
+namespace Common.Utilities.Converters
 {
     class BoolToVisibilityConverter : IValueConverter
     {
