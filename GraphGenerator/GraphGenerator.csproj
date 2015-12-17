@@ -68,6 +68,7 @@
     <Compile Include="Models\CanvasRectangle.cs" />
     <Compile Include="Models\CanvasEdge.cs" />
     <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
+    <Compile Include="Utilities\MathHelper.cs" />
     <Compile Include="ViewModels\AddNodeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="Views\AddNodeView.xaml">

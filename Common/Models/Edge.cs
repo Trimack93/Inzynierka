@@ -71,15 +71,5 @@ namespace Common.Models
         //---------------------------------
 
         public List<int> NodesID { get; set; } = new List<int>(2);      // Stores the IDs of the nodes it's connecting - to avoid circular dependency
-
-        //---------------------------------
-
-        public static double CalculateLength(double x1, double y1, double x2, double y2)
-        {
-            double bracket1 = Math.Pow(x2 - x1, 2);
-            double bracket2 = Math.Pow(y2 - y1, 2);
-
-            return Math.Sqrt(bracket1 + bracket2);
-        }
     }
 }

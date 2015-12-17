@@ -14,6 +14,7 @@ using Common.Models;
 using Common.Utilities;
 using MvvmDialogs;
 using Common.Controls;
+using GraphGenerator.Utilities;
 
 namespace GraphGenerator.ViewModels
 {
@@ -267,6 +268,36 @@ namespace GraphGenerator.ViewModels
             CanvasItems.Remove(canvasEdge);
         }
 
+        private void CorrectEdgePosition(CanvasRectangle rectStart, CanvasRectangle rectEnd, CanvasEdge canvasEdge)
+        {
+            double x1 = rectStart.CanvasLeft + RectangleSize / 2;
+            double y1 = rectStart.CanvasTop + RectangleSize / 2;
+            double x2 = rectEnd.CanvasLeft + RectangleSize / 2;
+            double y2 = rectEnd.CanvasTop + RectangleSize / 2;
+
+            double angleStart; 
+            double angleEnd; 
+
+            if (x1 <= x2)
+            {
+                angleStart = MathHelper.GetLineAngle(x1, y1, x2, y2);
+                angleEnd = angleStart + MathHelper.AlfaToRadian(180);
+            }
+            else
+            {
+                angleEnd = MathHelper.GetLineAngle(x1, y1, x2, y2);
+                angleStart = angleEnd + MathHelper.AlfaToRadian(180);
+            }
+
+            Point newStartPoint = MathHelper.GetPointOnCircle(x1, y1, angleStart, 15);                   // can't be helped ;(
+            Point newEndPoint = MathHelper.GetPointOnCircle(x2, y2, angleEnd, 15);
+
+            canvasEdge.X1 = newStartPoint.X;
+            canvasEdge.Y1 = newStartPoint.Y;
+            canvasEdge.X2 = newEndPoint.X;
+            canvasEdge.Y2 = newEndPoint.Y;
+        }
+
         //----------------------------------
 
         public void AddEdge(double x, double y)
@@ -316,16 +347,23 @@ namespace GraphGenerator.ViewModels
                 CanvasEdge canvasEdge = CanvasItems.LastOrDefault(l => l is CanvasEdge) as CanvasEdge;
                 
                 int rectID = GetCanvasRectangleID(x, y);
-                CanvasRectangle rect = CanvasItems[rectID] as CanvasRectangle;
+                CanvasRectangle rectEnd = CanvasItems[rectID] as CanvasRectangle;                   // rectangle containing node at the end of edge (arrow-side)
 
                 // Add edge only if rectangle contains node and the edge doesn't try to connect node with itself
-                if ( rect.DoesContainNode && rect.Node.Edges.Contains(canvasEdge.Edge) == false )
-                {
+                if ( rectEnd.DoesContainNode && rectEnd.Node.Edges.Contains(canvasEdge.Edge) == false )
+                {                    
+                    CanvasRectangle rectStart = CanvasItems
+                        .OfType<CanvasRectangle>()
+                        .Where( r => r.Node?.ID == canvasEdge.Edge.NodesID[0] )
+                        .Single();
+
+                    this.CorrectEdgePosition(rectStart, rectEnd, canvasEdge);
+
                     canvasEdge.Edge.Value = "69";         // TODO: Call modal window and get node's value
-                        
+
                     // Add references between edge and node
-                    rect.Node.Edges.Add(canvasEdge.Edge);
-                    canvasEdge.Edge.NodesID.Add(rect.Node.ID);
+                    rectEnd.Node.Edges.Add(canvasEdge.Edge);
+                    canvasEdge.Edge.NodesID.Add(rectEnd.Node.ID);
                 }
                 else
                     this.DeleteEdge(canvasEdge);
