@@ -77,9 +77,5 @@ namespace GraphGenerator.Models
 
             this.Edge = ec;
         }
-
-        // probably to be deleted
-        //public int GetGridX { get { return X / SideLength; } }
-        //public int GetGridY { get { return Y / SideLength; } }
     }
 }

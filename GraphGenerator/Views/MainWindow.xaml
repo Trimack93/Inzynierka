@@ -101,7 +101,7 @@
                     <Button Width="66" Height="66" Style="{StaticResource CanvasButtonStyle}" />
                 </Canvas>-->
 
-                <ItemsControl ItemsSource="{Binding CanvasRectangles}" Grid.Column="1" Name="CanvasItemsControl"
+                <ItemsControl ItemsSource="{Binding CanvasItems}" Grid.Column="1" Name="CanvasItemsControl"
                             Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0" >          <!--11x10-->
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>

@@ -98,6 +98,6 @@ namespace Common.Models
             }
         }
 
-        public List<Edge> Edges { get; set; }           // Make it ObservableCollection?
+        public List<Edge> Edges { get; set; } = new List<Edge>();
     }
 }
