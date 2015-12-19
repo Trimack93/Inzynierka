@@ -65,10 +65,14 @@ namespace GraphGenerator.ViewModels
             (CanvasItems[15] as CanvasRectangle).Node = new Node()
                 { ID = this.GetNewNodeID(), Name = "d", Value = 666, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
 
+            (CanvasItems[59] as CanvasRectangle).Node = new Node()
+            { ID = this.GetNewNodeID(), Name = "e", Value = 92, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
+
             (CanvasItems[1] as CanvasRectangle).DoesContainNode = true;
             (CanvasItems[69] as CanvasRectangle).DoesContainNode = true;
             (CanvasItems[24] as CanvasRectangle).DoesContainNode = true;
             (CanvasItems[15] as CanvasRectangle).DoesContainNode = true;
+            (CanvasItems[59] as CanvasRectangle).DoesContainNode = true;
 
             //--------------------
 
@@ -268,25 +272,29 @@ namespace GraphGenerator.ViewModels
             CanvasItems.Remove(canvasEdge);
         }
 
-        private void CorrectEdgePosition(CanvasRectangle rectStart, CanvasRectangle rectEnd, CanvasEdge canvasEdge)
+        private void CorrectEdgePosition(CanvasRectangle rectStart, CanvasRectangle rectEnd, CanvasEdge canvasEdge, bool isTwoSide = false)
         {
             double x1 = rectStart.CanvasLeft + RectangleSize / 2;
             double y1 = rectStart.CanvasTop + RectangleSize / 2;
             double x2 = rectEnd.CanvasLeft + RectangleSize / 2;
             double y2 = rectEnd.CanvasTop + RectangleSize / 2;
 
-            double angleStart; 
-            double angleEnd; 
+            double angleStart;
+            double angleEnd;
+            double twoSideAdjustment = 0;                           // When there are edges in both directions, their position on the circle must be additionally adjusted...
+
+            if (isTwoSide)
+                twoSideAdjustment = 25;                             // ... by a value of 25/50 degrees (depends on edge direction)
 
             if (x1 <= x2)
             {
-                angleStart = MathHelper.GetLineAngle(x1, y1, x2, y2);
-                angleEnd = angleStart + MathHelper.AlfaToRadian(180);
+                angleStart = MathHelper.GetLineAngle(x1, y1, x2, y2) - MathHelper.AlfaToRadian(twoSideAdjustment);
+                angleEnd = angleStart + MathHelper.AlfaToRadian(180) + MathHelper.AlfaToRadian(twoSideAdjustment * 2);
             }
             else
             {
-                angleEnd = MathHelper.GetLineAngle(x1, y1, x2, y2);
-                angleStart = angleEnd + MathHelper.AlfaToRadian(180);
+                angleEnd = MathHelper.GetLineAngle(x1, y1, x2, y2) + MathHelper.AlfaToRadian(twoSideAdjustment);
+                angleStart = angleEnd + MathHelper.AlfaToRadian(180) - MathHelper.AlfaToRadian(twoSideAdjustment * 2);
             }
 
             Point newStartPoint = MathHelper.GetPointOnCircle(x1, y1, angleStart, 15);                   // can't be helped ;(
@@ -296,6 +304,38 @@ namespace GraphGenerator.ViewModels
             canvasEdge.Y1 = newStartPoint.Y;
             canvasEdge.X2 = newEndPoint.X;
             canvasEdge.Y2 = newEndPoint.Y;
+        }
+
+        /// <summary>
+        /// Gets list of edges between two nodes.
+        /// </summary>
+        private List<Edge> GetListOfEdges(Node node1, Node node2)
+        {
+            return node1.Edges
+                .Where(e => e.NodesID.Contains(node2.ID))
+                .ToList();
+        }
+
+        /// <summary>
+        /// Checks if there already exists connection from first node to the second.
+        /// </summary>
+        /// <param name="node1">First node (beginning of the edge).</param>
+        /// <param name="node2">Second node (end of the edge).</param>
+        /// <returns>True, if edge already exists. Otherwise false.</returns>
+        private bool NodesAreAlreadyConnected(Node node1, Node node2)
+        {
+            List<Edge> connectingEdges = GetListOfEdges(node1, node2);
+            
+            // If there already exist nodes in both directions
+            if (connectingEdges.Count > 1)
+                return true;
+
+            // Check if there is edge that goes from another direction
+            if (connectingEdges.Count == 1)
+                return connectingEdges[0].NodesID[0] != node2.ID;                   // First node in list is where the edge begins
+
+            // If there are no edges between them yet
+            return false;
         }
 
         //----------------------------------
@@ -332,6 +372,7 @@ namespace GraphGenerator.ViewModels
                 
                 if (edge != null)
                 {
+                    // If crafty user tries to draw edge outside the canvas boundary
                     if (x2 > 0 && x2 < CanvasWidth)
                         edge.X2 = x2;
 
@@ -357,16 +398,44 @@ namespace GraphGenerator.ViewModels
                         .Where( r => r.Node?.ID == canvasEdge.Edge.NodesID[0] )
                         .Single();
 
-                    this.CorrectEdgePosition(rectStart, rectEnd, canvasEdge);
+                    if ( NodesAreAlreadyConnected(rectStart.Node, rectEnd.Node) )
+                    {
+                        DeleteEdge(canvasEdge);
 
-                    canvasEdge.Edge.Value = "69";         // TODO: Call modal window and get node's value
+                        // TODO: Change to custom information modal dialog
+                        MessageBox.Show("Krawędź łącząca podane wierzchołki w tym kierunku już istnieje.\nRozważ edycję wartości istniejącej krawędzi.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        List<Edge> connectingEdges = GetListOfEdges(rectStart.Node, rectEnd.Node);
 
-                    // Add references between edge and node
-                    rectEnd.Node.Edges.Add(canvasEdge.Edge);
-                    canvasEdge.Edge.NodesID.Add(rectEnd.Node.ID);
+                        // If there already exist edge connecting both nodes
+                        if (connectingEdges.Count == 1)
+                        {
+                            CanvasEdge secondCanvasEdge = CanvasItems                           // Edge wiht opposed direction
+                                .OfType<CanvasEdge>()
+                                .Single( ce => ce.Edge == connectingEdges[0] );
+
+                            CorrectEdgePosition(rectStart, rectEnd, canvasEdge, true);
+                            CorrectEdgePosition(rectEnd, rectStart, secondCanvasEdge, true);
+
+                            // Correct label position - call PropertyChanged on Value property (taki cwany workaround)
+                            string tmp = connectingEdges[0].Value;
+                            connectingEdges[0].Value = "dummy";
+                            connectingEdges[0].Value = tmp;
+                        }
+                        else
+                            CorrectEdgePosition(rectStart, rectEnd, canvasEdge);
+
+                        canvasEdge.Edge.Value = "69";         // TODO: Call modal window and get node's value
+
+                        // Add references between edge and node
+                        rectEnd.Node.Edges.Add(canvasEdge.Edge);
+                        canvasEdge.Edge.NodesID.Add(rectEnd.Node.ID);
+                }
                 }
                 else
-                    this.DeleteEdge(canvasEdge);
+                    DeleteEdge(canvasEdge);
 
                 this.isAddingNewNode = false;
             }
