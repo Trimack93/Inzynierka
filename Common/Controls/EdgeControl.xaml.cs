@@ -25,6 +25,7 @@ namespace Common.Controls
         {
             InitializeComponent();
 
+            // TODO: Change to triggers
             this.MouseEnter += (sender, e) =>
             {
                 if (Edge.Value != null)
@@ -43,22 +44,6 @@ namespace Common.Controls
                 }
             };
         }
-
-        //public string EdgeValue
-        //{
-        //    get { return (string)GetValue(EdgeValueProperty); }
-        //    set { SetValue(EdgeValueProperty, value); }
-        //}
-        //public double EdgeThickness
-        //{
-        //    get { return (double)GetValue(EdgeThicknessProperty); }
-        //    set { SetValue(EdgeThicknessProperty, value); }
-        //}
-        //public SolidColorBrush EdgeColor
-        //{
-        //    get { return (SolidColorBrush)GetValue(EdgeColorProperty); }
-        //    set { SetValue(EdgeColorProperty, value); }
-        //}
 
         public Edge Edge
         {
@@ -88,15 +73,6 @@ namespace Common.Controls
         }
 
         //---------------------------------
-
-        //public static readonly DependencyProperty EdgeValueProperty = DependencyProperty.Register(
-        //    "EdgeValue", typeof(string), typeof(EdgeControl), new UIPropertyMetadata(null));
-
-        //public static readonly DependencyProperty EdgeThicknessProperty = DependencyProperty.Register(
-        //    "EdgeThickness", typeof(double), typeof(EdgeControl), new UIPropertyMetadata(null));
-
-        //public static readonly DependencyProperty EdgeColorProperty = DependencyProperty.Register(
-        //    "EdgeColor", typeof(SolidColorBrush), typeof(EdgeControl), new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty EdgeProperty = DependencyProperty.Register(
             "Edge", typeof(Edge), typeof(EdgeControl), new UIPropertyMetadata(null));

@@ -89,6 +89,7 @@
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
     <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
+    <Compile Include="Utilities\InputHelper.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\BaseNotifyPropertyChanged.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

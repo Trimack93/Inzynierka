@@ -32,7 +32,11 @@ namespace GraphGenerator.ViewModels
         //----------------------------------
 
         private Node _Node = new Node();
+
         private bool? dialogResult = false;
+        private bool _canAcceptInputName = true;
+        private bool _canAcceptInputValue = true;
+
         private ObservableCollection<SolidColorBrush> _ButtonColors = new ObservableCollection<SolidColorBrush>();
 
         //----------------------------------
@@ -46,6 +50,7 @@ namespace GraphGenerator.ViewModels
                 RaisePropertyChanged("Node");
             }
         }
+
         public bool? DialogResult
         {
             get { return dialogResult; }
@@ -55,6 +60,31 @@ namespace GraphGenerator.ViewModels
                 RaisePropertyChanged("DialogResult");
             }
         }
+        public bool CanAcceptInputName
+        {
+            get { return _canAcceptInputName; }
+            set
+            {
+                _canAcceptInputName = value;
+                RaisePropertyChanged("CanAcceptInputName");
+                RaisePropertyChanged("CanAcceptInput");
+            }
+        }
+        public bool CanAcceptInputValue
+        {
+            get { return _canAcceptInputValue; }
+            set
+            {
+                _canAcceptInputValue = value;
+                RaisePropertyChanged("CanAcceptInputValue");
+                RaisePropertyChanged("CanAcceptInput");
+            }
+        }
+        public bool CanAcceptInput
+        {
+            get { return CanAcceptInputName && CanAcceptInputValue; }
+        }
+
         public ObservableCollection<SolidColorBrush> ButtonColors
         {
             get { return _ButtonColors; }

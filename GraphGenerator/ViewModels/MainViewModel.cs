@@ -381,6 +381,7 @@ namespace GraphGenerator.ViewModels
                 }
             }
         }
+        // <gunwokod>
         public void AddEdgeFinish(double x, double y)
         {
             if (this.isAddingNewNode)
@@ -407,32 +408,51 @@ namespace GraphGenerator.ViewModels
                     }
                     else
                     {
-                        List<Edge> connectingEdges = GetListOfEdges(rectStart.Node, rectEnd.Node);
+                        // Open dialog for adding new edge
+                        //--------------------------------------
 
-                        // If there already exist edge connecting both nodes
-                        if (connectingEdges.Count == 1)
+                        var dialogViewModel = new AddEdgeViewModel();
+
+                        bool? success = dialogService.ShowDialog(this, dialogViewModel);
+                        
+                        if (success.HasValue && success.Value)                                      // If user provided the node parameters successfully
                         {
-                            CanvasEdge secondCanvasEdge = CanvasItems                           // Edge wiht opposed direction
-                                .OfType<CanvasEdge>()
-                                .Single( ce => ce.Edge == connectingEdges[0] );
+                            // Correct edge(s) position
+                            //--------------------------------------
 
-                            CorrectEdgePosition(rectStart, rectEnd, canvasEdge, true);
-                            CorrectEdgePosition(rectEnd, rectStart, secondCanvasEdge, true);
+                            List<Edge> connectingEdges = GetListOfEdges(rectStart.Node, rectEnd.Node);
+                            
+                            if (connectingEdges.Count == 1)                                         // If there already exist edge connecting both nodes
+                            {
+                                CanvasEdge secondCanvasEdge = CanvasItems                           // Edge with opposed direction
+                                    .OfType<CanvasEdge>()
+                                    .Single(ce => ce.Edge == connectingEdges[0]);
 
-                            // Correct label position - call PropertyChanged on Value property (taki cwany workaround)
-                            string tmp = connectingEdges[0].Value;
-                            connectingEdges[0].Value = "dummy";
-                            connectingEdges[0].Value = tmp;
+                                CorrectEdgePosition(rectStart, rectEnd, canvasEdge, true);
+                                CorrectEdgePosition(rectEnd, rectStart, secondCanvasEdge, true);
+
+                                // Correct label position - call PropertyChanged on Value property (taki cwany workaround)
+                                string tmp = connectingEdges[0].Value;
+                                connectingEdges[0].Value = "dummy";
+                                connectingEdges[0].Value = tmp;
+                            }
+                            else
+                                CorrectEdgePosition(rectStart, rectEnd, canvasEdge);
+
+                            // Correct label position
+                            //--------------------------------------
+
+                            canvasEdge.Edge.Value = dialogViewModel.Edge.Value;
+
+                            // Add references between edge and node
+                            //--------------------------------------
+
+                            rectEnd.Node.Edges.Add(canvasEdge.Edge);
+                            canvasEdge.Edge.NodesID.Add(rectEnd.Node.ID);
                         }
                         else
-                            CorrectEdgePosition(rectStart, rectEnd, canvasEdge);
-
-                        canvasEdge.Edge.Value = "69";         // TODO: Call modal window and get node's value
-
-                        // Add references between edge and node
-                        rectEnd.Node.Edges.Add(canvasEdge.Edge);
-                        canvasEdge.Edge.NodesID.Add(rectEnd.Node.ID);
-                }
+                            DeleteEdge(canvasEdge);
+                    }
                 }
                 else
                     DeleteEdge(canvasEdge);
@@ -440,6 +460,7 @@ namespace GraphGenerator.ViewModels
                 this.isAddingNewNode = false;
             }
         }
+        // </gunwokod>
 
         //----------------------------------
 

@@ -18,8 +18,26 @@
     
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.Resources>
-            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AddNodeTextblockStyle}" />
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AddNodeOrEdgeTextblockStyle}" />
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}" />
+
+            <Style x:Key="GreenButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}">
+                <Setter Property="Background" Value="LimeGreen" />
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding CanAcceptInputName}" Value="False">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="LightGray" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                    
+                    <DataTrigger Binding="{Binding CanAcceptInputValue}" Value="False">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="LightGray" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -41,7 +59,7 @@
         <!--<TextBox Text="{Binding Node.Value, UpdateSourceTrigger=PropertyChanged}" MaxLength="3"
                  Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />-->       <!-- UpdateSourceTrigger causes update of property after each pressed key -->
 
-        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="3"
+        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="3" IsNotEmpty="{Binding CanAcceptInputValue}"
                            Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Podaj nazwę wierzchołka:" Grid.Row="1" Grid.Column="0" />
@@ -52,7 +70,7 @@
                                    Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0"
                                    Name="asdf" />-->
 
-        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="7"
+        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="7" IsNotEmpty="{Binding CanAcceptInputName}"
                            Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Wybierz położenie nazwy wierzchołka:" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,-10" />
@@ -81,9 +99,9 @@
                             NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}" />
         </Grid>
 
-        <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True"
-                Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Background="LimeGreen" Margin="0,0,80,0" />
-        <Button Content="Anuluj" IsCancel="True"
+        <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True" IsEnabled="{Binding CanAcceptInput}" Style="{StaticResource GreenButton}"
+                Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Margin="0,0,80,0" />
+        <Button Content="Anuluj" IsCancel="True" Style="{StaticResource BaseButtonStyle}"
                 Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
     </Grid>
     

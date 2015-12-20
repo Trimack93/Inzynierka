@@ -69,8 +69,13 @@
     <Compile Include="Models\CanvasEdge.cs" />
     <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
     <Compile Include="Utilities\MathHelper.cs" />
+    <Compile Include="ViewModels\AddEdgeViewModel.cs" />
     <Compile Include="ViewModels\AddNodeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Page Include="Views\AddEdgeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -82,6 +87,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\AddEdgeView.xaml.cs">
+      <DependentUpon>AddEdgeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddNodeView.xaml.cs">
       <DependentUpon>AddNodeView.xaml</DependentUpon>

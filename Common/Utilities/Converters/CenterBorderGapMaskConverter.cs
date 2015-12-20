@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace Common.Utilities.Converters
 {
-    class CenterBorderGapMaskConverter : IMultiValueConverter
+    public class CenterBorderGapMaskConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
