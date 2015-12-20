@@ -32,6 +32,18 @@ namespace Common.Controls
             get { return (string)GetValue(NodeValueProperty); }
             set { SetValue(NodeValueProperty, value); }
         }
+
+        public SolidColorBrush NodeColor
+        {
+            get { return (SolidColorBrush)GetValue(NodeColorProperty); }
+            set { SetValue(NodeColorProperty, value); }
+        }
+        public double NodeThickness
+        {
+            get { return (double)GetValue(NodeThicknessProperty); }
+            set { SetValue(NodeThicknessProperty, value); }
+        }
+
         public HorizontalAlignment NameHorizontalAlignment
         {
             get { return (HorizontalAlignment)GetValue(NameHorizontalAlignmentProperty); }
@@ -48,6 +60,12 @@ namespace Common.Controls
 
         public static readonly DependencyProperty NodeValueProperty = DependencyProperty.Register(
             "NodeValue", typeof(string), typeof(NodeControl), new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty NodeColorProperty = DependencyProperty.Register(
+            "NodeColor", typeof(SolidColorBrush), typeof(NodeControl), new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty NodeThicknessProperty = DependencyProperty.Register(
+            "NodeThickness", typeof(double), typeof(NodeControl), new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty NameHorizontalAlignmentProperty = DependencyProperty.Register(
             "NameHorizontalAlignment", typeof(HorizontalAlignment), typeof(NodeControl), new UIPropertyMetadata(null));

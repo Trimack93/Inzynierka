@@ -95,7 +95,7 @@
         <TextBlock Text="Podgląd:" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
 
         <Grid Grid.Row="5" Width="66" Height="66" Grid.ColumnSpan="2">
-            <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}"
+            <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}" NodeColor="{Binding Node.Color}" NodeThickness="{Binding Node.Thickness}"
                             NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}" />
         </Grid>
 

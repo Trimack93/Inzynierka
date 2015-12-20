@@ -135,8 +135,9 @@
                             Background="Transparent">
                         <ContentControl Visibility="{Binding DoesContainNode, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid>
-                                <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}"
-                                                    NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}" />
+                                <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}" NodeColor="{Binding Node.Color}" NodeThickness="{Binding Node.Thickness}"
+                                                    NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}"
+                                                    Name="kontrolka"/>
                             </Grid>
                         </ContentControl>
                     </Border>
@@ -157,14 +158,9 @@
                                 <Condition Binding="{Binding DoesContainNode}" Value="True" />
                             </MultiDataTrigger.Conditions>
 
-                            <MultiDataTrigger.EnterActions>
-
-                            </MultiDataTrigger.EnterActions>
-
                             <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
                             <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
-                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -176,8 +172,7 @@
 
                             <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                             <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
-                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -201,8 +196,7 @@
 
                             <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                             <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
-                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -214,8 +208,7 @@
 
                             <Setter TargetName="border" Property="BorderBrush" Value="LimeGreen" />
                             <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />
-                            <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                            <Setter TargetName="border" Property="Margin" Value="-1.5, -1.5, -1.5, -1.5" />     <!-- This prevents button's content from resizing when BorderThickness is increasing -->
                         </MultiDataTrigger>
 
                         <MultiDataTrigger>
@@ -227,6 +220,17 @@
                             <Setter TargetName="border" Property="BorderThickness" Value="2.5" />
                             <Setter TargetName="border" Property="Margin" Value="-2.5, -2.5, -2.5, -2.5" />
                             <!-- This prevents button's content from resizing when BorderThickness is increasing -->
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.EdgeButtonIsPressed}" Value="False" />
+                                <Condition Binding="{Binding ElementName=CanvasItemsControl, Path=DataContext.NodeButtonIsPressed}" Value="False" />
+                                <Condition Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="kontrolka" Property="NodeColor" Value="BurlyWood" />
+                            <Setter TargetName="kontrolka" Property="NodeThickness" Value="2.5" />
                         </MultiDataTrigger>
 
                         <!--<Trigger Property="IsPressed" Value="True">

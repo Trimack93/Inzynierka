@@ -25,10 +25,10 @@ namespace Common.Controls
         {
             InitializeComponent();
 
-            // TODO: Change to triggers
+            // TODO: Change to triggers (or not)
             this.MouseEnter += (sender, e) =>
             {
-                if (Edge.Value != null)
+                if (Edge.Value != null && CanFireMouseOverEvents)
                 {
                     this.Edge.Thickness = 3;
                     this.ValueTextblock.FontWeight = FontWeights.Bold;
@@ -37,7 +37,7 @@ namespace Common.Controls
 
             this.MouseLeave += (sender, e) =>
             {
-                if (Edge.Value != null)
+                if (Edge.Value != null && CanFireMouseOverEvents)
                 {
                     this.Edge.Thickness = 2;
                     this.ValueTextblock.FontWeight = FontWeights.Normal;
@@ -72,10 +72,19 @@ namespace Common.Controls
             set { SetValue(Y2Property, value); }
         }
 
+        public bool CanFireMouseOverEvents
+        {
+            get { return (bool)GetValue(CanFireMouseOverEventsProperty); }
+            set { SetValue(CanFireMouseOverEventsProperty, value); }
+        }
+
         //---------------------------------
 
         public static readonly DependencyProperty EdgeProperty = DependencyProperty.Register(
             "Edge", typeof(Edge), typeof(EdgeControl), new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty CanFireMouseOverEventsProperty = DependencyProperty.Register(
+            "CanFireMouseOverEvents", typeof(bool), typeof(EdgeControl), new UIPropertyMetadata(false));
 
         public static readonly DependencyProperty X1Property = DependencyProperty.Register(
             "X1", typeof(double), typeof(EdgeControl), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure));

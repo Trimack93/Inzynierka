@@ -13,11 +13,20 @@ namespace Common.Models
     // Wierzchołek
     public class Node : BaseNotifyPropertyChanged
     {
+        public Node()
+        {
+            Thickness = 1.0;
+            Color = Brushes.Transparent;
+        }
+
+        //---------------------------------
+
         private int _ID;
 
         private string _Name;
         private object _Value;
-        private Color _Color;
+        private SolidColorBrush _Color;
+        private double _Thickness;
 
         private HorizontalAlignment _NameHorizontalAlignment;
         private VerticalAlignment _NameVerticalAlignment;
@@ -59,7 +68,7 @@ namespace Common.Models
                 RaisePropertyChanged("Value");
             }
         }
-        public Color Color                          // Node color (used in some algorithms)
+        public SolidColorBrush Color                // Node color (used in some algorithms)
         {
             get { return _Color; }
             set
@@ -68,7 +77,16 @@ namespace Common.Models
                 RaisePropertyChanged("Color");
             }
         }
-        
+        public double Thickness                     // Node circle thickness
+        {
+            get { return _Thickness; }
+            set
+            {
+                _Thickness = value;
+                RaisePropertyChanged("Thickness");
+            }
+        }
+
         public HorizontalAlignment NameHorizontalAlignment
         {
             get { return _NameHorizontalAlignment; }

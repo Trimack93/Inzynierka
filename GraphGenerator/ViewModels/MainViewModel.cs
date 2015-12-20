@@ -134,6 +134,7 @@ namespace GraphGenerator.ViewModels
             {
                 _NodeButtonIsPressed = value;
                 RaisePropertyChanged("NodeButtonIsPressed");
+                RaisePropertyChanged("CanAnimateEdges");
             }
         }
         public bool EdgeButtonIsPressed
@@ -144,7 +145,12 @@ namespace GraphGenerator.ViewModels
             {
                 _EdgeButtonIsPressed = value;
                 RaisePropertyChanged("EdgeButtonIsPressed");
+                RaisePropertyChanged("CanAnimateEdges");
             }
+        }
+        public bool CanAnimateEdges
+        {
+            get { return !(NodeButtonIsPressed || EdgeButtonIsPressed); }
         }
 
         public ObservableCollection<SolidColorBrush> Colors
@@ -509,8 +515,8 @@ namespace GraphGenerator.ViewModels
 
         bool CanClickRectangle()
         {
-            return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
-            //return this.NodeButtonIsPressed;
+            //return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
+            return true;                                                            // Otherwise triggers in CanvasButton don't work
         }
 
         //----------------------------------

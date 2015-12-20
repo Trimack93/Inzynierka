@@ -11,6 +11,7 @@
                     <Grid>
                         <Grid.Resources>
                             <conv:AlignmentToGridPositionConverter x:Key="AlignmentToGridPositionConverter" />
+                            <conv:ThicknessToFontWeigthConverter x:Key="ThicknessToFontWeigthConverter" />
                         </Grid.Resources>
 
                         <Grid.RowDefinitions>
@@ -27,8 +28,11 @@
                         <TextBlock Text="{TemplateBinding NodeName}"
                             Grid.Row="{TemplateBinding NameVerticalAlignment, Converter={StaticResource AlignmentToGridPositionConverter}}"
                             Grid.Column="{TemplateBinding NameHorizontalAlignment, Converter={StaticResource AlignmentToGridPositionConverter}}"
-                            HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="66"/>
-                        <Ellipse Grid.Row="1" Grid.Column="1" Width="30" Height="30" Stroke="Black" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            FontWeight="{TemplateBinding NodeThickness, Converter={StaticResource ThicknessToFontWeigthConverter}}"
+                            HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="66" />
+
+                        <Ellipse Grid.Row="1" Grid.Column="1" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Stroke="Black" StrokeThickness="{TemplateBinding NodeThickness}" Fill="{TemplateBinding NodeColor}" />
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="{TemplateBinding NodeValue}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" />
                     </Grid>
                 </ControlTemplate>
