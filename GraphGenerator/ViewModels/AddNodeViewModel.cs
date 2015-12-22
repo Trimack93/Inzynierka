@@ -93,7 +93,7 @@ namespace GraphGenerator.ViewModels
 
         //----------------------------------
 
-        void SelectTopCenterAlignmentExecute()
+        protected void SelectTopCenterAlignmentExecute()
         {
             Node.NameVerticalAlignment = VerticalAlignment.Top;
             Node.NameHorizontalAlignment = HorizontalAlignment.Center;
@@ -103,7 +103,7 @@ namespace GraphGenerator.ViewModels
             ButtonColors[2] = Brushes.LightGray;
             ButtonColors[3] = Brushes.LightGray;
         }
-        void SelectCenterLeftAlignmentExecute()
+        protected void SelectCenterLeftAlignmentExecute()
         {
             if (Node.Name.Length < 3)
             {
@@ -116,7 +116,7 @@ namespace GraphGenerator.ViewModels
                 ButtonColors[3] = Brushes.LightGray;
             }
         }
-        void SelectCenterRightAlignmentExecute()
+        protected void SelectCenterRightAlignmentExecute()
         {
             if (Node.Name.Length < 3)
             {
@@ -129,7 +129,7 @@ namespace GraphGenerator.ViewModels
                 ButtonColors[3] = Brushes.LightGray;
             }
         }
-        void SelectBottomCenterAlignmentExecute()
+        protected void SelectBottomCenterAlignmentExecute()
         {
             Node.NameVerticalAlignment = VerticalAlignment.Bottom;
             Node.NameHorizontalAlignment = HorizontalAlignment.Center;

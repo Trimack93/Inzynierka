@@ -1,0 +1,65 @@
+﻿<Window x:Class="GraphGenerator.Views.EditEdgeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphGenerator.Views"
+        xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
+        xmlns:conv="clr-namespace:Common.Utilities.Converters;assembly=Common"
+        mc:Ignorable="d"
+        Title="Edytuj krawędź"
+        Height="250" Width="250" Background="RoyalBlue"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Name="EditEdgeWindow">
+    
+    <Window.DataContext>
+        <vm:EditEdgeViewModel />
+    </Window.DataContext>
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AddNodeOrEdgeTextblockStyle}" />
+
+            <Style x:Key="GreenButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}">
+                <Setter Property="Background" Value="LimeGreen" />
+
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding CanAcceptInput}" Value="False">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="LightGray" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="66" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Podaj wartość krawędzi:" />
+            <controls:ValidableTextbox Tekst="{Binding Edge.Value}" MaxLength="2" IsNumeric="True" IsNotEmpty="{Binding CanAcceptInput}"
+                               Width="50" Height="25" Margin="10,0,0,0" />
+        </StackPanel>
+
+        <TextBlock Text="Podgląd:" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,0" />
+
+        <!-- By default EdgeControl doesn't have any DataContext, so while trying to provide constant values, it tries to get them from ViewModel, thus failing hard -->
+        <controls:EdgeControl DataContext="{Binding RelativeSource={RelativeSource Self}}" Grid.Row="2" X1="60" Y1="0" X2="120" Y2="50"
+                    Edge="{Binding ElementName=EditEdgeWindow, Path=DataContext.Edge}" />
+
+        <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True" IsEnabled="{Binding CanAcceptInput}" Style="{StaticResource GreenButton}"
+                Grid.Row="3" Width="70" Height="20" Margin="0,0,80,0">
+        </Button>
+        
+        <Button Content="Anuluj" IsCancel="True" Style="{StaticResource BaseButtonStyle}"
+                Grid.Row="3" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
+    </Grid>
+</Window>

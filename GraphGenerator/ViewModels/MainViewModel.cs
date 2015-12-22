@@ -501,11 +501,42 @@ namespace GraphGenerator.ViewModels
 
         void NodeMenuItemEditExecute(int nodeID)
         {
-            MessageBox.Show("Edytowanie wierzchołka o ID: " + nodeID.ToString());
+            CanvasRectangle canvasRectangle = CanvasItems
+                .OfType<CanvasRectangle>()
+                .Single(r => r.Node?.ID == nodeID);
+
+            var dialogViewModel = new EditNodeViewModel(canvasRectangle.Node);
+
+            bool? success = dialogService.ShowDialog(this, dialogViewModel);
+
+            // If user provided the node parameters successfully
+            if (success.HasValue && success.Value)
+            {
+                Node newNode = dialogViewModel.Node;
+
+                canvasRectangle.Node.Name = newNode.Name;
+                canvasRectangle.Node.Value = newNode.Value;
+                canvasRectangle.Node.NameHorizontalAlignment = newNode.NameHorizontalAlignment;
+                canvasRectangle.Node.NameVerticalAlignment = newNode.NameVerticalAlignment;
+            }
         }
         void EdgeMenuItemEditExecute(int edgeID)
         {
-            MessageBox.Show("Edytowanie krawędzi o ID: " + edgeID.ToString());
+            CanvasEdge canvasEdge = CanvasItems
+                .OfType<CanvasEdge>()
+                .Single(e => e.Edge.ID == edgeID);
+            
+            var dialogViewModel = new EditEdgeViewModel(canvasEdge.Edge.Value);
+
+            bool? success = dialogService.ShowDialog(this, dialogViewModel);
+
+            // If user provided the node parameters successfully
+            if (success.HasValue && success.Value)
+            {
+                Edge edge = dialogViewModel.Edge;
+
+                canvasEdge.Edge.Value = edge.Value;
+            }
         }
 
         void NodeMenuItemDeleteExecute(int nodeID)

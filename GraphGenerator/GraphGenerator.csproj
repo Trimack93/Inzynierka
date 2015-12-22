@@ -71,12 +71,22 @@
     <Compile Include="Utilities\MathHelper.cs" />
     <Compile Include="ViewModels\AddEdgeViewModel.cs" />
     <Compile Include="ViewModels\AddNodeViewModel.cs" />
+    <Compile Include="ViewModels\EditEdgeViewModel.cs" />
+    <Compile Include="ViewModels\EditNodeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="Views\AddEdgeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditEdgeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditNodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,6 +103,12 @@
     </Compile>
     <Compile Include="Views\AddNodeView.xaml.cs">
       <DependentUpon>AddNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditEdgeView.xaml.cs">
+      <DependentUpon>EditEdgeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditNodeView.xaml.cs">
+      <DependentUpon>EditNodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
