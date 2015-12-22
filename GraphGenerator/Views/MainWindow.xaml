@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
         xmlns:model="clr-namespace:GraphGenerator.Models"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        xmlns:conv="clr-namespace:Common.Utilities.Converters;assembly=Common"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         xmlns:behav="clr-namespace:Common.Utilities.Behaviours;assembly=Common"
         md:DialogServiceViews.IsRegistered="True"
@@ -18,6 +19,10 @@
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+
+    <Window.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
 
     <Grid>
         <StackPanel>
@@ -129,7 +134,21 @@
                         <DataTemplate DataType="{x:Type model:CanvasEdge}">
                             <controls:EdgeControl X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
                                                   Edge="{Binding Edge}"
-                                                  CanFireMouseOverEvents="{Binding ElementName=CanvasItemsControl, Path=DataContext.IsEditState}" />
+                                                  CanFireMouseOverEvents="{Binding ElementName=CanvasItemsControl, Path=DataContext.IsEditState}"
+                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+
+                                <controls:EdgeControl.ContextMenu>
+                                    <ContextMenu Visibility="{Binding Path=PlacementTarget.Tag.IsEditState, RelativeSource={RelativeSource Self}, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                 behav:ContextMenuBehaviour.ContextMenuOpenedCommand="{Binding Path=PlacementTarget.Tag.ContextMenuOpened, RelativeSource={RelativeSource Self}}">
+                                        
+                                        <MenuItem Header="Edytuj" Command="{Binding Path=PlacementTarget.Tag.EdgeMenuItemEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                                  CommandParameter="{Binding Edge.ID}" />
+
+                                        <MenuItem Header="Usuń" Command="{Binding Path=PlacementTarget.Tag.EdgeMenuItemDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                                  CommandParameter="{Binding Edge.ID}" />
+                                    </ContextMenu>
+                                </controls:EdgeControl.ContextMenu>
+                            </controls:EdgeControl>
                         </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>

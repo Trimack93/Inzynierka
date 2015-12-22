@@ -501,11 +501,19 @@ namespace GraphGenerator.ViewModels
 
         void NodeMenuItemEditExecute(int nodeID)
         {
-            MessageBox.Show("Edytowanie wierzchołka o ID:" + nodeID.ToString());
+            MessageBox.Show("Edytowanie wierzchołka o ID: " + nodeID.ToString());
         }
         void NodeMenuItemDeleteExecute(int nodeID)
         {
-            MessageBox.Show("Usuwanie wierzchołka o ID:" + nodeID.ToString());
+            MessageBox.Show("Usuwanie wierzchołka o ID: " + nodeID.ToString());
+        }
+        void EdgeMenuItemEditExecute(int edgeID)
+        {
+            MessageBox.Show("Edytowanie krawędzi o ID: " + edgeID.ToString());
+        }
+        void EdgeMenuItemDeleteExecute(int edgeID)
+        {
+            MessageBox.Show("Usuwanie krawędzi o ID: " + edgeID.ToString());
         }
 
         void ContextMenuOpenedExecute(RoutedEventArgs e)
@@ -523,7 +531,7 @@ namespace GraphGenerator.ViewModels
             return true;                                                            // Otherwise triggers in CanvasButton don't work
         }
 
-        bool CanModifyNode()
+        bool CanModifyCanvasElements()
         {
             return this.IsEditState;
         }
@@ -543,23 +551,31 @@ namespace GraphGenerator.ViewModels
             get { return new RelayCommand<object>( p => ChangeCompatibilityExecute() ); }
         }
 
-        public ICommand ContextMenuOpened
-        {
-            get { return new RelayCommand<RoutedEventArgs>(p => ContextMenuOpenedExecute(p)); }
-        }
-
         public ICommand ClickRectangle
         {
             get { return new RelayCommand<int>( param => ClickRectangleExecute(param), CanClickRectangle ); }
         }
 
+        public ICommand ContextMenuOpened
+        {
+            get { return new RelayCommand<RoutedEventArgs>(p => ContextMenuOpenedExecute(p)); }
+        }
+
         public ICommand NodeMenuItemEdit
         {
-            get { return new RelayCommand<int>(param => NodeMenuItemEditExecute(param), CanModifyNode); }
+            get { return new RelayCommand<int>(param => NodeMenuItemEditExecute(param), CanModifyCanvasElements); }
         }
         public ICommand NodeMenuItemDelete
         {
-            get { return new RelayCommand<int>(param => NodeMenuItemDeleteExecute(param), CanModifyNode); }
+            get { return new RelayCommand<int>(param => NodeMenuItemDeleteExecute(param), CanModifyCanvasElements); }
+        }
+        public ICommand EdgeMenuItemEdit
+        {
+            get { return new RelayCommand<int>(param => EdgeMenuItemEditExecute(param), CanModifyCanvasElements); }
+        }
+        public ICommand EdgeMenuItemDelete
+        {
+            get { return new RelayCommand<int>(param => EdgeMenuItemDeleteExecute(param), CanModifyCanvasElements); }
         }
     }
 }
