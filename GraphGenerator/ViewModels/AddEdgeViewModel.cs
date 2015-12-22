@@ -64,11 +64,28 @@ namespace GraphGenerator.ViewModels
             this.DialogResult = true;
         }
 
+        void SelectDirectedEdgeTypeExecute()
+        {
+            this.Edge.IsBidirectional = false;
+        }
+        void SelectNonDirectedEdgeTypeExecute()
+        {
+            this.Edge.IsBidirectional = true;
+        }
+
         //----------------------------------
 
         public ICommand OkClick
         {
             get { return new RelayCommand<object>(p => OkClickExecute()); }
+        }
+        public ICommand SelectDirectedEdgeType
+        {
+            get { return new RelayCommand<object>(p => SelectDirectedEdgeTypeExecute()); }
+        }
+        public ICommand SelectNonDirectedEdgeType
+        {
+            get { return new RelayCommand<object>(p => SelectNonDirectedEdgeTypeExecute()); }
         }
     }
 }

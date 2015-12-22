@@ -88,24 +88,6 @@ namespace GraphGenerator.ViewModels
                 ID = this.GetNewEdgeID(), Thickness = 2, Color = Brushes.Red, Value = "43"
             };
             CanvasItems.Add(new CanvasEdge(400, 230, 475, 300, anotherRandomEdge));
-
-            //--------------------
-
-            //CanvasRectangles.Add(new EdgeControl()
-            //{
-            //    X1 = 100, Y1 = 100, X2 = 150, Y2 = 150,
-            //    Edge = e
-            //});
-
-            //--------------------
-
-            //CanvasRectangles.Add(new EdgeControl()
-            //{
-            //    X1 = 100, Y1 = 100, X2 = 150, Y2 = 150,
-            //    EdgeThickness = 2, EdgeColor = Brushes.Green
-            //});
-
-            //CanvasRectangles.OfType<EdgeControl>().ToList()[0].SetValue(7);
         }
 
         //----------------------------------
@@ -166,43 +148,7 @@ namespace GraphGenerator.ViewModels
         }
 
         //----------------------------------
-
-        private void AddNode(int rectangleID)
-        {
-            CanvasRectangle rectangle = CanvasItems[rectangleID] as CanvasRectangle;
-
-            if (rectangle.DoesContainNode == false)
-            {
-                var dialogViewModel = new AddNodeViewModel();
-
-                bool? success = dialogService.ShowDialog(this, dialogViewModel);
-
-                // If user provided the node parameters successfully
-                if (success.HasValue && success.Value)
-                {
-                    Node node = dialogViewModel.Node;
-
-                    rectangle.Node = new Node()
-                    {
-                        ID = this.GetNewNodeID(),
-                        Name = node.Name,
-                        Value = node.Value,
-                        NameHorizontalAlignment = node.NameHorizontalAlignment,
-                        NameVerticalAlignment = node.NameVerticalAlignment
-                    };
-
-                    rectangle.DoesContainNode = true;
-                }
-            }
-        }
-
-        //private void AddEdge(int ID)
-        //{
-        //    //TODO
-        //    if ( (CanvasRectangles[ID] as CanvasRectangle).DoesContainNode )
-        //        MessageBox.Show("Wait for it", "Work in progress", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        //}
-
+        
         private int GetNewNodeID()
         {
             List<Node> nodesList = CanvasItems                 // List of all nodes in a canvas
@@ -258,6 +204,16 @@ namespace GraphGenerator.ViewModels
             return columnsCount * (y / this.RectangleSize) + (x / this.RectangleSize);
         }
 
+        /// <summary>
+        /// Gets list of edges between two nodes.
+        /// </summary>
+        private List<Edge> GetListOfEdges(Node node1, Node node2)
+        {
+            return node1.Edges
+                .Where(e => e.NodesID.Contains(node2.ID))
+                .ToList();
+        }
+
         private void DeleteEdge(CanvasEdge canvasEdge)
         {
             List<Node> nodesList = CanvasItems                 // List of all nodes in a canvas
@@ -277,6 +233,28 @@ namespace GraphGenerator.ViewModels
             }
 
             CanvasItems.Remove(canvasEdge);
+        }
+
+        /// <summary>
+        /// Checks if there already exists connection from first node to the second.
+        /// </summary>
+        /// <param name="node1">First node (beginning of the edge).</param>
+        /// <param name="node2">Second node (end of the edge).</param>
+        /// <returns>True, if edge already exists. Otherwise false.</returns>
+        private bool NodesAreAlreadyConnected(Node node1, Node node2)
+        {
+            List<Edge> connectingEdges = GetListOfEdges(node1, node2);
+            
+            // If there already exist nodes in both directions
+            if (connectingEdges.Count > 1)
+                return true;
+
+            // Check if there is edge that goes from another direction
+            if (connectingEdges.Count == 1)
+                return connectingEdges[0].NodesID[0] != node2.ID;                   // First node in list is where the edge begins
+
+            // If there are no edges between them yet
+            return false;
         }
 
         private void CorrectEdgePosition(CanvasRectangle rectStart, CanvasRectangle rectEnd, CanvasEdge canvasEdge, bool isTwoSide = false)
@@ -313,36 +291,33 @@ namespace GraphGenerator.ViewModels
             canvasEdge.Y2 = newEndPoint.Y;
         }
 
-        /// <summary>
-        /// Gets list of edges between two nodes.
-        /// </summary>
-        private List<Edge> GetListOfEdges(Node node1, Node node2)
+        private void AddNode(int rectangleID)
         {
-            return node1.Edges
-                .Where(e => e.NodesID.Contains(node2.ID))
-                .ToList();
-        }
+            CanvasRectangle rectangle = CanvasItems[rectangleID] as CanvasRectangle;
 
-        /// <summary>
-        /// Checks if there already exists connection from first node to the second.
-        /// </summary>
-        /// <param name="node1">First node (beginning of the edge).</param>
-        /// <param name="node2">Second node (end of the edge).</param>
-        /// <returns>True, if edge already exists. Otherwise false.</returns>
-        private bool NodesAreAlreadyConnected(Node node1, Node node2)
-        {
-            List<Edge> connectingEdges = GetListOfEdges(node1, node2);
-            
-            // If there already exist nodes in both directions
-            if (connectingEdges.Count > 1)
-                return true;
+            if (rectangle.DoesContainNode == false)
+            {
+                var dialogViewModel = new AddNodeViewModel();
 
-            // Check if there is edge that goes from another direction
-            if (connectingEdges.Count == 1)
-                return connectingEdges[0].NodesID[0] != node2.ID;                   // First node in list is where the edge begins
+                bool? success = dialogService.ShowDialog(this, dialogViewModel);
 
-            // If there are no edges between them yet
-            return false;
+                // If user provided the node parameters successfully
+                if (success.HasValue && success.Value)
+                {
+                    Node node = dialogViewModel.Node;
+
+                    rectangle.Node = new Node()
+                    {
+                        ID = this.GetNewNodeID(),
+                        Name = node.Name,
+                        Value = node.Value,
+                        NameHorizontalAlignment = node.NameHorizontalAlignment,
+                        NameVerticalAlignment = node.NameVerticalAlignment
+                    };
+
+                    rectangle.DoesContainNode = true;
+                }
+            }
         }
 
         //----------------------------------
@@ -449,6 +424,7 @@ namespace GraphGenerator.ViewModels
                             // Correct label position
                             //--------------------------------------
 
+                            canvasEdge.Edge.IsBidirectional = dialogViewModel.Edge.IsBidirectional;
                             canvasEdge.Edge.Value = dialogViewModel.Edge.Value;
 
                             // Add references between edge and node

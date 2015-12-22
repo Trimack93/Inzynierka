@@ -28,6 +28,7 @@ namespace Common.Models
         private string _Value;
         private SolidColorBrush _Color;
         private double _Thickness;
+        private bool _IsBidirectional = false;
 
         //---------------------------------
 
@@ -65,6 +66,15 @@ namespace Common.Models
             {
                 _Thickness = value;
                 RaisePropertyChanged("Thickness");
+            }
+        }
+        public bool IsBidirectional
+        {
+            get { return _IsBidirectional; }
+            set
+            {
+                _IsBidirectional = value;
+                RaisePropertyChanged("IsBidirectional");
             }
         }
 

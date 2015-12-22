@@ -87,6 +87,7 @@
     <Compile Include="Utilities\Behaviours\ContextMenuBehaviour.cs" />
     <Compile Include="Utilities\Behaviours\EventBehaviourFactory.cs" />
     <Compile Include="Utilities\Converters\AlignmentToGridPositionConverter.cs" />
+    <Compile Include="Utilities\Converters\BoolToDirectionConverter.cs" />
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
     <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />

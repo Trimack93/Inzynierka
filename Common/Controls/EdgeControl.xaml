@@ -5,9 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:arrow="clr-namespace:Common.Controls.Arrowheads"
              xmlns:local="clr-namespace:Common.Controls"
+             xmlns:conv="clr-namespace:Common.Utilities.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
              <!--DataContext="{Binding RelativeSource={RelativeSource Self}}"-->
+
+    <UserControl.Resources>
+        <conv:BoolToDirectionConverter x:Key="BoolToDirectionConverter" />
+    </UserControl.Resources>
 
     <Canvas>
         <TextBlock Text="{Binding Edge.Value, NotifyOnTargetUpdated=True}" Name="ValueTextblock" TargetUpdated="ValueTextblock_TargetUpdated" />
@@ -17,7 +22,7 @@
         <Line X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
                 Stroke="Transparent" StrokeThickness="20" />
 
-        <arrow:ArrowLine X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
+        <arrow:ArrowLine X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}" ArrowEnds="{Binding Edge.IsBidirectional, Converter={StaticResource BoolToDirectionConverter}}"
                 Stroke="{Binding Edge.Color}" StrokeThickness="{Binding Edge.Thickness}" />
     </Canvas>
 </UserControl>
