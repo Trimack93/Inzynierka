@@ -129,7 +129,7 @@
                         <DataTemplate DataType="{x:Type model:CanvasEdge}">
                             <controls:EdgeControl X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
                                                   Edge="{Binding Edge}"
-                                                  CanFireMouseOverEvents="{Binding ElementName=CanvasItemsControl, Path=DataContext.CanAnimateEdges}" />
+                                                  CanFireMouseOverEvents="{Binding ElementName=CanvasItemsControl, Path=DataContext.IsEditState}" />
                         </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>

@@ -15,6 +15,7 @@ using Common.Utilities;
 using MvvmDialogs;
 using Common.Controls;
 using GraphGenerator.Utilities;
+using System.Windows.Controls;
 
 namespace GraphGenerator.ViewModels
 {
@@ -134,7 +135,7 @@ namespace GraphGenerator.ViewModels
             {
                 _NodeButtonIsPressed = value;
                 RaisePropertyChanged("NodeButtonIsPressed");
-                RaisePropertyChanged("CanAnimateEdges");
+                RaisePropertyChanged("IsEditState");
             }
         }
         public bool EdgeButtonIsPressed
@@ -145,10 +146,10 @@ namespace GraphGenerator.ViewModels
             {
                 _EdgeButtonIsPressed = value;
                 RaisePropertyChanged("EdgeButtonIsPressed");
-                RaisePropertyChanged("CanAnimateEdges");
+                RaisePropertyChanged("IsEditState");
             }
         }
-        public bool CanAnimateEdges
+        public bool IsEditState
         {
             get { return !(NodeButtonIsPressed || EdgeButtonIsPressed); }
         }
@@ -498,18 +499,21 @@ namespace GraphGenerator.ViewModels
             //    AddEdge(rectangleID);
         }
 
-        //void CanvasMouseDownExecute()
-        //{
-        //    ;
-        //}
-        //void CanvasMouseMoveExecute()
-        //{
-        //    ;
-        //}
-        //void CanvasMouseUpExecute()
-        //{
-        //    ;
-        //}
+        void NodeMenuItemEditExecute(int nodeID)
+        {
+            MessageBox.Show("Edytowanie wierzchołka o ID:" + nodeID.ToString());
+        }
+        void NodeMenuItemDeleteExecute(int nodeID)
+        {
+            MessageBox.Show("Usuwanie wierzchołka o ID:" + nodeID.ToString());
+        }
+
+        void ContextMenuOpenedExecute(RoutedEventArgs e)
+        {
+            ContextMenu contextMenu = e.Source as ContextMenu;                      // change to custom control in future - temporary workaround
+
+            contextMenu.IsOpen = this.IsEditState;
+        }
 
         //----------------------------------
 
@@ -517,6 +521,11 @@ namespace GraphGenerator.ViewModels
         {
             //return this.EdgeButtonIsPressed || this.NodeButtonIsPressed;
             return true;                                                            // Otherwise triggers in CanvasButton don't work
+        }
+
+        bool CanModifyNode()
+        {
+            return this.IsEditState;
         }
 
         //----------------------------------
@@ -534,22 +543,23 @@ namespace GraphGenerator.ViewModels
             get { return new RelayCommand<object>( p => ChangeCompatibilityExecute() ); }
         }
 
-        //public ICommand CanvasMouseDown
-        //{
-        //    get { return new RelayCommand<object>( p => CanvasMouseDownExecute() ); }
-        //}
-        //public ICommand CanvasMouseMove
-        //{
-        //    get { return new RelayCommand<object>(p => CanvasMouseMoveExecute()); }
-        //}
-        //public ICommand CanvasMouseUp
-        //{
-        //    get { return new RelayCommand<object>(p => CanvasMouseUpExecute()); }
-        //}
+        public ICommand ContextMenuOpened
+        {
+            get { return new RelayCommand<RoutedEventArgs>(p => ContextMenuOpenedExecute(p)); }
+        }
 
         public ICommand ClickRectangle
         {
             get { return new RelayCommand<int>( param => ClickRectangleExecute(param), CanClickRectangle ); }
+        }
+
+        public ICommand NodeMenuItemEdit
+        {
+            get { return new RelayCommand<int>(param => NodeMenuItemEditExecute(param), CanModifyNode); }
+        }
+        public ICommand NodeMenuItemDelete
+        {
+            get { return new RelayCommand<int>(param => NodeMenuItemDeleteExecute(param), CanModifyNode); }
         }
     }
 }

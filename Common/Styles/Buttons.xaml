@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:Common.Styles"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:controls="clr-namespace:Common.Controls"
-                    xmlns:conv="clr-namespace:Common.Utilities.Converters">
+                    xmlns:conv="clr-namespace:Common.Utilities.Converters"
+                    xmlns:behav="clr-namespace:Common.Utilities.Behaviours">
 
     <!-- Base button style providing default darken effect on MouseOver and lighten effect on MousePressed, also border style formatting -->
     <Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
@@ -137,7 +138,22 @@
                             <Grid>
                                 <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}" NodeColor="{Binding Node.Color}" NodeThickness="{Binding Node.Thickness}"
                                                     NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}"
-                                                    Name="kontrolka"/>
+                                                    Name="kontrolka"
+                                                    Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
+                                    
+                                    <controls:NodeControl.ContextMenu>
+                                        <ContextMenu Visibility="{Binding Path=PlacementTarget.Tag.IsEditState, RelativeSource={RelativeSource Self}, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                     behav:ContextMenuBehaviour.ContextMenuOpenedCommand="{Binding Path=PlacementTarget.Tag.ContextMenuOpened, RelativeSource={RelativeSource Self}}">
+                                                     <!--Opened="asdf">-->
+                                            
+                                            <MenuItem Header="Edytuj" Command="{Binding Path=PlacementTarget.Tag.NodeMenuItemEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                                      CommandParameter="{Binding Node.ID}" />
+                                            <MenuItem Header="Usuń" Command="{Binding Path=PlacementTarget.Tag.NodeMenuItemDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                                      CommandParameter="{Binding Node.ID}" />
+                                            
+                                        </ContextMenu>
+                                    </controls:NodeControl.ContextMenu>
+                                </controls:NodeControl>
                             </Grid>
                         </ContentControl>
                     </Border>

@@ -31,10 +31,13 @@ namespace GraphGenerator.Views
         // change to native WPF commands with event args?
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            double x = e.GetPosition(this.CanvasItemsControl).X;
-            double y = e.GetPosition(this.CanvasItemsControl).Y;
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                double x = e.GetPosition(this.CanvasItemsControl).X;
+                double y = e.GetPosition(this.CanvasItemsControl).Y;
 
-            (this.DataContext as MainViewModel).AddEdge(x, y);
+                (this.DataContext as MainViewModel).AddEdge(x, y);
+            }
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)

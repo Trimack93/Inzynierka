@@ -84,6 +84,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Utilities\Behaviours\CanvasBehaviour.cs" />
+    <Compile Include="Utilities\Behaviours\ContextMenuBehaviour.cs" />
     <Compile Include="Utilities\Behaviours\EventBehaviourFactory.cs" />
     <Compile Include="Utilities\Converters\AlignmentToGridPositionConverter.cs" />
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
