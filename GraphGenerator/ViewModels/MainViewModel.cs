@@ -503,17 +503,71 @@ namespace GraphGenerator.ViewModels
         {
             MessageBox.Show("Edytowanie wierzchołka o ID: " + nodeID.ToString());
         }
-        void NodeMenuItemDeleteExecute(int nodeID)
-        {
-            MessageBox.Show("Usuwanie wierzchołka o ID: " + nodeID.ToString());
-        }
         void EdgeMenuItemEditExecute(int edgeID)
         {
             MessageBox.Show("Edytowanie krawędzi o ID: " + edgeID.ToString());
         }
+
+        void NodeMenuItemDeleteExecute(int nodeID)
+        {
+            MessageBoxResult result = MessageBox.Show("Czy na pewno chcesz usunąć podany wierzchołek?", "Potwierdź działanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // Rectangle containing node to delete
+                CanvasRectangle canvasRectangle = CanvasItems
+                    .OfType<CanvasRectangle>()
+                    .Single(r => r.Node?.ID == nodeID);
+
+                // All edges connected to removable node
+                List<CanvasEdge> canvasEdgesList = CanvasItems
+                    .OfType<CanvasEdge>()
+                    .Where(e => canvasRectangle.Node.Edges.Contains(e.Edge))
+                    .ToList();
+
+                foreach (CanvasEdge canvasEdge in canvasEdgesList)
+                    DeleteEdge(canvasEdge);
+
+                canvasRectangle.Node = null;
+            }
+        }
         void EdgeMenuItemDeleteExecute(int edgeID)
         {
-            MessageBox.Show("Usuwanie krawędzi o ID: " + edgeID.ToString());
+            MessageBoxResult result = MessageBox.Show("Czy na pewno chcesz usunąć podaną krawędź?", "Potwierdź działanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                CanvasEdge canvasEdge = CanvasItems
+                .OfType<CanvasEdge>()
+                .Single(e => e.Edge.ID == edgeID);
+
+                // List of nodes which are connected by this edge
+                List<CanvasRectangle> rectanglesList = CanvasItems
+                    .OfType<CanvasRectangle>()
+                    .Where(r => r.Node != null)
+                    .Where(r => canvasEdge.Edge.NodesID.Contains(r.Node.ID))
+                    .ToList();
+
+                DeleteEdge(canvasEdge);
+
+                Edge connectingEdge = GetListOfEdges(rectanglesList[0].Node, rectanglesList[1].Node)
+                    .SingleOrDefault();
+
+                // If the nodes were connected both-sides
+                if (connectingEdge != null)
+                {
+                    CanvasEdge connectingCanvasEdge = CanvasItems
+                        .OfType<CanvasEdge>()
+                        .Single(e => e.Edge == connectingEdge);
+
+                    // NodesID[0] = beginning of the edge. CorrectEdgePosition requires valid order of nodes, and because of that
+                    // if the starting node isn't at the beginning, we need to reverse the order in rectanglesList.
+                    if (rectanglesList[0].Node.ID != connectingEdge.NodesID[0])
+                        rectanglesList.Reverse();
+
+                    CorrectEdgePosition(rectanglesList[0], rectanglesList[1], connectingCanvasEdge);
+                }
+            }
         }
 
         void ContextMenuOpenedExecute(RoutedEventArgs e)
