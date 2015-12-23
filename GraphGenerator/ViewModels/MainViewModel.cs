@@ -245,13 +245,18 @@ namespace GraphGenerator.ViewModels
         {
             List<Edge> connectingEdges = GetListOfEdges(node1, node2);
             
-            // If there already exist nodes in both directions
+            // If there already exist edges in both directions
             if (connectingEdges.Count > 1)
                 return true;
 
-            // Check if there is edge that goes from another direction
+            // Check if there is edge that goes from another direction or bidirectional edge
             if (connectingEdges.Count == 1)
+            {
+                if (connectingEdges[0].IsBidirectional)
+                    return true;
+
                 return connectingEdges[0].NodesID[0] != node2.ID;                   // First node in list is where the edge begins
+            }
 
             // If there are no edges between them yet
             return false;
@@ -390,23 +395,30 @@ namespace GraphGenerator.ViewModels
                     }
                     else
                     {
+                        // Check if edge can be bidirectional
+                        //--------------------------------------
+
+                        List<Edge> connectingEdges = GetListOfEdges(rectStart.Node, rectEnd.Node);
+                        bool canEdgeBeBidirectional = true;
+
+                        if (connectingEdges.Count == 1 && connectingEdges[0].IsBidirectional == false)
+                            canEdgeBeBidirectional = false;
+
                         // Open dialog for adding new edge
                         //--------------------------------------
 
-                        var dialogViewModel = new AddEdgeViewModel();
+                        var dialogViewModel = new AddEdgeViewModel(canEdgeBeBidirectional);
 
                         bool? success = dialogService.ShowDialog(this, dialogViewModel);
                         
-                        if (success.HasValue && success.Value)                                      // If user provided the node parameters successfully
+                        if (success.HasValue && success.Value)                                  // If user provided the node parameters successfully
                         {
                             // Correct edge(s) position
                             //--------------------------------------
-
-                            List<Edge> connectingEdges = GetListOfEdges(rectStart.Node, rectEnd.Node);
                             
-                            if (connectingEdges.Count == 1)                                         // If there already exist edge connecting both nodes
+                            if (connectingEdges.Count == 1)                                     // If there already exist edge connecting both nodes (it's not bidirectional for sure, because we checked it before
                             {
-                                CanvasEdge secondCanvasEdge = CanvasItems                           // Edge with opposed direction
+                                CanvasEdge secondCanvasEdge = CanvasItems                       // Edge with opposed direction
                                     .OfType<CanvasEdge>()
                                     .Single(ce => ce.Edge == connectingEdges[0]);
 

@@ -14,11 +14,12 @@ namespace GraphGenerator.ViewModels
 {
     public class AddEdgeViewModel : BaseNotifyPropertyChanged, IModalDialogViewModel
     {
-        public AddEdgeViewModel() : this("0") { }
+        public AddEdgeViewModel() : this(true) { }
 
-        public AddEdgeViewModel(string edgeValue)
+        public AddEdgeViewModel(bool canEdgeBeBidirectional)
         {
-            Edge.Value = edgeValue;
+            this.Edge.Value = "0";
+            this.CanAcceptBidirectionalEdge = canEdgeBeBidirectional;
         }
 
         //----------------------------------
@@ -26,6 +27,7 @@ namespace GraphGenerator.ViewModels
         private Edge _Edge = new Edge();
         private bool? dialogResult = false;
         private bool _canAcceptInput = true;
+        private bool _canAcceptBidirectionalEdge = true;
 
         //----------------------------------
 
@@ -54,6 +56,15 @@ namespace GraphGenerator.ViewModels
             {
                 _canAcceptInput = value;
                 RaisePropertyChanged("CanAcceptInput");
+            }
+        }
+        public bool CanAcceptBidirectionalEdge
+        {
+            get { return _canAcceptBidirectionalEdge; }
+            set
+            {
+                _canAcceptBidirectionalEdge = value;
+                RaisePropertyChanged("CanAcceptBidirectionalEdge");
             }
         }
 

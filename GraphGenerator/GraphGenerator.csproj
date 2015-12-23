@@ -67,6 +67,7 @@
     <Compile Include="Models\CanvasControlBase.cs" />
     <Compile Include="Models\CanvasRectangle.cs" />
     <Compile Include="Models\CanvasEdge.cs" />
+    <Compile Include="Utilities\Converters\BoolToColorConverter.cs" />
     <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
     <Compile Include="Utilities\MathHelper.cs" />
     <Compile Include="ViewModels\AddEdgeViewModel.cs" />

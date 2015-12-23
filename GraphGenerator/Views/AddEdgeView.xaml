@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         xmlns:conv="clr-namespace:Common.Utilities.Converters;assembly=Common"
+        xmlns:convInternal="clr-namespace:GraphGenerator.Utilities.Converters"
         mc:Ignorable="d"
         Title="Dodaj nową krawędź"
         Height="300" Width="275" Background="RoyalBlue"
@@ -34,6 +35,7 @@
             </Style>
 
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <convInternal:BoolToColorConverter x:Key="BoolToColorConverter" />
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -64,8 +66,9 @@
             
             <RadioButton Content="skierowana" Foreground="Snow" FontSize="12" Grid.Row="0" Grid.Column="1" Margin="25,0,0,0" IsChecked="True"
                          Command="{Binding SelectDirectedEdgeType}" />
-            <RadioButton Content="nieskierowana" Foreground="Snow" FontSize="12" Grid.Row="1" Grid.Column="1" Margin="25,0,0,0"
-                         Command="{Binding SelectNonDirectedEdgeType}" />
+            <RadioButton Content="nieskierowana" FontSize="12" Grid.Row="1" Grid.Column="1" Margin="25,0,0,0"
+                         Foreground="{Binding CanAcceptBidirectionalEdge, Converter={StaticResource BoolToColorConverter}}"
+                         Command="{Binding SelectNonDirectedEdgeType}" IsEnabled="{Binding CanAcceptBidirectionalEdge}" />
         </Grid>
 
         <TextBlock Text="Podgląd:" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,0" />

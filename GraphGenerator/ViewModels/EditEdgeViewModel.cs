@@ -8,9 +8,9 @@ namespace GraphGenerator.ViewModels
 {
     public class EditEdgeViewModel : AddEdgeViewModel
     {
-        public EditEdgeViewModel() : base() { }
+        public EditEdgeViewModel() : base(true) { }
 
-        public EditEdgeViewModel(string edgeValueToEdit)
+        public EditEdgeViewModel(string edgeValueToEdit) : base(true)
         {
             this.Edge.Value = edgeValueToEdit;
         }
