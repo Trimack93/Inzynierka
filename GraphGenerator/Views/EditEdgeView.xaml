@@ -73,7 +73,7 @@
                          Command="{Binding SelectNonDirectedEdgeType}" IsEnabled="{Binding CanAcceptBidirectionalEdge}" />
         </Grid>
 
-        <TextBlock Text="Podgląd:" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,0" />
+        <TextBlock Text="Podgląd:" Grid.Row="2" HorizontalAlignment="Center" />
 
         <!-- By default EdgeControl doesn't have any DataContext, so while trying to provide constant values, it tries to get them from ViewModel, thus failing hard -->
         <controls:EdgeControl DataContext="{Binding RelativeSource={RelativeSource Self}}" Grid.Row="3" X1="72" Y1="0" X2="132" Y2="50"

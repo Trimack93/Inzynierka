@@ -63,10 +63,12 @@
       <DependentUpon>EdgeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InterfaceButton.cs" />
+    <Compile Include="Controls\NodeControl.xaml.cs">
+      <DependentUpon>NodeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ValidableTextbox.xaml.cs">
       <DependentUpon>ValidableTextbox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NodeControl.cs" />
     <Compile Include="Controls\ValidableTextboxObsolete.cs" />
     <Compile Include="Models\Edge.cs" />
     <Compile Include="Models\Node.cs" />
@@ -112,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\EdgeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NodeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -35,7 +35,6 @@ namespace GraphGenerator.ViewModels
 
         private bool? dialogResult = false;
         private bool _canAcceptInputName = true;
-        private bool _canAcceptInputValue = true;
 
         private ObservableCollection<SolidColorBrush> _ButtonColors = new ObservableCollection<SolidColorBrush>();
 
@@ -69,20 +68,6 @@ namespace GraphGenerator.ViewModels
                 RaisePropertyChanged("CanAcceptInputName");
                 RaisePropertyChanged("CanAcceptInput");
             }
-        }
-        public bool CanAcceptInputValue
-        {
-            get { return _canAcceptInputValue; }
-            set
-            {
-                _canAcceptInputValue = value;
-                RaisePropertyChanged("CanAcceptInputValue");
-                RaisePropertyChanged("CanAcceptInput");
-            }
-        }
-        public bool CanAcceptInput
-        {
-            get { return CanAcceptInputName && CanAcceptInputValue; }
         }
 
         public ObservableCollection<SolidColorBrush> ButtonColors
@@ -139,6 +124,12 @@ namespace GraphGenerator.ViewModels
             ButtonColors[2] = Brushes.LightGray;
             ButtonColors[3] = Brushes.LimeGreen;
         }
+
+        protected void ChangeValueToInfinityExecute()
+        {
+            this.Node.Value = "∞";
+        }
+
         void OkClickExecute()
         {
             this.DialogResult = true;
@@ -162,6 +153,12 @@ namespace GraphGenerator.ViewModels
         {
             get { return new RelayCommand<object>(p => SelectBottomCenterAlignmentExecute()); }
         }
+
+        public ICommand ChangeValueToInfinity
+        {
+            get { return new RelayCommand<object>(p => ChangeValueToInfinityExecute()); }
+        }
+
         public ICommand OkClick
         {
             get { return new RelayCommand<object>(p => OkClickExecute()); }

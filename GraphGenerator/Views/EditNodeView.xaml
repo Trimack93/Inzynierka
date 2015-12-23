@@ -30,12 +30,6 @@
                             <Setter Property="Background" Value="LightGray" />
                         </DataTrigger.Setters>
                     </DataTrigger>
-
-                    <DataTrigger Binding="{Binding CanAcceptInputValue}" Value="False">
-                        <DataTrigger.Setters>
-                            <Setter Property="Background" Value="LightGray" />
-                        </DataTrigger.Setters>
-                    </DataTrigger>
                 </Style.Triggers>
             </Style>
         </Grid.Resources>
@@ -43,7 +37,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
             <RowDefinition Height="35" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="35" />
             <RowDefinition Height="Auto" />
@@ -56,27 +51,20 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Podaj wartość wierzchołka:" Grid.Row="0" Grid.Column="0" />
-        <!--<TextBox Text="{Binding Node.Value, UpdateSourceTrigger=PropertyChanged}" MaxLength="3"
-                 Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />-->
-        <!-- UpdateSourceTrigger causes update of property after each pressed key -->
-
-        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="3" IsNotEmpty="{Binding CanAcceptInputValue}"
+        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="3"
                            Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Podaj nazwę wierzchołka:" Grid.Row="1" Grid.Column="0" />
-        <!--<TextBox Text="{Binding Node.Name, UpdateSourceTrigger=PropertyChanged}" MaxLength="10"
-                 Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />-->
-
-        <!--<controls:ValidableTextbox ValidableText="{Binding Node.Name}" MaxLength="10"
-                                   Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0"
-                                   Name="asdf" />-->
-
         <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="7" IsNotEmpty="{Binding CanAcceptInputName}"
                            Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
-        <TextBlock Text="Wybierz położenie nazwy wierzchołka:" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,-10" />
+        <Button Content="Ustaw wartość wierzchołka: ∞" FontWeight="DemiBold" Style="{StaticResource BaseButtonStyle}"
+                Grid.Row="2" Grid.ColumnSpan="2" Width="200" Height="20" Margin="0,5,0,0" Background="Orange"
+                Command="{Binding ChangeValueToInfinity}" />
 
-        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+        <TextBlock Text="Wybierz położenie nazwy wierzchołka:" Grid.Row="3" Grid.ColumnSpan="2" />
+
+        <Grid Grid.Row="4" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -93,17 +81,17 @@
                     Background="{Binding ButtonColors[3]}" BorderBrush="Black" BorderThickness="1" />
         </Grid>
 
-        <TextBlock Text="Podgląd:" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+        <TextBlock Text="Podgląd:" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
 
-        <Grid Grid.Row="5" Width="66" Height="66" Grid.ColumnSpan="2">
+        <Grid Grid.Row="6" Width="66" Height="66" Grid.ColumnSpan="2">
             <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}" NodeColor="{Binding Node.Color}" NodeThickness="{Binding Node.Thickness}"
                             NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}" />
         </Grid>
 
-        <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True" IsEnabled="{Binding CanAcceptInput}" Style="{StaticResource GreenButton}"
-                Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Margin="0,0,80,0" />
+        <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True" IsEnabled="{Binding CanAcceptInputName}" Style="{StaticResource GreenButton}"
+                Grid.Row="7" Grid.ColumnSpan="2" Width="70" Height="20" Margin="0,0,80,0" />
         <Button Content="Anuluj" IsCancel="True" Style="{StaticResource BaseButtonStyle}"
-                Grid.Row="6" Grid.ColumnSpan="2" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
+                Grid.Row="7" Grid.ColumnSpan="2" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
     </Grid>
 
 </Window>

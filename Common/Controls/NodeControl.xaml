@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="Common.Controls.NodeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Common.Controls"
+             xmlns:conv="clr-namespace:Common.Utilities.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Name="customNode">
+
+    <Grid>
+        <!-- Can't add DataContext on the UserControl level, because it will also affect bindings on "declaring control" level -->
+        <Grid.DataContext>
+            <Binding ElementName="customNode" />
+        </Grid.DataContext>
+
+            <Grid.Resources>
+            <conv:AlignmentToGridPositionConverter x:Key="AlignmentToGridPositionConverter" />
+            <conv:ThicknessToFontWeigthConverter x:Key="ThicknessToFontWeigthConverter" />
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="{Binding NodeName}"
+                   Grid.Row="{Binding NameVerticalAlignment, Converter={StaticResource AlignmentToGridPositionConverter}}"
+                   Grid.Column="{Binding NameHorizontalAlignment, Converter={StaticResource AlignmentToGridPositionConverter}}"
+                   FontWeight="{Binding NodeThickness, Converter={StaticResource ThicknessToFontWeigthConverter}}"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" MaxWidth="66" />
+
+        <Ellipse Grid.Row="1" Grid.Column="1" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Stroke="Black" StrokeThickness="{Binding NodeThickness}" Fill="{Binding NodeColor}" />
+        
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Text="{Binding NodeValue, NotifyOnTargetUpdated=True}" TargetUpdated="TextBlock_TargetUpdated"
+                   FontSize="14" FontWeight="DemiBold" Foreground="Black" />
+    </Grid>
+</UserControl>

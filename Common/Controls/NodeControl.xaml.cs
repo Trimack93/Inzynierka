@@ -15,11 +15,14 @@ using System.Windows.Shapes;
 
 namespace Common.Controls
 {
-    public class NodeControl : Control
+    /// <summary>
+    /// Interaction logic for NodeControl.xaml
+    /// </summary>
+    public partial class NodeControl : UserControl
     {
-        static NodeControl()
+        public NodeControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(NodeControl), new FrameworkPropertyMetadata(typeof(NodeControl)));
+            InitializeComponent();
         }
 
         public string NodeName
@@ -54,7 +57,7 @@ namespace Common.Controls
             get { return (VerticalAlignment)GetValue(NameVerticalAlignmentProperty); }
             set { SetValue(NameVerticalAlignmentProperty, value); }
         }
-        
+
         public static readonly DependencyProperty NodeNameProperty = DependencyProperty.Register(
             "NodeName", typeof(string), typeof(NodeControl), new UIPropertyMetadata(null));
 
@@ -72,5 +75,17 @@ namespace Common.Controls
 
         public static readonly DependencyProperty NameVerticalAlignmentProperty = DependencyProperty.Register(
             "NameVerticalAlignment", typeof(VerticalAlignment), typeof(NodeControl), new UIPropertyMetadata(null));
+
+        private void TextBlock_TargetUpdated(object sender, DataTransferEventArgs e)
+        {
+            TextBlock textBlock = sender as TextBlock;
+            
+            if (textBlock.Text.Length <= 3)
+                textBlock.FontSize = 14;
+            else if (textBlock.Text.Length == 4)
+                textBlock.FontSize = 12;
+            else
+                textBlock.FontSize = 10;
+        }
     }
 }

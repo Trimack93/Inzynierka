@@ -4,7 +4,7 @@
                     xmlns:controls="clr-namespace:Common.Controls"
                     xmlns:conv="clr-namespace:Common.Utilities.Converters">
 
-    <Style TargetType="{x:Type controls:NodeControl}">
+    <!--<Style TargetType="{x:Type controls:NodeControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:NodeControl}">
@@ -38,7 +38,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <Style TargetType="{x:Type controls:InterfaceButton}">
         <Setter Property="Width" Value="100" />

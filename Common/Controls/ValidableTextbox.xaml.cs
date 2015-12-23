@@ -77,11 +77,11 @@ namespace Common.Controls
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             var textBox = sender as TextBox;
-            string x = textBox.Text;
+            string text = textBox.Text;
 
             // If the limit of characters is met and there is less than 1 character selected in textbox.
             // Also if user didn't pressed a button like Tab or Shift
-            if ( x.Length == MaxLength && textBox.SelectionLength <= 1 &&
+            if ( text.Length == MaxLength && textBox.SelectionLength <= 1 &&
                 (InputHelper.IsKeyAChar(e.Key) || InputHelper.IsKeyADigit(e.Key)) )
             {
                 Storyboard s = (Storyboard)this.Resources["KeyDownStoryboard"];
@@ -103,6 +103,16 @@ namespace Common.Controls
                 }
 
                 e.Handled = true;                                       // Block the letter from being added into textbox
+            }
+
+            // Can't add anything if text is ∞ character
+            if (text == "∞" && textBox.SelectionLength == 0)
+            {
+                Storyboard s = (Storyboard)this.Resources["KeyDownStoryboard"];
+                s.Begin();
+
+                _errorOccured = true;
+                e.Handled = true;
             }
         }
         private void TextBox_KeyUp(object sender, KeyEventArgs e)
