@@ -7,9 +7,10 @@
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         xmlns:conv="clr-namespace:Common.Utilities.Converters;assembly=Common"
+        xmlns:convInternal="clr-namespace:GraphGenerator.Utilities.Converters"
         mc:Ignorable="d"
         Title="Edytuj krawędź"
-        Height="250" Width="250" Background="RoyalBlue"
+        Height="300" Width="275" Background="RoyalBlue"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         Name="EditEdgeWindow">
     
@@ -34,32 +35,55 @@
             </Style>
 
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <convInternal:BoolToColorConverter x:Key="BoolToColorConverter" />
         </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="40" />
             <RowDefinition Height="66" />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Podaj wartość krawędzi:" />
             <controls:ValidableTextbox Tekst="{Binding Edge.Value}" MaxLength="2" IsNumeric="True" IsNotEmpty="{Binding CanAcceptInput}"
                                Width="50" Height="25" Margin="10,0,0,0" />
         </StackPanel>
 
-        <TextBlock Text="Podgląd:" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,0" />
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Podaj typ krawędzi:" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"/>
+
+            <RadioButton Content="skierowana" Foreground="Snow" FontSize="12" Grid.Row="0" Grid.Column="1" Margin="25,0,0,0"
+                         IsChecked="{Binding IsOneDirectional}"
+                         Command="{Binding SelectDirectedEdgeType}" />
+            <RadioButton Content="nieskierowana" FontSize="12" Grid.Row="1" Grid.Column="1" Margin="25,0,0,0"
+                         IsChecked="{Binding IsBidirectional}"
+                         Foreground="{Binding CanAcceptBidirectionalEdge, Converter={StaticResource BoolToColorConverter}}"
+                         Command="{Binding SelectNonDirectedEdgeType}" IsEnabled="{Binding CanAcceptBidirectionalEdge}" />
+        </Grid>
+
+        <TextBlock Text="Podgląd:" Grid.Row="2" HorizontalAlignment="Center" Margin="0,0,0,0" />
 
         <!-- By default EdgeControl doesn't have any DataContext, so while trying to provide constant values, it tries to get them from ViewModel, thus failing hard -->
-        <controls:EdgeControl DataContext="{Binding RelativeSource={RelativeSource Self}}" Grid.Row="2" X1="60" Y1="0" X2="120" Y2="50"
+        <controls:EdgeControl DataContext="{Binding RelativeSource={RelativeSource Self}}" Grid.Row="3" X1="72" Y1="0" X2="132" Y2="50"
                     Edge="{Binding ElementName=EditEdgeWindow, Path=DataContext.Edge}" />
 
         <Button Content="Zatwierdź" Command="{Binding OkClick}" IsDefault="True" IsEnabled="{Binding CanAcceptInput}" Style="{StaticResource GreenButton}"
-                Grid.Row="3" Width="70" Height="20" Margin="0,0,80,0">
+                Grid.Row="4" Width="70" Height="20" Margin="0,0,80,0">
         </Button>
         
         <Button Content="Anuluj" IsCancel="True" Style="{StaticResource BaseButtonStyle}"
-                Grid.Row="3" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
+                Grid.Row="4" Width="70" Height="20" Background="Red" Margin="80,0,0,0" />
     </Grid>
 </Window>

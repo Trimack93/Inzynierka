@@ -510,11 +510,28 @@ namespace GraphGenerator.ViewModels
         }
         void EdgeMenuItemEditExecute(int edgeID)
         {
+            bool canEdgeBeBidirectional = true;
+
+            // Edge to edit
             CanvasEdge canvasEdge = CanvasItems
                 .OfType<CanvasEdge>()
                 .Single(e => e.Edge.ID == edgeID);
+
+            // Nodes which this edge is connecting
+            List<Node> connectedNodes = CanvasItems
+                .OfType<CanvasRectangle>()
+                .Where( r => r.Node != null )
+                .Select( r => r.Node )
+                .Where( n => canvasEdge.Edge.NodesID.Contains(n.ID) )
+                .ToList();
             
-            var dialogViewModel = new EditEdgeViewModel(canvasEdge.Edge.Value);
+            // List of all edges between those two nodes
+            List<Edge> connectingEdges = GetListOfEdges(connectedNodes[0], connectedNodes[1]);
+
+            if (connectingEdges.Count == 2)
+                canEdgeBeBidirectional = false;
+            
+            var dialogViewModel = new EditEdgeViewModel(canvasEdge.Edge, canEdgeBeBidirectional);
 
             bool? success = dialogService.ShowDialog(this, dialogViewModel);
 
@@ -524,6 +541,7 @@ namespace GraphGenerator.ViewModels
                 Edge edge = dialogViewModel.Edge;
 
                 canvasEdge.Edge.Value = edge.Value;
+                canvasEdge.Edge.IsBidirectional = edge.IsBidirectional;
             }
         }
 
@@ -548,6 +566,7 @@ namespace GraphGenerator.ViewModels
                     DeleteEdge(canvasEdge);
 
                 canvasRectangle.Node = null;
+                canvasRectangle.DoesContainNode = false;
             }
         }
         void EdgeMenuItemDeleteExecute(int edgeID)
@@ -572,7 +591,7 @@ namespace GraphGenerator.ViewModels
                 Edge connectingEdge = GetListOfEdges(rectanglesList[0].Node, rectanglesList[1].Node)
                     .SingleOrDefault();
 
-                // If the nodes were connected both-sides
+                // If the nodes were connected both-sides by two directional edges
                 if (connectingEdge != null)
                 {
                     CanvasEdge connectingCanvasEdge = CanvasItems
