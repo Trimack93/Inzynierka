@@ -45,6 +45,8 @@ namespace GraphGenerator.ViewModels
             Colors.Add(Brushes.Green);
             Colors.Add(Brushes.Red);
 
+            CanvasItems.CollectionChanged += CanvasItems_CollectionChanged;
+
             int columnsCount = this.CanvasWidth / this.RectangleSize;
             int rowsCount = this.CanvasHeight / this.RectangleSize;
 
@@ -77,19 +79,79 @@ namespace GraphGenerator.ViewModels
 
             //--------------------
 
-            Edge randomEdge = new Edge()
-            {
-                ID = this.GetNewEdgeID(), Thickness = 2, Color = Brushes.Green, Value = "15"
-            };
-            CanvasItems.Add(new CanvasEdge(150, 100, 60, 150, randomEdge));
+            //Edge randomEdge = new Edge()
+            //{
+            //    ID = this.GetNewEdgeID(), Thickness = 2, Color = Brushes.Green, Value = "15"
+            //};
+            //CanvasItems.Add(new CanvasEdge(150, 100, 60, 150, randomEdge));
 
-            Edge anotherRandomEdge = new Edge()
-            {
-                ID = this.GetNewEdgeID(), Thickness = 2, Color = Brushes.Red, Value = "43"
-            };
-            CanvasItems.Add(new CanvasEdge(400, 230, 475, 300, anotherRandomEdge));
+            //Edge anotherRandomEdge = new Edge()
+            //{
+            //    ID = this.GetNewEdgeID(), Thickness = 2, Color = Brushes.Red, Value = "43"
+            //};
+            //CanvasItems.Add(new CanvasEdge(400, 230, 475, 300, anotherRandomEdge));
         }
 
+        //----------------------------------
+        #region PropertyChanged Event Handlers
+
+        private void CanvasItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+                foreach (CanvasControlBase item in e.NewItems)
+                {
+                    if (item is CanvasEdge)                                                                 // Because Edge class doesn't contain its X and Y coordinates,
+                        (item as CanvasEdge).Edge.PropertyChanged += Edge_PropertyChanged;                  // event won't be fired thousand times during addition of new edge - wise owl predicted it!
+
+                    else if (item is CanvasRectangle)
+                        (item as CanvasRectangle).PropertyChanged += CanvasRectangle_PropertyChanged;       // Node object is null by default to avoid unnecessary memory consumption, so we bind to class itself
+                }
+            
+            // Unsubscribe events to be sure objects will be collected by GC
+            if (e.OldItems != null)
+                foreach (CanvasControlBase item in e.OldItems)
+                {
+                    if (item is CanvasEdge)
+                    {
+                        (item as CanvasEdge).Edge.PropertyChanged -= Edge_PropertyChanged;
+
+                        Edge_PropertyChanged(null, new PropertyChangedEventArgs("Value"));                  // Call method last time after Edge is deleted
+                    }
+
+                    else if (item is CanvasRectangle)
+                        (item as CanvasRectangle).PropertyChanged -= CanvasRectangle_PropertyChanged;
+                }
+        }
+
+        private void CanvasRectangle_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Node")
+            {
+                // If node was just created, add handler to its PropertyChanged event
+                if ( (sender as CanvasRectangle).Node != null)
+                    (sender as CanvasRectangle).Node.PropertyChanged += Node_PropertyChanged;
+                
+                Node_PropertyChanged(null, new PropertyChangedEventArgs("Value"));                  // Call it when the value of Node property is changed - that's when it's either created or deleted
+            }
+        }
+
+        private void Edge_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Value" || e.PropertyName == "IsBidirectional")
+            {
+                MessageBox.Show("Edge changed!");
+            }
+        }
+
+        private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Value")
+            {
+                MessageBox.Show("Node changed!");
+            }
+        }
+
+        #endregion
         //----------------------------------
 
         private bool _NodeButtonIsPressed = false;
@@ -502,8 +564,11 @@ namespace GraphGenerator.ViewModels
             {
                 Node newNode = dialogViewModel.Node;
 
+                // Comparing if properties are different to optimize PropertyChanged event calls
+                if (canvasRectangle.Node.Value != newNode.Value)
+                    canvasRectangle.Node.Value = newNode.Value;
+
                 canvasRectangle.Node.Name = newNode.Name;
-                canvasRectangle.Node.Value = newNode.Value;
                 canvasRectangle.Node.NameHorizontalAlignment = newNode.NameHorizontalAlignment;
                 canvasRectangle.Node.NameVerticalAlignment = newNode.NameVerticalAlignment;
             }
@@ -540,8 +605,12 @@ namespace GraphGenerator.ViewModels
             {
                 Edge edge = dialogViewModel.Edge;
 
-                canvasEdge.Edge.Value = edge.Value;
-                canvasEdge.Edge.IsBidirectional = edge.IsBidirectional;
+                // Comparing if properties are different to optimize PropertyChanged event calls
+                if (canvasEdge.Edge.Value != edge.Value)
+                    canvasEdge.Edge.Value = edge.Value;
+
+                if (canvasEdge.Edge.IsBidirectional != edge.IsBidirectional)
+                    canvasEdge.Edge.IsBidirectional = edge.IsBidirectional;
             }
         }
 

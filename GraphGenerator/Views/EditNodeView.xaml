@@ -51,7 +51,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Podaj wartość wierzchołka:" Grid.Row="0" Grid.Column="0" />
-        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="3"
+        <controls:ValidableTextbox Tekst="{Binding Node.Value}" MaxLength="5"
                            Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Podaj nazwę wierzchołka:" Grid.Row="1" Grid.Column="0" />
