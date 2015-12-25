@@ -70,6 +70,9 @@
       <DependentUpon>ValidableTextbox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ValidableTextboxObsolete.cs" />
+    <Compile Include="Models\Canvas\CanvasControlBase.cs" />
+    <Compile Include="Models\Canvas\CanvasEdge.cs" />
+    <Compile Include="Models\Canvas\CanvasRectangle.cs" />
     <Compile Include="Models\Edge.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -88,12 +91,15 @@
     <Compile Include="Utilities\Behaviours\CanvasBehaviour.cs" />
     <Compile Include="Utilities\Behaviours\ContextMenuBehaviour.cs" />
     <Compile Include="Utilities\Behaviours\EventBehaviourFactory.cs" />
+    <Compile Include="Utilities\CanvasItemsCollectionExtensions.cs" />
     <Compile Include="Utilities\Converters\AlignmentToGridPositionConverter.cs" />
     <Compile Include="Utilities\Converters\BoolToDirectionConverter.cs" />
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
     <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
     <Compile Include="Utilities\Converters\ThicknessToFontWeigthConverter.cs" />
+    <Compile Include="Utilities\GraphCompatibility.cs" />
+    <Compile Include="Utilities\GraphHelper.cs" />
     <Compile Include="Utilities\InputHelper.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\BaseNotifyPropertyChanged.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-using GraphGenerator.Models;
 using Common.Models;
+using Common.Models.Canvas;
 using Common.Utilities;
 using MvvmDialogs;
-using Common.Controls;
 using GraphGenerator.Utilities;
 using System.Windows.Controls;
 
@@ -95,7 +95,7 @@ namespace GraphGenerator.ViewModels
         //----------------------------------
         #region PropertyChanged Event Handlers
 
-        private void CanvasItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void CanvasItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
                 foreach (CanvasControlBase item in e.NewItems)
@@ -139,7 +139,7 @@ namespace GraphGenerator.ViewModels
         {
             if (e.PropertyName == "Value" || e.PropertyName == "IsBidirectional")
             {
-                MessageBox.Show("Edge changed!");
+                //MessageBox.Show("Edge changed!");
             }
         }
 
@@ -147,7 +147,7 @@ namespace GraphGenerator.ViewModels
         {
             if (e.PropertyName == "Value")
             {
-                MessageBox.Show("Node changed!");
+                //MessageBox.Show("Node changed!");
             }
         }
 
@@ -213,11 +213,7 @@ namespace GraphGenerator.ViewModels
         
         private int GetNewNodeID()
         {
-            List<Node> nodesList = CanvasItems                 // List of all nodes in a canvas
-                .OfType<CanvasRectangle>()
-                .Select(rect => rect.Node)
-                .Where(n => n != null)
-                .ToList();
+            List<Node> nodesList = CanvasItems.GetAllNodes();
 
             if (nodesList.Count == 0)
                 return 0;
@@ -230,11 +226,7 @@ namespace GraphGenerator.ViewModels
         }
         private int GetNewEdgeID()
         {
-            List<Edge> edgesList = CanvasItems                 // List of all edges in a canvas
-                .OfType<CanvasEdge>()
-                .Select(canv => canv.Edge)
-                .Where(e => e != null)
-                .ToList();
+            List<Edge> edgesList = CanvasItems.GetAllEdges();
 
             if (edgesList.Count == 0)
                 return 0;
@@ -266,32 +258,13 @@ namespace GraphGenerator.ViewModels
             return columnsCount * (y / this.RectangleSize) + (x / this.RectangleSize);
         }
 
-        /// <summary>
-        /// Gets list of edges between two nodes.
-        /// </summary>
-        private List<Edge> GetListOfEdges(Node node1, Node node2)
-        {
-            return node1.Edges
-                .Where(e => e.NodesID.Contains(node2.ID))
-                .ToList();
-        }
-
         private void DeleteEdge(CanvasEdge canvasEdge)
         {
-            List<Node> nodesList = CanvasItems                 // List of all nodes in a canvas
-                   .OfType<CanvasRectangle>()
-                   .Select(rect => rect.Node)
-                   .Where(n => n != null)
-                   .ToList();
+            List<Node> nodesList = CanvasItems.GetAllNodes();
 
             foreach (Node node in nodesList)
             {
-                Edge edge = node.Edges
-                    .Where(e => e.ID == canvasEdge.Edge.ID)
-                    .SingleOrDefault();
-
-                if (edge != null)
-                    node.Edges.Remove(edge);
+                node.Edges.Remove(canvasEdge.Edge);
             }
 
             CanvasItems.Remove(canvasEdge);
@@ -305,7 +278,7 @@ namespace GraphGenerator.ViewModels
         /// <returns>True, if edge already exists. Otherwise false.</returns>
         private bool NodesAreAlreadyConnected(Node node1, Node node2)
         {
-            List<Edge> connectingEdges = GetListOfEdges(node1, node2);
+            List<Edge> connectingEdges = GraphHelper.GetListOfEdges(node1, node2);
             
             // If there already exist edges in both directions
             if (connectingEdges.Count > 1)
@@ -442,11 +415,8 @@ namespace GraphGenerator.ViewModels
 
                 // Add edge only if rectangle contains node and the edge doesn't try to connect node with itself
                 if ( rectEnd.DoesContainNode && rectEnd.Node.Edges.Contains(canvasEdge.Edge) == false )
-                {                    
-                    CanvasRectangle rectStart = CanvasItems
-                        .OfType<CanvasRectangle>()
-                        .Where( r => r.Node?.ID == canvasEdge.Edge.NodesID[0] )
-                        .Single();
+                {
+                    CanvasRectangle rectStart = CanvasItems.GetRectangleAtBeginning(canvasEdge.Edge);
 
                     if ( NodesAreAlreadyConnected(rectStart.Node, rectEnd.Node) )
                     {
@@ -460,9 +430,9 @@ namespace GraphGenerator.ViewModels
                         // Check if edge can be bidirectional
                         //--------------------------------------
 
-                        List<Edge> connectingEdges = GetListOfEdges(rectStart.Node, rectEnd.Node);
+                        List<Edge> connectingEdges = GraphHelper.GetListOfEdges(rectStart.Node, rectEnd.Node);
                         bool canEdgeBeBidirectional = true;
-
+                        
                         if (connectingEdges.Count == 1 && connectingEdges[0].IsBidirectional == false)
                             canEdgeBeBidirectional = false;
 
@@ -480,9 +450,7 @@ namespace GraphGenerator.ViewModels
                             
                             if (connectingEdges.Count == 1)                                     // If there already exist edge connecting both nodes (it's not bidirectional for sure, because we checked it before
                             {
-                                CanvasEdge secondCanvasEdge = CanvasItems                       // Edge with opposed direction
-                                    .OfType<CanvasEdge>()
-                                    .Single(ce => ce.Edge == connectingEdges[0]);
+                                CanvasEdge secondCanvasEdge = CanvasItems.GetCanvasEdge( connectingEdges[0] );          // Edge with opposed direction
 
                                 CorrectEdgePosition(rectStart, rectEnd, canvasEdge, true);
                                 CorrectEdgePosition(rectEnd, rectStart, secondCanvasEdge, true);
@@ -551,9 +519,7 @@ namespace GraphGenerator.ViewModels
 
         void NodeMenuItemEditExecute(int nodeID)
         {
-            CanvasRectangle canvasRectangle = CanvasItems
-                .OfType<CanvasRectangle>()
-                .Single(r => r.Node?.ID == nodeID);
+            CanvasRectangle canvasRectangle = CanvasItems.GetRectByNodeId(nodeID);
 
             var dialogViewModel = new EditNodeViewModel(canvasRectangle.Node);
 
@@ -576,22 +542,15 @@ namespace GraphGenerator.ViewModels
         void EdgeMenuItemEditExecute(int edgeID)
         {
             bool canEdgeBeBidirectional = true;
-
+            
             // Edge to edit
-            CanvasEdge canvasEdge = CanvasItems
-                .OfType<CanvasEdge>()
-                .Single(e => e.Edge.ID == edgeID);
+            CanvasEdge canvasEdge = CanvasItems.GetEdgeById(edgeID);
 
             // Nodes which this edge is connecting
-            List<Node> connectedNodes = CanvasItems
-                .OfType<CanvasRectangle>()
-                .Where( r => r.Node != null )
-                .Select( r => r.Node )
-                .Where( n => canvasEdge.Edge.NodesID.Contains(n.ID) )
-                .ToList();
+            List<Node> connectedNodes = CanvasItems.GetConnectedNodes(canvasEdge.Edge);
             
             // List of all edges between those two nodes
-            List<Edge> connectingEdges = GetListOfEdges(connectedNodes[0], connectedNodes[1]);
+            List<Edge> connectingEdges = GraphHelper.GetListOfEdges(connectedNodes[0], connectedNodes[1]);
 
             if (connectingEdges.Count == 2)
                 canEdgeBeBidirectional = false;
@@ -619,17 +578,12 @@ namespace GraphGenerator.ViewModels
             MessageBoxResult result = MessageBox.Show("Czy na pewno chcesz usunąć podany wierzchołek?", "Potwierdź działanie", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (result == MessageBoxResult.Yes)
-            {
+            {                
                 // Rectangle containing node to delete
-                CanvasRectangle canvasRectangle = CanvasItems
-                    .OfType<CanvasRectangle>()
-                    .Single(r => r.Node?.ID == nodeID);
-
+                CanvasRectangle canvasRectangle = CanvasItems.GetRectByNodeId(nodeID);
+                
                 // All edges connected to removable node
-                List<CanvasEdge> canvasEdgesList = CanvasItems
-                    .OfType<CanvasEdge>()
-                    .Where(e => canvasRectangle.Node.Edges.Contains(e.Edge))
-                    .ToList();
+                List<CanvasEdge> canvasEdgesList = CanvasItems.GetConnectedEdges(canvasRectangle.Node);
 
                 foreach (CanvasEdge canvasEdge in canvasEdgesList)
                     DeleteEdge(canvasEdge);
@@ -644,28 +598,21 @@ namespace GraphGenerator.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                CanvasEdge canvasEdge = CanvasItems
-                .OfType<CanvasEdge>()
-                .Single(e => e.Edge.ID == edgeID);
-
+                // Edge to be deleted
+                CanvasEdge canvasEdge = CanvasItems.GetEdgeById(edgeID);
+                
                 // List of nodes which are connected by this edge
-                List<CanvasRectangle> rectanglesList = CanvasItems
-                    .OfType<CanvasRectangle>()
-                    .Where(r => r.Node != null)
-                    .Where(r => canvasEdge.Edge.NodesID.Contains(r.Node.ID))
-                    .ToList();
+                List<CanvasRectangle> rectanglesList = CanvasItems.GetConnectedRectangles(canvasEdge.Edge);
 
                 DeleteEdge(canvasEdge);
 
-                Edge connectingEdge = GetListOfEdges(rectanglesList[0].Node, rectanglesList[1].Node)
+                Edge connectingEdge = GraphHelper.GetListOfEdges(rectanglesList[0].Node, rectanglesList[1].Node)
                     .SingleOrDefault();
 
                 // If the nodes were connected both-sides by two directional edges
                 if (connectingEdge != null)
                 {
-                    CanvasEdge connectingCanvasEdge = CanvasItems
-                        .OfType<CanvasEdge>()
-                        .Single(e => e.Edge == connectingEdge);
+                    CanvasEdge connectingCanvasEdge = CanvasItems.GetCanvasEdge(connectingEdge);
 
                     // NodesID[0] = beginning of the edge. CorrectEdgePosition requires valid order of nodes, and because of that
                     // if the starting node isn't at the beginning, we need to reverse the order in rectanglesList.

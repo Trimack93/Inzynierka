@@ -64,9 +64,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\CanvasControlBase.cs" />
-    <Compile Include="Models\CanvasRectangle.cs" />
-    <Compile Include="Models\CanvasEdge.cs" />
     <Compile Include="Utilities\Converters\BoolToColorConverter.cs" />
     <Compile Include="Utilities\Converters\ButtonBackgroundConverter.cs" />
     <Compile Include="Utilities\MathHelper.cs" />
@@ -144,7 +141,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\SaveButton.png" />
   </ItemGroup>

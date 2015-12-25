@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphGenerator.Views"
         xmlns:vm="clr-namespace:GraphGenerator.ViewModels"
-        xmlns:model="clr-namespace:GraphGenerator.Models"
+        xmlns:model="clr-namespace:Common.Models.Canvas;assembly=Common"
         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:conv="clr-namespace:Common.Utilities.Converters;assembly=Common"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"

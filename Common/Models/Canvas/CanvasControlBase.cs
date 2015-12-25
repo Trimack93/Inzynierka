@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphGenerator.Models
+namespace Common.Models.Canvas
 {
     /// <summary>
     /// Provides basic properties which define object that can be placed inside drawing canvas.

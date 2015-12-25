@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Common.Models;
 using Common.Utilities;
 
-namespace GraphGenerator.Models
+namespace Common.Models.Canvas
 {
     public class CanvasRectangle : CanvasControlBase
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphGenerator.Models
+namespace Common.Models.Canvas
 {
     public class CanvasEdge : CanvasControlBase
     {
