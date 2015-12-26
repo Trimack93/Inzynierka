@@ -11,17 +11,45 @@ namespace WpfApplication1.ViewModels
 {
     public class LearningViewModel : BaseNotifyPropertyChanged
     {
-        public string AlgorithmName { get; private set; } = "[Nazwa algorytmu]";
+        public LearningViewModel() : this("[Nazwa algorytmu]") { }
+
+        public LearningViewModel(string algorithmName)
+        {
+            AlgorithmName = algorithmName;
+            //IsStopButtonVisible = true;
+        }
+
+        public string AlgorithmName { get; private set; }
         public string Instructions { get; set; } = @"Instrukcja dla aktualnie wykonywanej sekwencji. asdf asdf
                                    Test nowej linii
                                    fdsgsdfg";                                   // move to model of each algorithm
 
-        public LearningViewModel()
+        private bool _isStopButtonVisible { get; set; }
+        private bool _isNodeNamesControlVisible { get; set; }
+
+        public bool IsStopButtonVisible
         {
+            get { return _isStopButtonVisible; }
+            set
+            {
+                _isStopButtonVisible = value;
+                RaisePropertyChanged("IsStopButtonVisible");
+                RaisePropertyChanged("IsAdditionalControlVisible");
+            }
         }
-        public LearningViewModel(string algorithmName)
+        public bool IsNodeNamesControlVisible
         {
-            this.AlgorithmName = algorithmName;
+            get { return _isNodeNamesControlVisible; }
+            set
+            {
+                _isNodeNamesControlVisible = value;
+                RaisePropertyChanged("IsNodeNamesControlVisible");
+                RaisePropertyChanged("IsAdditionalControlVisible");
+            }
+        }
+        public bool IsAdditionalControlVisible
+        {
+            get { return IsStopButtonVisible || IsNodeNamesControlVisible; }
         }
     }
 }

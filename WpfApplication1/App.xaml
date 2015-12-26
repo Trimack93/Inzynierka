@@ -8,10 +8,10 @@
         
         <ResourceDictionary>
             <conv:StringToNewlineStringConverter x:Key="StringToNewlineStringConverter" />
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
             <!-- Common styles used by every project in the solution -->
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="/Common;component/CommonStyles.xaml" />-->
                 <ResourceDictionary Source="/Common;component/Styles/Buttons.xaml" />
                 <ResourceDictionary Source="/Common;component/Styles/TextBlocks.xaml" />
                 <ResourceDictionary Source="/Common;component/Styles/Rectangles.xaml" />

@@ -81,6 +81,11 @@
         <Setter Property="Padding" Value="0,0,0,15" />
     </Style>
 
+    <Style x:Key="CenteredButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
     <Style x:Key="ChooseHorizontalAlignmentButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>

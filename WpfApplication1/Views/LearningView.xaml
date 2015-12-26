@@ -19,6 +19,7 @@
         <!-- Can't move it to Styles, because image path from there will be different - during runtime it works, but designer can't resolve this -->
         <Style x:Key="EndSequenceButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
+            <Setter Property="Grid.Row" Value="2" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -42,6 +43,12 @@
                                 <Setter TargetName="border" Property="BorderThickness" Value="3" />
                                 <Setter TargetName="border" Property="BorderBrush" Value="Gold" />
                             </Trigger>
+
+                            <!-- Correct button position when no additional controls are present -->
+                            <DataTrigger Binding="{Binding IsAdditionalControlVisible}" Value="False">
+                                <Setter Property="Grid.Row" Value="4" />
+                                <Setter Property="Margin" Value="0,0,0,40" />
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
 
                     </ControlTemplate>
@@ -64,33 +71,44 @@
                 
                 <Rectangle Grid.Column="0" Width="726" Height="660" HorizontalAlignment="Left" Fill="LightGray" Margin="7,0,0,0"></Rectangle>
 
-                <Grid Grid.Column="1" HorizontalAlignment="Right" >
+                <Grid Grid.Column="1" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Width="250" Height="350" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-28,12,0">
+                    <StackPanel Grid.Row="0" Width="250" Height="350" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-28,0,0">
                         <TextBlock Text="Instrukcje" FontWeight="Bold" FontSize="16" Foreground="DodgerBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
                         <Line X1="15" Y1="10" X2="235" Y2="10" Stroke="Gold" StrokeThickness="1.5" />
 
                         <TextBlock Text="{Binding Instructions, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="5,10,5,0" />
                     </StackPanel>
 
-                    <Button Grid.Row="2" Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
+                    <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
                             ToolTip="Po naciśnięciu tego przycisku zakończysz obecnie wykonywaną sekwencję.\n
                             Spowoduje to sprawdzenie, czy wykonałeś wszystkie kroki zgodnie z wybranym algorytmem.\n
                             W przypadku wykrycia nieprawidłowości zostaniesz o tym poinformowany, a graf zostanie przywrócony do postaci,\n
                             w jakiej znajdował się na początku sekwencji." />
                     
-                    <Button Content="KONIEC" TextBlock.FontWeight="DemiBold" Background="Red" Click="CloseButton_Click"
-                            Grid.Row="4" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,10" Style="{StaticResource BaseButtonStyle}" />
-                    <Button Content="O PROGRAMIE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" Click="AboutButton_Click"
-                            Grid.Row="5" Height="35" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Style="{StaticResource BaseButtonStyle}" />
+                    <Rectangle Fill="Snow" Width="250" Height="100" Grid.Row="4"
+                               Visibility="{Binding IsNodeNamesControlVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                    <Button Content="STOP" Width="80" Height="80" Grid.Row="4" 
+                            FontWeight="Bold" FontSize="20" BorderThickness="3" Background="Orange"
+                            Visibility="{Binding IsStopButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource CenteredButtonStyle}" />
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Center">
+                        <Button Content="O PROGRAMIE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" Click="AboutButton_Click"
+                           Height="35" Width="120" Margin="0,0,15,0" Style="{StaticResource CenteredButtonStyle}" />
+                        
+                        <Button Content="KONIEC" TextBlock.FontWeight="DemiBold" Background="Red" Click="CloseButton_Click"
+                            Height="35" Width="120" Style="{StaticResource CenteredButtonStyle}" />
+                    </StackPanel>
                 </Grid>
             </Grid>
         </StackPanel>
