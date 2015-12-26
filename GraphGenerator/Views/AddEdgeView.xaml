@@ -48,7 +48,7 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Text="Podaj wartość krawędzi:" />
-            <controls:ValidableTextbox Tekst="{Binding Edge.Value}" MaxLength="2" IsNumeric="True" IsNotEmpty="{Binding CanAcceptInput}"
+            <controls:ValidableTextbox Tekst="{Binding Edge.Value}" MaxLength="2" IsNumeric="True"
                                Width="50" Height="25" Margin="10,0,0,0" />
         </StackPanel>
 

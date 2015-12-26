@@ -18,7 +18,7 @@ namespace GraphGenerator.ViewModels
 
         public AddEdgeViewModel(bool canEdgeBeBidirectional)
         {
-            this.Edge.Value = "0";
+            this.Edge.Value = "";
             this.CanAcceptBidirectionalEdge = canEdgeBeBidirectional;
         }
 

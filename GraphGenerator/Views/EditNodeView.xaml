@@ -55,7 +55,7 @@
                            Grid.Row="0" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <TextBlock Text="Podaj nazwę wierzchołka:" Grid.Row="1" Grid.Column="0" />
-        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="7" IsNotEmpty="{Binding CanAcceptInputName}"
+        <controls:ValidableTextbox Tekst="{Binding Node.Name}" MaxLength="7"
                            Grid.Row="1" Grid.Column="1" Width="50" Height="25" Margin="10,0,0,0" />
 
         <Button Content="Ustaw wartość wierzchołka: ∞" FontWeight="DemiBold" Style="{StaticResource BaseButtonStyle}"
