@@ -50,8 +50,6 @@ namespace GraphGenerator.ViewModels
 
             _graphCompatibility = new GraphCompatibility(CanvasItems);
 
-            //CanvasItems.CollectionChanged += CanvasItems_CollectionChanged;
-
             int columnsCount = this.CanvasWidth / this.RectangleSize;
             int rowsCount = this.CanvasHeight / this.RectangleSize;
 
@@ -70,17 +68,17 @@ namespace GraphGenerator.ViewModels
             //(CanvasItems[24] as CanvasRectangle).Node = new Node()
             //    { ID = this.GetNewNodeID(), Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
 
-            (CanvasItems[15] as CanvasRectangle).Node = new Node()
-            { ID = this.GetNewNodeID(), Name = "d", Value = "0", NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
+            //(CanvasItems[15] as CanvasRectangle).Node = new Node()
+            //{ ID = this.GetNewNodeID(), Name = "d", Value = "0", NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
 
-            (CanvasItems[59] as CanvasRectangle).Node = new Node()
-            { ID = this.GetNewNodeID(), Name = "e", Value = "", NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
+            //(CanvasItems[59] as CanvasRectangle).Node = new Node()
+            //{ ID = this.GetNewNodeID(), Name = "e", Value = "", NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
 
             //(CanvasItems[1] as CanvasRectangle).DoesContainNode = true;
             //(CanvasItems[69] as CanvasRectangle).DoesContainNode = true;
             //(CanvasItems[24] as CanvasRectangle).DoesContainNode = true;
-            (CanvasItems[15] as CanvasRectangle).DoesContainNode = true;
-            (CanvasItems[59] as CanvasRectangle).DoesContainNode = true;
+            //(CanvasItems[15] as CanvasRectangle).DoesContainNode = true;
+            //(CanvasItems[59] as CanvasRectangle).DoesContainNode = true;
 
             CheckCompatibility();
 
@@ -104,7 +102,6 @@ namespace GraphGenerator.ViewModels
             
         private void CheckCompatibility()
         {
-            //MessageBox.Show("Node changed!");
             _graphCompatibility.Init();
 
             if (_graphCompatibility.AreBasicRequirementsMet() == false)
@@ -528,8 +525,6 @@ namespace GraphGenerator.ViewModels
         {
             if (this.NodeButtonIsPressed)
                 AddNode(rectangleID);
-            //if (this.EdgeButtonIsPressed)
-            //    AddEdge(rectangleID);
         }
 
         void NodeMenuItemEditExecute(int nodeID)

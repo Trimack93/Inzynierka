@@ -88,5 +88,45 @@ namespace Common.Models
         //---------------------------------
 
         public List<int> NodesID { get; set; } = new List<int>(2);      // Stores the IDs of the nodes it's connecting - to avoid circular dependency
+
+        //---------------------------------
+        // While serializing object into XML, it's hashcode is also preserved.
+        // After reboot of the application, object hashcodes change and default Equals method fails.
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            Edge e = obj as Edge;
+
+            if (e == null)
+                return false;
+
+            bool result = this.ID == e.ID &&
+                this.Value == e.Value &&
+                this.Thickness == e.Thickness &&
+                this.IsBidirectional == e.IsBidirectional &&
+                this.SerializedColor == e.SerializedColor &&
+                this.Color == e.Color &&
+                this.NodesID.SequenceEqual(e.NodesID);
+
+            return result;
+        }
+
+        public static bool operator==(Edge a, Edge b)
+        {
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Edge a, Edge b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ID;
+        }
     }
 }
