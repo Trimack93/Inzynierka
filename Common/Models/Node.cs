@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Media;
 
 using Common.Utilities;
+using System.Xml.Serialization;
 
 namespace Common.Models
 {
@@ -68,15 +69,6 @@ namespace Common.Models
                 RaisePropertyChanged("Value");
             }
         }
-        public SolidColorBrush Color                // Node color (used in some algorithms)
-        {
-            get { return _Color; }
-            set
-            {
-                _Color = value;
-                RaisePropertyChanged("Color");
-            }
-        }
         public double Thickness                     // Node circle thickness
         {
             get { return _Thickness; }
@@ -84,6 +76,20 @@ namespace Common.Models
             {
                 _Thickness = value;
                 RaisePropertyChanged("Thickness");
+            }
+        }
+        public Color SerializedColor { get; set; }  // Color which will be serialized into XML file
+
+        [XmlIgnore]
+        public SolidColorBrush Color                // Node color (used in some algorithms)
+        {
+            get { return _Color; }
+            set
+            {
+                _Color = value;
+                RaisePropertyChanged("Color");
+
+                SerializedColor = value.Color;
             }
         }
 

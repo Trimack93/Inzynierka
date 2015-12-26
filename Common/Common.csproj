@@ -74,6 +74,7 @@
     <Compile Include="Models\Canvas\CanvasEdge.cs" />
     <Compile Include="Models\Canvas\CanvasRectangle.cs" />
     <Compile Include="Models\Edge.cs" />
+    <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -98,6 +99,7 @@
     <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
     <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
     <Compile Include="Utilities\Converters\ThicknessToFontWeigthConverter.cs" />
+    <Compile Include="Utilities\CustomXmlSerializer.cs" />
     <Compile Include="Utilities\GraphCompatibility.cs" />
     <Compile Include="Utilities\GraphHelper.cs" />
     <Compile Include="Utilities\InputHelper.cs" />

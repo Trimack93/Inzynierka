@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace Common.Models
-{    
+{
     // Krawędź
     public class Edge : BaseNotifyPropertyChanged
     {
@@ -50,15 +52,6 @@ namespace Common.Models
                 RaisePropertyChanged("Value");
             }
         }
-        public SolidColorBrush Color
-        {
-            get { return _Color; }
-            set
-            {
-                _Color = value;
-                RaisePropertyChanged("Color");
-            }
-        }
         public double Thickness
         {
             get { return _Thickness; }
@@ -75,6 +68,20 @@ namespace Common.Models
             {
                 _IsBidirectional = value;
                 RaisePropertyChanged("IsBidirectional");
+            }
+        }
+        public Color SerializedColor { get; set; }                      // Color which will be serialized into XML file
+
+        [XmlIgnore]
+        public SolidColorBrush Color
+        {
+            get { return _Color; }
+            set
+            {
+                _Color = value;
+                RaisePropertyChanged("Color");
+
+                SerializedColor = value.Color;
             }
         }
 

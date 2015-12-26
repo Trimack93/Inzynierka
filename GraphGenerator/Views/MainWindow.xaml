@@ -95,11 +95,11 @@
                         </Grid>
                     </GroupBox>
 
-                    <controls:InterfaceButton ImageSource="/Resources/SaveButton.png" Title="Zapisz" Background="Gold"
-                                              Grid.Row="5" Command="{Binding ChangeCompatibility}" />
+                    <controls:InterfaceButton ImageSource="/Resources/SaveButton.png" Title="Zapisz" Background="Gold" Grid.Row="5" 
+                                              Command="{Binding SaveGraph}" IsEnabled="{Binding CanSaveGraph}"/>
 
-                    <controls:InterfaceButton ImageSource="/Resources/OpenButton.png" Title="Otwórz" Background="Gold" Margin="0,10,0,0"
-                                              Grid.Row="6" />
+                    <controls:InterfaceButton ImageSource="/Resources/OpenButton.png" Title="Otwórz" Background="Gold" Grid.Row="6" Margin="0,10,0,0"
+                                              Command="{Binding LoadGraph}"/>
                 </Grid>
 
                 <!--<Canvas Background="LightGray" Grid.Column="1" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0">

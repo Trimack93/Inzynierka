@@ -16,6 +16,9 @@ using Common.Utilities;
 using MvvmDialogs;
 using GraphGenerator.Utilities;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace GraphGenerator.ViewModels
 {
@@ -67,17 +70,17 @@ namespace GraphGenerator.ViewModels
             //(CanvasItems[24] as CanvasRectangle).Node = new Node()
             //    { ID = this.GetNewNodeID(), Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
 
-            //(CanvasItems[15] as CanvasRectangle).Node = new Node()
-            //    { ID = this.GetNewNodeID(), Name = "d", Value = 666, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
+            (CanvasItems[15] as CanvasRectangle).Node = new Node()
+            { ID = this.GetNewNodeID(), Name = "d", Value = "0", NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
 
-            //(CanvasItems[59] as CanvasRectangle).Node = new Node()
-            //{ ID = this.GetNewNodeID(), Name = "e", Value = 92, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
+            (CanvasItems[59] as CanvasRectangle).Node = new Node()
+            { ID = this.GetNewNodeID(), Name = "e", Value = "", NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Bottom };
 
             //(CanvasItems[1] as CanvasRectangle).DoesContainNode = true;
             //(CanvasItems[69] as CanvasRectangle).DoesContainNode = true;
             //(CanvasItems[24] as CanvasRectangle).DoesContainNode = true;
-            //(CanvasItems[15] as CanvasRectangle).DoesContainNode = true;
-            //(CanvasItems[59] as CanvasRectangle).DoesContainNode = true;
+            (CanvasItems[15] as CanvasRectangle).DoesContainNode = true;
+            (CanvasItems[59] as CanvasRectangle).DoesContainNode = true;
 
             CheckCompatibility();
 
@@ -97,60 +100,8 @@ namespace GraphGenerator.ViewModels
         }
 
         //----------------------------------
-        #region PropertyChanged Event Handlers
-
-        //private void CanvasItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    if (e.NewItems != null)
-        //        foreach (CanvasControlBase item in e.NewItems)
-        //        {
-        //            if (item is CanvasEdge)                                                                 // Because Edge class doesn't contain its X and Y coordinates,
-        //                (item as CanvasEdge).Edge.PropertyChanged += Edge_PropertyChanged;                  // event won't be fired thousand times during addition of new edge - wise owl predicted it!
-
-        //            else if (item is CanvasRectangle)
-        //                (item as CanvasRectangle).PropertyChanged += CanvasRectangle_PropertyChanged;       // Node object is null by default to avoid unnecessary memory consumption, so we bind to class itself
-        //        }
+        #region Compatibility
             
-        //    // Unsubscribe events to be sure objects will be collected by GC
-        //    if (e.OldItems != null)
-        //        foreach (CanvasControlBase item in e.OldItems)
-        //        {
-        //            if (item is CanvasEdge)
-        //            {
-        //                (item as CanvasEdge).Edge.PropertyChanged -= Edge_PropertyChanged;
-
-        //                Edge_PropertyChanged(null, new PropertyChangedEventArgs("Value"));                  // Call method last time after Edge is deleted
-        //            }
-
-        //            else if (item is CanvasRectangle)
-        //                (item as CanvasRectangle).PropertyChanged -= CanvasRectangle_PropertyChanged;
-        //        }
-        //}
-
-        //private void CanvasRectangle_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "Node")
-        //    {
-        //        // If node was just created, add handler to its PropertyChanged event
-        //        if ( (sender as CanvasRectangle).Node != null)
-        //            (sender as CanvasRectangle).Node.PropertyChanged += Node_PropertyChanged;
-                
-        //        Node_PropertyChanged(null, new PropertyChangedEventArgs("Value"));                  // Call it when the value of Node property is changed - that's when it's either created or deleted
-        //    }
-        //}
-
-        //private void Edge_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "Value" || e.PropertyName == "IsBidirectional")
-        //        CheckCompatibility();
-        //}
-
-        //private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "Value")
-        //        CheckCompatibility();
-        //}
-
         private void CheckCompatibility()
         {
             //MessageBox.Show("Node changed!");
@@ -161,6 +112,7 @@ namespace GraphGenerator.ViewModels
                 for (int i = 0; i < Colors.Count; i++)
                     Colors[i] = Brushes.Red;
 
+                RaisePropertyChanged("CanSaveGraph");
                 return;
             }
 
@@ -200,6 +152,8 @@ namespace GraphGenerator.ViewModels
             // Bellman–Ford algorithm
             Colors[6] = areEdgesWithIntValues && areNodesZeroAndInfinites && isGraphDirected ?
                 Brushes.Green : Brushes.Red;
+
+            RaisePropertyChanged("CanSaveGraph");
         }
 
         #endregion
@@ -249,16 +203,31 @@ namespace GraphGenerator.ViewModels
         {
             get { return !(NodeButtonIsPressed || EdgeButtonIsPressed); }
         }
+        public bool CanSaveGraph
+        {
+            get { return Colors.Any(c => c == Brushes.Green); }
+        }
 
         public ObservableCollection<SolidColorBrush> Colors
         {
             get { return _Colors; }
-            private set { _Colors = value; }
+            private set
+            {
+                _Colors = value;
+                RaisePropertyChanged("Colors");
+            }
         }
         public ObservableCollection<CanvasControlBase> CanvasItems
         {
             get { return _CanvasItems; }
-            private set { _CanvasItems = value; }
+            private set
+            {
+                _CanvasItems = value;
+                _graphCompatibility = new GraphCompatibility(CanvasItems);              // Refresh collection within _graphCompatibility object
+
+                RaisePropertyChanged("CanvasItems");
+
+            }
         }
 
         //----------------------------------
@@ -544,15 +513,6 @@ namespace GraphGenerator.ViewModels
 
         //----------------------------------
 
-        // GUI update test
-        void ChangeCompatibilityExecute()
-        {
-            if (Colors[2] == Brushes.Green)
-                Colors[2] = Brushes.Red;
-            else
-                Colors[2] = Brushes.Green;
-        }
-
         void AddNodeClickExecute()
         {
             EdgeButtonIsPressed = false;
@@ -687,6 +647,60 @@ namespace GraphGenerator.ViewModels
             contextMenu.IsOpen = this.IsEditState;
         }
 
+        void SaveGraphExecute()
+        {
+            string path = Path.GetFullPath("../../CustomGraphs/");                  // Can bug in release, test it
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.InitialDirectory = path;
+            saveDialog.Filter = "Custom graph file (*.huu)|*.huu";
+
+            if (saveDialog.ShowDialog() == true)
+            {
+                Graph graph = new Graph();
+                graph.CanvasGraph = CanvasItems;
+
+                for (int i = 0; i < Colors.Count; i++)
+                {
+                    if (Colors[i] == Brushes.Green)
+                        graph.AlgorithmsSupported[i] = true;
+                }
+
+                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(Graph) );
+
+                using ( StreamWriter writer = new StreamWriter(saveDialog.FileName) )
+                    xmlSerializer.Serialize(writer, graph);
+            }
+        }
+
+        void LoadGraphExecute()
+        {
+            string path = Path.GetFullPath("../../CustomGraphs/");                  // Can bug in release, test it
+
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.InitialDirectory = path;
+            openDialog.Filter = "Custom graph file (*.huu)|*.huu";
+
+            if (openDialog.ShowDialog() == true)
+            {
+                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer(typeof(Graph));
+
+                using (StreamReader reader = new StreamReader(openDialog.FileName))
+                {
+                    Graph graph = (Graph) xmlSerializer.Deserialize(reader);
+
+                    //this.CanvasItems.Clear();
+                    this.CanvasItems = graph.CanvasGraph;
+
+                    for (int i = 0; i < Colors.Count; i++)
+                    {
+                        Colors[i] = graph.AlgorithmsSupported[i] ?
+                            Brushes.Green : Brushes.Red;
+                    }
+                }
+            }
+        }
+
         //----------------------------------
 
         bool CanClickRectangle()
@@ -710,19 +724,23 @@ namespace GraphGenerator.ViewModels
         {
             get { return new RelayCommand<object>( p => AddEdgeClickExecute() ); }
         }
-        public ICommand ChangeCompatibility
+        public ICommand SaveGraph
         {
-            get { return new RelayCommand<object>( p => ChangeCompatibilityExecute() ); }
+            get { return new RelayCommand<object>( p => SaveGraphExecute() ); }
+        }
+        public ICommand LoadGraph
+        {
+            get { return new RelayCommand<object>( p => LoadGraphExecute() ); }
         }
 
         public ICommand ClickRectangle
         {
-            get { return new RelayCommand<int>( param => ClickRectangleExecute(param), CanClickRectangle ); }
+            get { return new RelayCommand<int>(param => ClickRectangleExecute(param), CanClickRectangle); }
         }
 
         public ICommand ContextMenuOpened
         {
-            get { return new RelayCommand<RoutedEventArgs>(p => ContextMenuOpenedExecute(p)); }
+            get { return new RelayCommand<RoutedEventArgs>( p => ContextMenuOpenedExecute(p) ); }
         }
 
         public ICommand NodeMenuItemEdit

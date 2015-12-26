@@ -72,14 +72,14 @@
                             <Setter TargetName="border" Property="Opacity" Value="0.95" />
                         </Trigger>
 
-                        <MultiTrigger>
+                        <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsPressed" Value="True" />
                                 <Condition Property="Background" Value="Red" />
                             </MultiTrigger.Conditions>
 
                             <Setter TargetName="border" Property="Background" Value="DarkOrange" />
-                        </MultiTrigger>
+                        </MultiTrigger>-->
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -90,14 +90,14 @@
                             <Setter TargetName="border" Property="Background" Value="Chartreuse" />
                         </MultiTrigger>
 
-                        <MultiTrigger>
+                        <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsPressed" Value="True" />
                                 <Condition Property="Background" Value="Orange" />
                             </MultiTrigger.Conditions>
 
                             <Setter TargetName="border" Property="Background" Value="Wheat" />
-                        </MultiTrigger>
+                        </MultiTrigger>-->
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -107,6 +107,10 @@
 
                             <Setter TargetName="border" Property="Background" Value="Yellow" />
                         </MultiTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="LightGray" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>

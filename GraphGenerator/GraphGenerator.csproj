@@ -142,6 +142,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CustomGraphs\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

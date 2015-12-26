@@ -64,5 +64,7 @@ namespace Common.Models.Canvas
             this.RectangleID = ID;
             this.SideLength = sideLength;
         }
+
+        public CanvasRectangle() { }
     }
 }

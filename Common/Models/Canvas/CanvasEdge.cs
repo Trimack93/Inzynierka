@@ -77,5 +77,7 @@ namespace Common.Models.Canvas
 
             this.Edge = ec;
         }
+
+        public CanvasEdge() { }
     }
 }

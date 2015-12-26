@@ -43,5 +43,11 @@ namespace Common.Models.Canvas
             this.CanvasLeft = x;
             this.CanvasTop = y;
         }
+
+        protected CanvasControlBase()
+        {
+            this.CanvasLeft = 0;
+            this.CanvasTop = 0;
+        }
     }
 }
