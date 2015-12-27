@@ -66,6 +66,9 @@
     <Compile Include="Controls\NodeControl.xaml.cs">
       <DependentUpon>NodeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NodeNamesList.xaml.cs">
+      <DependentUpon>NodeNamesList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ValidableTextbox.xaml.cs">
       <DependentUpon>ValidableTextbox.xaml</DependentUpon>
     </Compile>
@@ -73,6 +76,7 @@
     <Compile Include="Models\Canvas\CanvasControlBase.cs" />
     <Compile Include="Models\Canvas\CanvasEdge.cs" />
     <Compile Include="Models\Canvas\CanvasRectangle.cs" />
+    <Compile Include="Models\ComboboxElement.cs" />
     <Compile Include="Models\Edge.cs" />
     <Compile Include="Models\Graph.cs" />
     <Compile Include="Models\Node.cs" />
@@ -126,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NodeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NodeNamesList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

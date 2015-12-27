@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApplication1.Views"
         xmlns:vm="clr-namespace:WpfApplication1.ViewModels"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
+        xmlns:model="clr-namespace:Common.Models.Canvas;assembly=Common"
         mc:Ignorable="d"
         Title="Algorytmy grafowe" Width="1024" Height="768" Background="RoyalBlue"
         ResizeMode="CanMinimize"
@@ -69,7 +71,37 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 
-                <Rectangle Grid.Column="0" Width="726" Height="660" HorizontalAlignment="Left" Fill="LightGray" Margin="7,0,0,0"></Rectangle>
+                <!--<Rectangle Grid.Column="0" Width="726" Height="660" HorizontalAlignment="Left" Fill="LightGray" Margin="7,0,0,0"></Rectangle>-->
+
+
+                <ItemsControl ItemsSource="{Binding CanvasItems}" Grid.Column="0" Name="CanvasItemsControl" HorizontalAlignment="Left"
+                            Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="7,0,0,0" >
+                    <!--11x10-->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Background="LightGray" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding CanvasLeft}" />
+                            <Setter Property="Canvas.Top" Value="{Binding CanvasTop}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type model:CanvasRectangle}">
+                            <Button Width="{Binding SideLength}" Height="{Binding SideLength}" Style="{StaticResource LearningCanvasButtonStyle}" />
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type model:CanvasEdge}">
+                            <controls:EdgeControl X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
+                                                  Edge="{Binding Edge}" CanFireMouseOverEvents="True"
+                                                  Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
 
                 <Grid Grid.Column="1" >
                     <Grid.RowDefinitions>
@@ -90,13 +122,18 @@
                     </StackPanel>
 
                     <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
+                            Command="{Binding EndSequenceClick}"
                             ToolTip="Po naciśnięciu tego przycisku zakończysz obecnie wykonywaną sekwencję.\n
                             Spowoduje to sprawdzenie, czy wykonałeś wszystkie kroki zgodnie z wybranym algorytmem.\n
                             W przypadku wykrycia nieprawidłowości zostaniesz o tym poinformowany, a graf zostanie przywrócony do postaci,\n
                             w jakiej znajdował się na początku sekwencji." />
-                    
-                    <Rectangle Fill="Snow" Width="250" Height="100" Grid.Row="4"
-                               Visibility="{Binding IsNodeNamesControlVisible, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                    <StackPanel Grid.Row="4" Visibility="{Binding IsNodeNamesControlVisible, Converter={StaticResource BoolToVisibilityConverter}}" >
+                        <TextBlock Text="Kolejka wierzchołków:" Foreground="Snow" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,15" />
+                        <!--<Rectangle Fill="Snow" Width="250" Height="40" />-->
+                        <controls:NodeNamesList Width="250" ElementWidth="40" NodesList="{Binding DataContext.CanvasNodes, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
+                                                ComboBoxEnabled="{Binding DataContext.IsNodeNamesControlEnabled, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"/>
+                    </StackPanel>
 
                     <Button Content="STOP" Width="80" Height="80" Grid.Row="4" 
                             FontWeight="Bold" FontSize="20" BorderThickness="3" Background="Orange"

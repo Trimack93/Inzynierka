@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="Common.Controls.NodeNamesList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Common.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Name="NodeNamesListControl">
+
+    <ItemsControl Name="NodeItemsControl" ItemsSource="{Binding ElementsList}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="{Binding ElementWidth}" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.Template>
+            <ControlTemplate TargetType="ItemsControl">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <ItemsPresenter />
+                </ScrollViewer>
+            </ControlTemplate>
+        </ItemsControl.Template>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <!--<Border BorderThickness="1" BorderBrush="Black">
+                    <TextBlock Text="{Binding Wartosc}" FontSize="12" TextAlignment="Center" VerticalAlignment="Center"
+                                   Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=ListHeight}" />
+                </Border>-->
+                <ComboBox HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                          Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=ElementWidth}"
+                          Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=ElementHeight}"
+                          ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=NodesList}"
+                          IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=ComboBoxEnabled}"
+                          Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}}"
+                          SelectionChanged="ComboBox_SelectionChanged" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    <ComboBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Usuń" IsEnabled="{Binding IsValueChosen}"
+                                      Command="{Binding Path=PlacementTarget.Tag.ContextMenuItemDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
+                                      CommandParameter="{Binding}" />
+                        </ContextMenu>
+                    </ComboBox.ContextMenu>
+                </ComboBox>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    
+</UserControl>
