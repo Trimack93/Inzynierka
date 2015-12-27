@@ -652,6 +652,8 @@ namespace GraphGenerator.ViewModels
 
             if (saveDialog.ShowDialog() == true)
             {
+                List<Graph> graphsList = new List<Graph>();                         // Graphs will be initially stored as list - algorithm views will read random graph from it,
+                                                                                    // and user graphs will always be the first and only element in the list
                 Graph graph = new Graph();
                 graph.CanvasGraph = CanvasItems;
 
@@ -661,10 +663,18 @@ namespace GraphGenerator.ViewModels
                         graph.AlgorithmsSupported[i] = true;
                 }
 
-                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(Graph) );
+                graphsList.Add(graph);
+                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(List<Graph>) );
 
-                using ( StreamWriter writer = new StreamWriter(saveDialog.FileName) )
-                    xmlSerializer.Serialize(writer, graph);
+                using ( StringWriter writer = new StringWriter() )
+                {
+                    xmlSerializer.Serialize(writer, graphsList);
+
+                    string plainXml = writer.GetStringBuilder().ToString();
+                    string encryptedXml = StringEncryption.Encrypt(plainXml, "Yaranaika?");
+
+                    File.WriteAllText(saveDialog.FileName, encryptedXml);
+                }
             }
         }
 
@@ -678,20 +688,32 @@ namespace GraphGenerator.ViewModels
 
             if (openDialog.ShowDialog() == true)
             {
-                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer(typeof(Graph));
+                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(List<Graph>) );
 
-                using (StreamReader reader = new StreamReader(openDialog.FileName))
+                try
                 {
-                    Graph graph = (Graph) xmlSerializer.Deserialize(reader);
+                    string encryptedXml = File.ReadAllText(openDialog.FileName);
+                    string plainXml = StringEncryption.Decrypt(encryptedXml, "Yaranaika?");
 
-                    //this.CanvasItems.Clear();
-                    this.CanvasItems = graph.CanvasGraph;
-
-                    for (int i = 0; i < Colors.Count; i++)
+                    using (StringReader reader = new StringReader(plainXml))
                     {
-                        Colors[i] = graph.AlgorithmsSupported[i] ?
-                            Brushes.Green : Brushes.Red;
+                        Graph graph = ((List<Graph>)xmlSerializer.Deserialize(reader))[0];
+
+                        //this.CanvasItems.Clear();
+                        this.CanvasItems = graph.CanvasGraph;
+
+                        for (int i = 0; i < Colors.Count; i++)
+                        {
+                            Colors[i] = graph.AlgorithmsSupported[i] ?
+                                Brushes.Green : Brushes.Red;
+                        }
+
+                        RaisePropertyChanged("CanSaveGraph");
                     }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Wystąpił błąd podczas wczytywania pliku. Upewnij się, że nie jest on uszkodzony.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

@@ -104,6 +104,7 @@
     <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
     <Compile Include="Utilities\Converters\ThicknessToFontWeigthConverter.cs" />
     <Compile Include="Utilities\CustomXmlSerializer.cs" />
+    <Compile Include="Utilities\StringEncryption.cs" />
     <Compile Include="Utilities\GraphCompatibility.cs" />
     <Compile Include="Utilities\GraphHelper.cs" />
     <Compile Include="Utilities\InputHelper.cs" />
