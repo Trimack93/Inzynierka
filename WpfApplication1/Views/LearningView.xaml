@@ -118,7 +118,7 @@
                         <TextBlock Text="Instrukcje" FontWeight="Bold" FontSize="16" Foreground="DodgerBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
                         <Line X1="15" Y1="10" X2="235" Y2="10" Stroke="Gold" StrokeThickness="1.5" />
 
-                        <TextBlock Text="{Binding Instructions, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="5,10,5,0" />
+                        <TextBlock Text="{Binding Instruction, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="10,10,10,0" />
                     </StackPanel>
 
                     <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"

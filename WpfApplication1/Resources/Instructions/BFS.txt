@@ -1,0 +1,15 @@
+﻿# Witaj w algorytmie przeszukiwania wszerz!
+
+ 
+Wierzchołek, od którego rozpoczyna się działanie algorytmu, posiada wartość 0.
+
+W pierwszym kroku należy obliczyć odległość dla każdego z sąsiadujących z nim wierzchołków oraz przepisać je do kolejki.
+
+Następnie trzeba zaznaczyć wierzchołek przetworzony - tutaj ten o wartości 0.
+
+
+Aby zmienić wartość wierzchołka, wystarczy kliknąć go lewym przyciskiem myszy.
+
+Aby oznaczyć wierzchołek jako przetworzony, trzeba kliknąć go prawym przyciskiem myszy i wybrać stosowną opcję.
+
+# Druga instrukcja

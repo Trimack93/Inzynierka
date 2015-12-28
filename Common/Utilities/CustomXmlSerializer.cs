@@ -27,23 +27,32 @@ namespace Common.Utilities
         {
             var result = base.Deserialize(reader);
 
-            if (result is Graph)
+            if (result is List<Graph>)
             {
-                ObservableCollection<CanvasControlBase> items = (result as Graph).CanvasGraph;
+                List<Graph> graphsList = result as List<Graph>;
 
-                List<Edge> edgesList = items.GetAllEdges();
-                List<Node> nodesList = items.GetAllNodes();
-
-                foreach (Edge edge in edgesList)
+                foreach (Graph graph in graphsList)
                 {
-                    if (edge.Color.Color != edge.SerializedColor)
-                        edge.Color = new SolidColorBrush(edge.SerializedColor);
-                }
+                    ObservableCollection<CanvasControlBase> items = graph.CanvasGraph;
 
-                foreach (Node node in nodesList)
-                {
-                    if (node.Color.Color != node.SerializedColor)
-                        node.Color = new SolidColorBrush(node.SerializedColor);
+                    List<Edge> edgesList = items.GetAllEdges();
+                    List<Node> nodesList = items.GetAllNodes();
+
+                    foreach (Edge edge in edgesList)
+                    {
+                        if (edge.Color.Color != edge.SerializedColor)
+                            edge.Color = new SolidColorBrush(edge.SerializedColor);
+                    }
+
+                    foreach (Node node in nodesList)
+                    {
+                        if (node.Color.Color != node.SerializedColor)
+                            node.Color = new SolidColorBrush(node.SerializedColor);
+
+                        // Cryptographic algorithm can't resolve Unicode characters, they are encrypted as "?"
+                        if (node.Value.ToString() == "?")
+                            node.Value = "∞";
+                    }
                 }
             }
 

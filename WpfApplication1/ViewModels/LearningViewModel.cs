@@ -13,38 +13,66 @@ using Common.Models;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WpfApplication1.Models.Algorithms;
+using System.IO;
 
 namespace WpfApplication1.ViewModels
 {
     public class LearningViewModel : BaseNotifyPropertyChanged
     {
-        public LearningViewModel() : this("[Nazwa algorytmu]") { }
+        public LearningViewModel()
+        {
+            this.AlgorithmName = "[Nazwa algorytmu]";
+        }
 
         public LearningViewModel(string algorithmName)
         {
-            AlgorithmName = algorithmName;
+            this.AlgorithmName = algorithmName;
 
-            int columnsCount = this.CanvasWidth / this.RectangleSize;
-            int rowsCount = this.CanvasHeight / this.RectangleSize;
+            //int columnsCount = this.CanvasWidth / this.RectangleSize;
+            //int rowsCount = this.CanvasHeight / this.RectangleSize;
 
-            for (int i = 0; i < rowsCount; i++)
-                for (int j = 0; j < columnsCount; j++)
-                {
-                    CanvasItems.Add(new CanvasRectangle(i * columnsCount + j, j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize));
-                }
+            //for (int i = 0; i < rowsCount; i++)
+            //    for (int j = 0; j < columnsCount; j++)
+            //    {
+            //        CanvasItems.Add(new CanvasRectangle(i * columnsCount + j, j * this.RectangleSize, i * this.RectangleSize, this.RectangleSize));
+            //    }
 
-            (CanvasItems[1] as CanvasRectangle).Node = new Node()
-            { ID = 0, Name = "a", Value = 6, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
+            //(CanvasItems[1] as CanvasRectangle).Node = new Node()
+            //{ ID = 0, Name = "a", Value = 6, NameHorizontalAlignment = HorizontalAlignment.Center, NameVerticalAlignment = VerticalAlignment.Top };
 
-            (CanvasItems[69] as CanvasRectangle).Node = new Node()
-            { ID = 1, Name = "b", Value = 9, NameHorizontalAlignment = HorizontalAlignment.Right, NameVerticalAlignment = VerticalAlignment.Center };
+            //(CanvasItems[69] as CanvasRectangle).Node = new Node()
+            //{ ID = 1, Name = "b", Value = 9, NameHorizontalAlignment = HorizontalAlignment.Right, NameVerticalAlignment = VerticalAlignment.Center };
 
-            (CanvasItems[24] as CanvasRectangle).Node = new Node()
-            { ID = 2, Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
+            //(CanvasItems[24] as CanvasRectangle).Node = new Node()
+            //{ ID = 2, Name = "c", Value = 15, NameHorizontalAlignment = HorizontalAlignment.Left, NameVerticalAlignment = VerticalAlignment.Center };
 
-            (CanvasItems[1] as CanvasRectangle).DoesContainNode = true;
-            (CanvasItems[69] as CanvasRectangle).DoesContainNode = true;
-            (CanvasItems[24] as CanvasRectangle).DoesContainNode = true;
+            //(CanvasItems[1] as CanvasRectangle).DoesContainNode = true;
+            //(CanvasItems[69] as CanvasRectangle).DoesContainNode = true;
+            //(CanvasItems[24] as CanvasRectangle).DoesContainNode = true;
+
+            List<Graph> graphsList;
+
+            CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(List<Graph>) );
+            
+            string encryptedXml = File.ReadAllText(GRAPH_PATH);
+            string plainXml = StringEncryption.Decrypt(encryptedXml, "Yaranaika?");
+
+            using ( StringReader reader = new StringReader(plainXml) )
+            {
+                graphsList = ( List<Graph> )xmlSerializer.Deserialize(reader);
+            }
+
+            switch (this.AlgorithmName)
+            {
+                case "Przeszukiwanie wszerz":
+                    _algorithm = new BFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes() );
+
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 0);
+                    break;
+            }
+
+            this.Instruction = _algorithm?.Instructions[0];
 
             RaisePropertyChanged("CanvasNodes");
         }
@@ -55,11 +83,15 @@ namespace WpfApplication1.ViewModels
         private bool _isNodeNamesControlVisible { get; set; } = true;
         private bool _isNodeNamesControlEnabled { get; set; } = true;
 
+        private readonly string GRAPH_PATH = Path.GetFullPath("../../Resources/Graphs/EncryptedData.huu");
+        private string _instruction;
+
         private ObservableCollection<CanvasControlBase> _canvasItems = new ObservableCollection<CanvasControlBase>();
+
+        private AlgorithmBase _algorithm { get; set; }
 
         //----------------------------------
 
-        public string AlgorithmName { get; private set; }
         public bool IsStopButtonVisible
         {
             get { return _isStopButtonVisible; }
@@ -113,10 +145,34 @@ namespace WpfApplication1.ViewModels
         public int CanvasWidth { get { return 726; } }
         public int CanvasHeight { get { return 660; } }
         public int RectangleSize { get { return 66; } }
+
+        public string AlgorithmName { get; private set; }
+        public string Instruction
+        {
+            get { return _instruction; }
+            set
+            {
+                _instruction = value;
+                RaisePropertyChanged("Instruction");
+            }
+        }
         
-        public string Instructions { get; set; } = @"Instrukcja dla aktualnie wykonywanej sekwencji. asdf asdf
-                                   Test nowej linii
-                                   fdsgsdfg";                                   // move to model of each algorithm
+        //public string Instruction { get; set; } = @"Instrukcja dla aktualnie wykonywanej sekwencji. asdf asdf
+        //                           Test nowej linii
+        //                           fdsgsdfg";                                   // move to model of each algorithm
+
+        //----------------------------------
+
+        private ObservableCollection<CanvasControlBase> GetRandomGraphFromList(List<Graph> graphsList, byte algorithmID)
+        {
+            List<Graph> compatibileGraphsList = graphsList
+                .Where(g => g.AlgorithmsSupported[algorithmID] == true)
+                .ToList();
+
+            int randomIndex = new Random().Next(compatibileGraphsList.Count);
+
+            return compatibileGraphsList[randomIndex].CanvasGraph;
+        }
 
         //----------------------------------
 

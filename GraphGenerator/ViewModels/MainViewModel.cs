@@ -672,6 +672,19 @@ namespace GraphGenerator.ViewModels
 
                     string plainXml = writer.GetStringBuilder().ToString();
                     string encryptedXml = StringEncryption.Encrypt(plainXml, "Yaranaika?");
+                    //string encryptedXml = plainXml;
+
+                    //----------------
+
+                    //string dataPath = Path.GetFullPath("../../CustomGraphs/Data.huu");
+                    //string encryptedDataPath = Path.GetFullPath("../../CustomGraphs/EncryptedData.huu");
+
+                    //plainXml = File.ReadAllText(dataPath);
+                    //encryptedXml = StringEncryption.Encrypt(plainXml, "Yaranaika?");
+
+                    //File.WriteAllText(encryptedDataPath, encryptedXml);
+
+                    //----------------
 
                     File.WriteAllText(saveDialog.FileName, encryptedXml);
                 }
@@ -694,6 +707,16 @@ namespace GraphGenerator.ViewModels
                 {
                     string encryptedXml = File.ReadAllText(openDialog.FileName);
                     string plainXml = StringEncryption.Decrypt(encryptedXml, "Yaranaika?");
+                    //string plainXml = encryptedXml;
+
+                    //-------------------
+
+                    //string dataPath = Path.GetFullPath("../../CustomGraphs/FullData.huu");
+                    //plainXml = File.ReadAllText(dataPath);
+
+                    //encryptedXml = StringEncryption.Encrypt(plainXml, "Yaranaika?");
+
+                    //-------------------
 
                     using (StringReader reader = new StringReader(plainXml))
                     {

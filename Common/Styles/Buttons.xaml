@@ -276,7 +276,7 @@
 
                     <Border Name="border"
                             BorderBrush="Snow"
-                            BorderThickness="0.2"
+                            BorderThickness="0.05"
                             Background="Transparent">
                         <ContentControl Visibility="{Binding DoesContainNode, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid>

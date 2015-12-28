@@ -116,6 +116,9 @@ namespace Common.Models
 
         public static bool operator==(Edge a, Edge b)
         {
+            if ( Object.ReferenceEquals(a, null) )
+                return Object.ReferenceEquals(b, null);
+
             return a.Equals(b);
         }
 
