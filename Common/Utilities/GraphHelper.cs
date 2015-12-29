@@ -34,8 +34,6 @@ namespace Common.Utilities
             foreach(Edge edge in connectedEdges)
             {
                 int secondNodeID = 0;                                               // ID of second node connected by this edge
-                //int secondNodeID = edge.NodesID.Single(a => a != node.ID);                // ID of second node connected by this edge
-                //int secondNodeID = edge.NodesID[1];
 
                 // If edge is bidirectional, second node ID can be anywhere.
                 // But if it is directed, second node is ALWAYS in the [1]

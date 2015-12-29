@@ -18,21 +18,9 @@ namespace WpfApplication1.Models.Algorithms
             string filePath = Path.Combine(INSTRUCTIONS_PATH, "BFS.txt");
 
             this.Instructions = FileHelper.GetInstructionsFromFile(filePath, 0);
-
-            //ComboboxElement firstNodeInQueue = new ComboboxElement(0);
-            //firstNodeInQueue.IsValueChosen = true;
-
-            //firstNodeInQueue.Value = nodesList
-            //    .Single(n => n.Value.ToString() == "0")
-            //    .Name;
-
-            //this.NodesQueue.Add(firstNodeInQueue);
             this.NodesQueue = queue;
 
             RefreshCorrectLists();
-
-            //foreach (ComboboxElement element in queue)
-            //    this.CorrectNodesQueue.Add( element.Clone() );
         }
 
         //----------------------------------
@@ -63,6 +51,9 @@ namespace WpfApplication1.Models.Algorithms
                     if (node.Value != correctNode.Value)
                         return false;
                 }
+
+                Node observableRootNode = NodesList.Single(n => n.Name == rootNodeName);
+                observableRootNode.Color = Brushes.Gray;
             }
             else
             {

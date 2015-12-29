@@ -52,40 +52,62 @@ namespace WpfApplication1.ViewModels
 
         public LearningViewModel(string algorithmName)
         {
-            Func<INotifyPropertyChanged, Type> typeLocator = (t) => App.GetViewClassTypeLocalizer(t);
-            this._dialogService = new DialogService(null, typeLocator);
-
-            this.AlgorithmName = algorithmName;
-
-            List<Graph> graphsList;
-
-            CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(List<Graph>) );
-            
-            string encryptedXml = File.ReadAllText(GRAPH_PATH);
-            string plainXml = StringEncryption.Decrypt(encryptedXml, "Yaranaika?");
-
-            using ( StringReader reader = new StringReader(plainXml) )
+            try
             {
-                graphsList = ( List<Graph> )xmlSerializer.Deserialize(reader);
-            }
+                Func<INotifyPropertyChanged, Type> typeLocator = (t) => App.GetViewClassTypeLocalizer(t);
+                this._dialogService = new DialogService(null, typeLocator);
 
-            switch (this.AlgorithmName)
+                this.AlgorithmName = algorithmName;
+
+                List<Graph> graphsList;
+
+                CustomXmlSerializer xmlSerializer = new CustomXmlSerializer( typeof(List<Graph>) );
+
+                string encryptedXml = File.ReadAllText(GRAPH_PATH);
+                string plainXml = StringEncryption.Decrypt(encryptedXml, "Yaranaika?");
+
+                using (StringReader reader = new StringReader(plainXml))
+                {
+                    graphsList = (List<Graph>)xmlSerializer.Deserialize(reader);
+                }
+
+                switch (this.AlgorithmName)
+                {
+                    case "Przeszukiwanie wszerz":
+                        this.CanvasItems = GetRandomGraphFromList(graphsList, 0);
+
+                        //this.ComboBoxItems = new ObservableCollection<ComboboxElement>( (_algorithm as BFS).NodesQueue );
+
+                        this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
+                        this.ComboBoxItems.Add(new ComboboxElement(0));
+
+                        _algorithm = new BFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
+                        break;
+                }
+
+                this.Instruction = _algorithm?.GetCurrentInstruction();
+
+                RaisePropertyChanged("CanvasNodes");
+            }
+            catch (Exception ex)
             {
-                case "Przeszukiwanie wszerz":
-                    this.CanvasItems = GetRandomGraphFromList(graphsList, 0);
+                MessageBox.Show("Wystąpil błąd: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                    //this.ComboBoxItems = new ObservableCollection<ComboboxElement>( (_algorithm as BFS).NodesQueue );
+                // Get the learning view window from static property and close it
+                var openedWindows = App.Current.Windows;
+                Window currentWindow = null;
 
-                    this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
-                    this.ComboBoxItems.Add(new ComboboxElement(0));
-
-                    _algorithm = new BFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems );
-                    break;
+                for (int i = 0; i < openedWindows.Count; i++)
+                {
+                    if (openedWindows[i].DataContext?.GetType().Name == this.GetType().Name)
+                    {
+                        currentWindow = openedWindows[i];
+                        break;
+                    }
+                }
+                                                                                                                        // Can't close a window which practically wasn't opened yet. 
+                currentWindow.Loaded += new RoutedEventHandler((sender, e) => { (sender as Window).Close(); });         // So let's add closing handler to its Loaded event. (ProjektBD experience~ )
             }
-
-            this.Instruction = _algorithm?.GetCurrentInstruction();
-
-            RaisePropertyChanged("CanvasNodes");
         }
 
         //----------------------------------
@@ -196,18 +218,20 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
 
-        void EndSequenceClickExecute()
+        void EndSequenceClickExecute(Window learningWindow)
         {
-            //IsNodeNamesControlEnabled = !IsNodeNamesControlEnabled;
-
             bool isSequenceGood = _algorithm.Step();
 
             if (isSequenceGood)
             {
                 this.Instruction = _algorithm.GetCurrentInstruction();
 
-                if (_algorithm.IsFinished)
-                    MessageBox.Show("Koniec algorytmu, zamknij okno.");
+                if (_algorithm.IsFinished && learningWindow != null)
+                {
+                    MessageBox.Show("Gratulacje, algorytm został zakończony!/nZa chwilę nastąpi przejście do głównego menu...");
+
+                    learningWindow.Close();
+                }
             }
             else
             {
@@ -291,20 +315,21 @@ namespace WpfApplication1.ViewModels
 
         public ICommand EndSequenceClick
         {
-            get { return new RelayCommand<object>(p => EndSequenceClickExecute()); }
+            get { return new RelayCommand<Window>(param => EndSequenceClickExecute(param)); }
         }
+
         public ICommand ContextMenuOpened
         {
             get { return new RelayCommand<RoutedEventArgs>( p => ContextMenuOpenedExecute(p) ); }
         }
+        public ICommand NodeClicked
+        {
+            get { return new RelayCommand<RoutedEventArgs>(p => NodeClickedExecute(p)); }
+        }
+
         public ICommand MarkNodeBlack
         {
             get { return new RelayCommand<int>( param => MarkNodeBlackExecute(param) ); }
-        }
-
-        public ICommand NodeClicked
-        {
-            get { return new RelayCommand<RoutedEventArgs>( p => NodeClickedExecute(p) ); }
         }
     }
 }

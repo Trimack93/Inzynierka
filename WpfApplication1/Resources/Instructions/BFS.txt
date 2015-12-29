@@ -3,13 +3,30 @@
  
 Wierzchołek, od którego rozpoczyna się działanie algorytmu, posiada wartość 0.
 
-W pierwszym kroku należy obliczyć odległość dla każdego z sąsiadujących z nim wierzchołków oraz przepisać je do kolejki.
+W pierwszym kroku wystarczy jedynie przepisać go do kolejki wierzchołków.
 
-Następnie trzeba zaznaczyć wierzchołek przetworzony - tutaj ten o wartości 0.
+Po wykonaniu powyższej czynności zakończ sekwencję.
 
 
+# Gdy wierzchołek startowy został wybrany, następnym krokiem jest obliczenie odległości jego sąsiadów.
+
+Ustaw wartość (StartNode.Value + 1) każdemu wierzchołkowi, do którego skierowany jest wierzchołek startowy.
+Następnie przepisz te wierzchołki do kolejki (kolejność nie ma znaczenia).
+Ostatnim krokiem jest oznaczenie wierzchołka startowego jako przetworzonego.
+
+Wierzchołki odwiedzone, ale jeszcze nie przetworzone, oznaczone są na szaro.
+------------------------------
 Aby zmienić wartość wierzchołka, wystarczy kliknąć go lewym przyciskiem myszy.
+Aby oznaczyć wierzchołek jako przetworzony, kliknij go prawym przyciskiem myszy i wybierz stosowną opcję.
 
-Aby oznaczyć wierzchołek jako przetworzony, trzeba kliknąć go prawym przyciskiem myszy i wybrać stosowną opcję.
 
-# Druga instrukcja
+# Wierzchołkiem startowym jest teraz pierwszy wierzchołek w kolejce (licząc od lewej).
+
+Oblicz odległości jego sąsiadów, przepisz ich do kolejki i oznacz wierzchołek startowy jako przetworzony.
+
+
+Jeśli wierzchołek nie łączy się z żadnymi sąsiadami, wystarczy oznaczyć go jako przetworzony.
+
+Jeśli odległość sąsiada została już obliczona (jest szary), zostaw go w spokoju.
+
+Algorytm zakończy się, gdy w kolejce nie pozostanie ani jeden wierzchołek.

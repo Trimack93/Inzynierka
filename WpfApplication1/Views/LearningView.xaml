@@ -11,8 +11,8 @@
         md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
         Title="Algorytmy grafowe" Width="1024" Height="768" Background="RoyalBlue"
-        ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen">
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        Name="LearningWindow">
     
     <Window.DataContext>
         <vm:LearningViewModel />
@@ -120,11 +120,12 @@
                         <TextBlock Text="Instrukcje" FontWeight="Bold" FontSize="16" Foreground="DodgerBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
                         <Line X1="15" Y1="10" X2="235" Y2="10" Stroke="Gold" StrokeThickness="1.5" />
 
-                        <TextBlock Text="{Binding Instruction, Converter={StaticResource StringToNewlineStringConverter}}" FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="10,10,10,0" />
+                        <TextBlock Text="{Binding Instruction, Converter={StaticResource StringToNewlineStringConverter}}"
+                                   FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="10,10,10,0" TextAlignment="Justify" />
                     </StackPanel>
 
                     <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
-                            Command="{Binding EndSequenceClick}"
+                            Command="{Binding EndSequenceClick}" CommandParameter="{Binding ElementName=LearningWindow}"
                             ToolTip="Po naciśnięciu tego przycisku zakończysz obecnie wykonywaną sekwencję.\n
                             Spowoduje to sprawdzenie, czy wykonałeś wszystkie kroki zgodnie z wybranym algorytmem.\n
                             W przypadku wykrycia nieprawidłowości zostaniesz o tym poinformowany, a graf zostanie przywrócony do postaci,\n

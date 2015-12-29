@@ -18,15 +18,18 @@ namespace WpfApplication1.Models
             {
                 string currentLine = reader.ReadLine();
 
+                // First line and instruction should start with "#" symbol
                 if ( currentLine != null && currentLine.StartsWith("# ") )
                 {
                     while (currentLine != null)
                     {
+                        // Append the first line of instruction into string, removing the beginning "# " character
                         currentInstruction.AppendLine(currentLine);
                         currentInstruction.Remove(0, 2);
 
                         currentLine = reader.ReadLine();
 
+                        // Append new linew of instruction into string until EOF or new instruction
                         while (currentLine != null && currentLine.StartsWith("# ") == false)
                         {
                             currentInstruction.AppendLine(currentLine);
@@ -34,6 +37,7 @@ namespace WpfApplication1.Models
                             currentLine = reader.ReadLine();
                         }
 
+                        // Add received instruction into list
                         instructionsList.Add( currentInstruction.ToString() );
                         currentInstruction.Clear();
                     }
