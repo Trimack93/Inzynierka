@@ -25,6 +25,8 @@ namespace Common.Controls
             InitializeComponent();
         }
 
+        //----------------------------------
+
         public string NodeName
         {
             get { return (string)GetValue(NodeNameProperty); }
@@ -58,6 +60,8 @@ namespace Common.Controls
             set { SetValue(NameVerticalAlignmentProperty, value); }
         }
 
+        //----------------------------------
+
         public static readonly DependencyProperty NodeNameProperty = DependencyProperty.Register(
             "NodeName", typeof(string), typeof(NodeControl), new UIPropertyMetadata(null));
 
@@ -75,6 +79,8 @@ namespace Common.Controls
 
         public static readonly DependencyProperty NameVerticalAlignmentProperty = DependencyProperty.Register(
             "NameVerticalAlignment", typeof(VerticalAlignment), typeof(NodeControl), new UIPropertyMetadata(null));
+
+        //----------------------------------
 
         private void TextBlock_TargetUpdated(object sender, DataTransferEventArgs e)
         {

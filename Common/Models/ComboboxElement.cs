@@ -19,6 +19,7 @@ namespace Common.Models
 
         private short _ID;
         private bool _isValueChosen;
+        private string _value;
 
         //---------------------------------
 
@@ -39,6 +40,30 @@ namespace Common.Models
                 _isValueChosen = value;
                 RaisePropertyChanged("IsValueChosen");
             }
+        }
+        public string Value
+        {
+            get { return _value; }
+            set
+            {
+                _value = value;
+                RaisePropertyChanged("Value");
+            }
+        }
+
+        //---------------------------------
+
+        /// <summary>
+        /// Creates deep copy of current object.
+        /// </summary>
+        public ComboboxElement Clone()
+        {
+            ComboboxElement newElement = new ComboboxElement(0);
+            newElement.ID = this.ID;
+            newElement.IsValueChosen = this.IsValueChosen;
+            newElement.Value = this.Value;
+
+            return newElement;
         }
     }
 }

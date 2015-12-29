@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:local="clr-namespace:WpfApplication1.Views"
         xmlns:vm="clr-namespace:WpfApplication1.ViewModels"
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         xmlns:model="clr-namespace:Common.Models.Canvas;assembly=Common"
+        md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
         Title="Algorytmy grafowe" Width="1024" Height="768" Background="RoyalBlue"
         ResizeMode="CanMinimize"
@@ -132,7 +134,8 @@
                         <TextBlock Text="Kolejka wierzchołków:" Foreground="Snow" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,15" />
                         <!--<Rectangle Fill="Snow" Width="250" Height="40" />-->
                         <controls:NodeNamesList Width="250" ElementWidth="40" NodesList="{Binding DataContext.CanvasNodes, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
-                                                ComboBoxEnabled="{Binding DataContext.IsNodeNamesControlEnabled, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"/>
+                                                ComboBoxEnabled="{Binding DataContext.IsNodeNamesControlEnabled, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
+                                                ElementsList="{Binding DataContext.ComboBoxItems, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}" />
                     </StackPanel>
 
                     <Button Content="STOP" Width="80" Height="80" Grid.Row="4" 

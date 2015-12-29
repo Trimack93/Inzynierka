@@ -27,7 +27,8 @@ namespace Common.Controls
         {
             InitializeComponent();
 
-            ElementsList.Add( new ComboboxElement(0) );
+            //ElementsList = new ObservableCollection<ComboboxElement>();
+            //ElementsList.Add(new ComboboxElement(0));
         }
 
         //----------------------------------
@@ -47,22 +48,39 @@ namespace Common.Controls
             get { return (List<Node>)GetValue(NodesListProperty); }
             set { SetValue(NodesListProperty, value); }
         }
+        public ObservableCollection<ComboboxElement> ElementsList
+        {
+            get { return (ObservableCollection<ComboboxElement>)GetValue(ElementsListProperty); }
+            set { SetValue(ElementsListProperty, value); }
+        }
 
         public int ElementHeight
         {
             get { return ElementWidth - 10; }
         }
 
-        public ObservableCollection<ComboboxElement> ElementsList { get; set; } = new ObservableCollection<ComboboxElement>();
-
         //----------------------------------
 
         public static readonly DependencyProperty ElementWidthProperty = DependencyProperty.Register(
             "ElementWidth", typeof(int), typeof(NodeNamesList), new UIPropertyMetadata(null));
+
         public static readonly DependencyProperty ComboBoxEnabledProperty = DependencyProperty.Register(
             "ComboBoxEnabled", typeof(bool), typeof(NodeNamesList), new UIPropertyMetadata(null));
+
         public static readonly DependencyProperty NodesListProperty = DependencyProperty.Register(
-            "NodesList", typeof(List<Node>), typeof(NodeNamesList), new UIPropertyMetadata(null));
+            "NodesList", typeof( List<Node> ), typeof(NodeNamesList), new UIPropertyMetadata(null));
+
+        public static readonly DependencyProperty ElementsListProperty = DependencyProperty.Register(
+            "ElementsList", typeof( ObservableCollection<ComboboxElement> ), typeof(NodeNamesList), new FrameworkPropertyMetadata(null));
+
+        //----------------------------------
+
+        private static void OnElementsListChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var x = sender as NodeNamesList;
+
+            var y = x.NodeItemsControl.Items.SourceCollection;
+        }
 
         //----------------------------------
 
@@ -77,7 +95,24 @@ namespace Common.Controls
                 if (ElementsList.Count < NodesList.Count)
                     ElementsList.Add( new ComboboxElement(newIndex) );
 
+                ElementsList[newIndex - 1].Value = (e.AddedItems[0] as Node).Name;
                 ElementsList[newIndex - 1].IsValueChosen = true;
+            }
+            else
+            {
+                Node newNode = null;
+                Node oldNode = null;
+
+                if (e.AddedItems.Count > 0 && e.RemovedItems.Count > 0)
+                {
+                    newNode = e.AddedItems[0] as Node;
+                    oldNode = e.RemovedItems[0] as Node;
+                }
+
+                ComboboxElement changedElement = ElementsList
+                    .Single(el => el.Value == oldNode?.Name);
+
+                changedElement.Value = newNode?.Name;
             }
         }
 

@@ -87,6 +87,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditNodeValueView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LearningView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -102,12 +106,16 @@
     <Compile Include="Models\Algorithms\AlgorithmBase.cs" />
     <Compile Include="Models\Algorithms\BFS.cs" />
     <Compile Include="Models\FileHelper.cs" />
+    <Compile Include="ViewModels\EditNodeValueViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ChooseAlgorithmView.xaml.cs">
       <DependentUpon>ChooseAlgorithmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditNodeValueView.xaml.cs">
+      <DependentUpon>EditNodeValueView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LearningView.xaml.cs">
       <DependentUpon>LearningView.xaml</DependentUpon>

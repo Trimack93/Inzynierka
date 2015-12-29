@@ -90,6 +90,28 @@ namespace Common.Models
         public List<int> NodesID { get; set; } = new List<int>(2);      // Stores the IDs of the nodes it's connecting - to avoid circular dependency
 
         //---------------------------------
+        
+        /// <summary>
+        /// Creates deep copy of current object.
+        /// </summary>
+        public Edge Clone()
+        {
+            Edge newEdge = new Edge();
+
+            newEdge.ID = this.ID;
+            newEdge.Value = this.Value;
+            newEdge.Thickness = this.Thickness;
+            newEdge.IsBidirectional = this.IsBidirectional;
+            newEdge.Color = new SolidColorBrush(this.Color.Color);
+            newEdge.SerializedColor = newEdge.Color.Color;
+
+            foreach (int ID in NodesID)
+                newEdge.NodesID.Add(ID);
+
+            return newEdge;
+        }
+
+        //---------------------------------
         // While serializing object into XML, it's hashcode is also preserved.
         // After reboot of the application, object hashcodes change and default Equals method fails.
 

@@ -22,6 +22,7 @@ namespace Common.Utilities
                 .OfType<CanvasRectangle>()
                 .Select(rect => rect.Node)
                 .Where(n => n != null)
+                .OrderBy(k => k.Value.ToString())
                 .ToList();
         }
 

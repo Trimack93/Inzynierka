@@ -24,5 +24,31 @@ namespace Common.Utilities
                 .Where( e => e.NodesID.Contains(node2.ID) )
                 .ToList();
         }
+
+        public static List<Node> GetConnectedNodes(List<Node> nodesList, Node node)
+        {
+            List<Node> result = new List<Node>();
+
+            List<Edge> connectedEdges = node.Edges;
+
+            foreach(Edge edge in connectedEdges)
+            {
+                int secondNodeID = 0;                                               // ID of second node connected by this edge
+                //int secondNodeID = edge.NodesID.Single(a => a != node.ID);                // ID of second node connected by this edge
+                //int secondNodeID = edge.NodesID[1];
+
+                // If edge is bidirectional, second node ID can be anywhere.
+                // But if it is directed, second node is ALWAYS in the [1]
+                if (edge.IsBidirectional)
+                    secondNodeID = edge.NodesID.Single(a => a != node.ID);
+                else
+                    secondNodeID = edge.NodesID[1];
+
+                Node secondNode = nodesList.Single(n => n.ID == secondNodeID);
+                result.Add(secondNode);
+            }
+
+            return result;
+        }
     }
 }

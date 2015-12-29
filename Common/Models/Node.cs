@@ -25,7 +25,7 @@ namespace Common.Models
         private int _ID;
 
         private string _Name;
-        private object _Value;
+        private object _Value;                      // object here is grave mistake...
         private SolidColorBrush _Color;
         private double _Thickness;
 
@@ -123,5 +123,35 @@ namespace Common.Models
         }
 
         public List<Edge> Edges { get; set; } = new List<Edge>();
+
+        //---------------------------------
+
+        /// <summary>
+        /// Creates deep copy of current object.
+        /// </summary>
+        public Node Clone()
+        {
+            Node newNode = new Node();
+
+            newNode.ID = this.ID;
+            newNode.Name = this.Name;
+            newNode.Value = this.Value;
+            newNode.Thickness = this.Thickness;
+
+            newNode.CanChangeHorizontalAlignment = this.CanChangeHorizontalAlignment;
+            newNode.NameHorizontalAlignment = this.NameHorizontalAlignment;
+            newNode.NameVerticalAlignment = this.NameVerticalAlignment;
+
+            //newNode.Color = new SolidColorBrush(this.Color.Color);
+            newNode.Color = this.Color;                                     // Brushes.xxx are static, so it should work...
+            newNode.SerializedColor = newNode.Color.Color;
+
+            newNode.Edges = new List<Edge>();
+
+            foreach (Edge edge in this.Edges)
+                newNode.Edges.Add( edge.Clone() );
+
+            return newNode;
+        }
     }
 }

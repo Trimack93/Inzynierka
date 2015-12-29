@@ -9,6 +9,22 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="customNode">
 
+    <UserControl.Resources>
+        <Style x:Key="NodeValueTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black" />
+            
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding NodeColor}" Value="Black" />
+                    </MultiDataTrigger.Conditions>
+
+                    <Setter Property="Foreground" Value="Snow" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <!-- Can't add DataContext on the UserControl level, because it will also affect bindings on "declaring control" level -->
         <Grid.DataContext>
@@ -42,6 +58,6 @@
         
         <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Text="{Binding NodeValue, NotifyOnTargetUpdated=True}" TargetUpdated="TextBlock_TargetUpdated"
-                   FontSize="14" FontWeight="DemiBold" Foreground="Black" />
+                   FontSize="14" FontWeight="DemiBold" Style="{StaticResource NodeValueTextBlockStyle}" />
     </Grid>
 </UserControl>

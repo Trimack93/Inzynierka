@@ -283,12 +283,13 @@
                                 <controls:NodeControl NodeName="{Binding Node.Name}" NodeValue="{Binding Node.Value}" NodeColor="{Binding Node.Color}" NodeThickness="{Binding Node.Thickness}"
                                                     NameHorizontalAlignment="{Binding Node.NameHorizontalAlignment}" NameVerticalAlignment="{Binding Node.NameVerticalAlignment}"
                                                     Name="kontrolka"
+                                                    behav:NodeControlBehaviour.NodeClickedCommand="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.NodeClicked}"
                                                     Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
 
                                     <controls:NodeControl.ContextMenu>
                                         <ContextMenu behav:ContextMenuBehaviour.ContextMenuOpenedCommand="{Binding Path=PlacementTarget.Tag.ContextMenuOpened, RelativeSource={RelativeSource Self}}">
                                             <!--Opened="asdf">-->
-                                            <MenuItem Header="Oznacz wierzchołek jako przetworzony"
+                                            <MenuItem Header="Oznacz/Odznacz wierzchołek jako przetworzony"
                                                       Command="{Binding Path=PlacementTarget.Tag.MarkNodeBlack, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                                       CommandParameter="{Binding Node.ID}" />
                                         </ContextMenu>
@@ -299,10 +300,30 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True">
+                        <!--<DataTrigger Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True">
                             <Setter TargetName="kontrolka" Property="NodeColor" Value="BurlyWood" />
                             <Setter TargetName="kontrolka" Property="NodeThickness" Value="2.5" />
-                        </DataTrigger>
+                        </DataTrigger>-->
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding ElementName=kontrolka, Path=DataContext.Node.Color}" Value="Transparent" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="kontrolka" Property="NodeColor" Value="BurlyWood" />
+                            <Setter TargetName="kontrolka" Property="NodeThickness" Value="2.5" />
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True" />
+                                <Condition Binding="{Binding ElementName=kontrolka, Path=DataContext.Node.Color}" Value="Gray" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="kontrolka" Property="NodeColor" Value="BurlyWood" />
+                            <Setter TargetName="kontrolka" Property="NodeThickness" Value="2.5" />
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
 
                 </ControlTemplate>
