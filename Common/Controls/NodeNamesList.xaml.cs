@@ -75,12 +75,12 @@ namespace Common.Controls
 
         //----------------------------------
 
-        private static void OnElementsListChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            var x = sender as NodeNamesList;
+        //private static void OnElementsListChanged(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    var x = sender as NodeNamesList;
 
-            var y = x.NodeItemsControl.Items.SourceCollection;
-        }
+        //    var y = x.NodeItemsControl.Items.SourceCollection;
+        //}
 
         //----------------------------------
 
@@ -89,30 +89,11 @@ namespace Common.Controls
             // Change of value from "" to something
             if (e.RemovedItems.Count == 0)
             {
-                short newIndex = (short) ElementsList.Count;
+                int newIndex = ElementsList.Count;
 
                 // if user changed value of the not-last element in the list
-                if (ElementsList.Count < NodesList.Count)
+                if (ElementsList.Count < NodesList.Count && ElementsList.Last().SelectedValue != null)
                     ElementsList.Add( new ComboboxElement(newIndex) );
-
-                ElementsList[newIndex - 1].Value = (e.AddedItems[0] as Node).Name;
-                ElementsList[newIndex - 1].IsValueChosen = true;
-            }
-            else
-            {
-                Node newNode = null;
-                Node oldNode = null;
-
-                if (e.AddedItems.Count > 0 && e.RemovedItems.Count > 0)
-                {
-                    newNode = e.AddedItems[0] as Node;
-                    oldNode = e.RemovedItems[0] as Node;
-                }
-
-                ComboboxElement changedElement = ElementsList
-                    .Single(el => el.Value == oldNode?.Name);
-
-                changedElement.Value = newNode?.Name;
             }
         }
 
@@ -121,15 +102,16 @@ namespace Common.Controls
         void ContextMenuItemDeleteExecute(ComboboxElement element)
         {
             // If the list is not empty and last element has value
-            if (ElementsList.Count > 1 && element.IsValueChosen)
+            //if (ElementsList.Count > 1 && element.IsValueChosen)
+            if (ElementsList.Count > 1 && element.SelectedValue != null)
             {
                 ElementsList.Remove(element);
 
                 // If the list was full and item was deleted, the last element must be empty to allow user to add new node.
                 // However, if the last item was already empty, nothing will happen.
-                if (ElementsList.Count <= NodesList.Count - 1 && ElementsList.Last().IsValueChosen)
+                if (ElementsList.Count <= NodesList.Count - 1 && ElementsList.Last().SelectedValue != null)
                 {
-                    ElementsList.Add(new ComboboxElement( (short)ElementsList.Count ));
+                    ElementsList.Add(new ComboboxElement( ElementsList.Count ));
                 }
             }
         }

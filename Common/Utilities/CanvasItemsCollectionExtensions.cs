@@ -117,12 +117,26 @@ namespace Common.Utilities
         /// </summary>
         /// <param name="canvasItems">Collection with canvas items.</param>
         /// <param name="edgeID">ID of edge.</param>
-        /// <returns>Canvas rectangle containing node with provided ID.</returns>
+        /// <returns>CanvasEdge containing edge with provided ID.</returns>
         public static CanvasEdge GetEdgeById(this ObservableCollection<CanvasControlBase> canvasItems, int edgeID)
         {
             return canvasItems
                 .OfType<CanvasEdge>()
                 .Single(e => e.Edge.ID == edgeID);
+        }
+
+        /// <summary>
+        /// Gets node from canvas by it's node ID.
+        /// </summary>
+        /// <param name="canvasItems">Collection with canvas items.</param>
+        /// <param name="nodeID">ID of node.</param>
+        /// <returns>Node with provided ID.</returns>
+        public static Node GetNodeById(this ObservableCollection<CanvasControlBase> canvasItems, int nodeID)
+        {
+            return canvasItems
+                .OfType<CanvasRectangle>()
+                .Single(n => n.Node?.ID == nodeID)
+                .Node;
         }
 
         /// <summary>

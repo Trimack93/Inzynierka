@@ -28,7 +28,7 @@ namespace WpfApplication1.Models.Algorithms
         public ObservableCollection<ComboboxElement> NodesQueue { get; set; }// = new List<ComboboxElement>();
 
         // Queue not impured by user's actions
-        private ObservableCollection<ComboboxElement> CorrectNodesQueue { get; set; } = new ObservableCollection<ComboboxElement>();
+        public ObservableCollection<ComboboxElement> CorrectNodesQueue { get; set; } = new ObservableCollection<ComboboxElement>();
 
         //----------------------------------
 
@@ -41,7 +41,7 @@ namespace WpfApplication1.Models.Algorithms
                 string rootNodeName = CorrectNodesList.Single(n => n.Value.ToString() == "0").Name;         // Name of node which value is 0 (root node)
 
                 // First value in queue must be the root node
-                if (NodesQueue.Count == 0 || NodesQueue[0].Value != rootNodeName)
+                if (NodesQueue.Count == 0 || NodesQueue[0].SelectedValue.Name != rootNodeName)
                     return false;
 
                 foreach (Node node in NodesList)
@@ -57,14 +57,6 @@ namespace WpfApplication1.Models.Algorithms
             }
             else
             {
-                //Node blackNode = CorrectNodesList.Single(n => n.Name == CorrectNodesQueue[0].Value);        // Black node of the current step
-
-                //// If first node from queue isn't black
-                //if (NodesList.Single(n => n.ID == blackNode.ID).Color != Brushes.Black)
-                //    return false;
-
-                //List<Node> nodeNeighbours = GraphHelper.GetConnectedNodes(CorrectNodesList, blackNode);
-
                 List<Node> algorithmNodesList = new List<Node>();                               // List of nodes on which algorithm will be performed
                 
                 // Clone correct nodes from beginning of the step into new list
@@ -72,7 +64,7 @@ namespace WpfApplication1.Models.Algorithms
                     algorithmNodesList.Add( node.Clone() );
 
                 // Get first node from queue and set its color to black
-                Node blackNode = algorithmNodesList.Single(n => n.Name == CorrectNodesQueue[0].Value);      // Black node of the current step
+                Node blackNode = algorithmNodesList.Single(n => n.Name == CorrectNodesQueue[0].SelectedValue.Name);      // Black node of the current step
                 blackNode.Color = Brushes.Black;
 
                 // Get black node non-black neighbours
@@ -96,13 +88,13 @@ namespace WpfApplication1.Models.Algorithms
                 // Nodes are vaild, time to check the queue
 
                 List<string> nodeNamesFromCorrectQueue = CorrectNodesQueue
-                    .Where(el => el.Value != null)
-                    .Select(el => el.Value)
+                    .Where(el => el.SelectedValue != null)
+                    .Select(el => el.SelectedValue.Name)
                     .ToList();
 
                 List<string> nodeNamesFromQueue = NodesQueue
-                    .Where(el => el.Value != null)
-                    .Select(el => el.Value)
+                    .Where(el => el.SelectedValue != null)
+                    .Select(el => el.SelectedValue.Name)
                     .ToList();
 
                 // Compare first values in queue - the beginning should be the same
@@ -136,7 +128,7 @@ namespace WpfApplication1.Models.Algorithms
 
                 // If queue is empty at this point, finish algorithm
                 if (this.NodesQueue
-                        .Where(el => el.Value != null)
+                        .Where(el => el.SelectedValue != null)
                         .ToList()
                         .Count == 0)
                 {

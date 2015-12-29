@@ -35,6 +35,7 @@
                           Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=ElementHeight}"
                           ItemsSource="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=NodesList}"
                           IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}, Path=ComboBoxEnabled}"
+                          SelectedItem="{Binding SelectedValue}"
                           Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type local:NodeNamesList}}}"
                           SelectionChanged="ComboBox_SelectionChanged" >
                     <ComboBox.ItemTemplate>

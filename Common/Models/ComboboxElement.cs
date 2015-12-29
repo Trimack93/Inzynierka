@@ -7,23 +7,24 @@ using System.Threading.Tasks;
 
 namespace Common.Models
 {
+    // May be updated in future with new properties
     public class ComboboxElement : BaseNotifyPropertyChanged
     {
-        public ComboboxElement(short ID, bool isValueChosen = false)
+        public ComboboxElement() { }
+
+        public ComboboxElement(int ID)
         {
             this.ID = ID;
-            this.IsValueChosen = IsValueChosen;
         }
 
         //---------------------------------
 
-        private short _ID;
-        private bool _isValueChosen;
-        private string _value;
+        private int _ID;
+        private Node _selectedValue;
 
         //---------------------------------
 
-        public short ID
+        public int ID
         {
             get { return _ID; }
             set
@@ -32,22 +33,13 @@ namespace Common.Models
                 RaisePropertyChanged("ID");
             }
         }
-        public bool IsValueChosen
+        public Node SelectedValue
         {
-            get { return _isValueChosen; }
+            get { return _selectedValue; }
             set
             {
-                _isValueChosen = value;
-                RaisePropertyChanged("IsValueChosen");
-            }
-        }
-        public string Value
-        {
-            get { return _value; }
-            set
-            {
-                _value = value;
-                RaisePropertyChanged("Value");
+                _selectedValue = value;
+                RaisePropertyChanged("SelectedValue");
             }
         }
 
@@ -58,10 +50,9 @@ namespace Common.Models
         /// </summary>
         public ComboboxElement Clone()
         {
-            ComboboxElement newElement = new ComboboxElement(0);
+            ComboboxElement newElement = new ComboboxElement();
             newElement.ID = this.ID;
-            newElement.IsValueChosen = this.IsValueChosen;
-            newElement.Value = this.Value;
+            newElement.SelectedValue = this.SelectedValue?.Clone();
 
             return newElement;
         }

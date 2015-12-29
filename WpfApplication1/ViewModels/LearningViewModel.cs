@@ -79,7 +79,7 @@ namespace WpfApplication1.ViewModels
                         //this.ComboBoxItems = new ObservableCollection<ComboboxElement>( (_algorithm as BFS).NodesQueue );
 
                         this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
-                        this.ComboBoxItems.Add(new ComboboxElement(0));
+                        this.ComboBoxItems.Add( new ComboboxElement(0) );
 
                         _algorithm = new BFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
                         break;
@@ -216,6 +216,49 @@ namespace WpfApplication1.ViewModels
             return compatibileGraphsList[randomIndex].CanvasGraph;
         }
 
+        private void ReturnGraphToValidState()
+        {
+            List<Node> nodesList = CanvasItems.GetAllNodes();
+            List<Edge> edgesList = CanvasItems.GetAllEdges();
+
+            foreach (Node node in nodesList)
+            {
+                Node correctNode = _algorithm.CorrectNodesList.Single(n => n.ID == node.ID);
+
+                node.Value = correctNode.Value;
+                node.Color = correctNode.Color;
+            }
+
+            foreach (Edge edge in edgesList)
+            {
+                Edge correctEdge = _algorithm.CorrectEdgesList.Single(e => e.ID == edge.ID);
+
+                edge.Value = correctEdge.Value;
+                edge.Color = correctEdge.Color;
+            }
+
+            // If algorithm is BFS, the queue of nodes also needs to be refreshed (user could mess up there a lot)
+            if (_algorithm is BFS)
+            {
+                this.ComboBoxItems.Clear();
+                int i = 0;
+
+                // ComboBoxItems needs to have reference to real node from Canvas, not a filthy clone
+                foreach (ComboboxElement element in (_algorithm as BFS).CorrectNodesQueue)
+                {
+                    Node observableNode = null;
+
+                    if (element.SelectedValue != null)
+                        observableNode = CanvasItems.GetNodeById(element.SelectedValue.ID);
+
+                    ComboboxElement newElement = new ComboboxElement(i);
+                    newElement.SelectedValue = observableNode;
+
+                    this.ComboBoxItems.Add(newElement);
+                }
+            }
+        }
+
         //----------------------------------
 
         void EndSequenceClickExecute(Window learningWindow)
@@ -228,34 +271,16 @@ namespace WpfApplication1.ViewModels
 
                 if (_algorithm.IsFinished && learningWindow != null)
                 {
-                    MessageBox.Show("Gratulacje, algorytm został zakończony!/nZa chwilę nastąpi przejście do głównego menu...");
+                    MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     learningWindow.Close();
                 }
             }
             else
             {
-                MessageBox.Show("Wykonano błędny krok. Stan grafu został cofnięty na początek sekwencji");
+                MessageBox.Show("Wykonano błędny krok. Stan grafu został cofnięty na początek sekwencji", "Co za niedopatrzenie", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                List<Node> nodesList = CanvasItems.GetAllNodes();
-                List<Edge> edgesList = CanvasItems.GetAllEdges();
-
-                foreach (Node node in nodesList)
-                {
-                    Node correctNode = _algorithm.CorrectNodesList.Single(n => n.ID == node.ID);
-
-                    node.Value = correctNode.Value;
-                    node.Color = correctNode.Color;
-                }
-
-                foreach (Edge edge in edgesList)
-                {
-                    Edge correctEdge = _algorithm.CorrectEdgesList.Single(e => e.ID == edge.ID);
-
-                    edge.Value = correctEdge.Value;
-                    edge.Color = correctEdge.Color;
-                }
-
+                ReturnGraphToValidState();
                 _algorithm.DecrementStep();
             }
         }

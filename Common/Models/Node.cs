@@ -134,7 +134,7 @@ namespace Common.Models
             Node newNode = new Node();
 
             newNode.ID = this.ID;
-            newNode.Name = this.Name;
+            newNode.Name = this.Name;            
             newNode.Value = this.Value;
             newNode.Thickness = this.Thickness;
 
