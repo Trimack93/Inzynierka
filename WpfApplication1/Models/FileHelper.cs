@@ -9,7 +9,7 @@ namespace WpfApplication1.Models
 {
     public static class FileHelper
     {
-        public static List<string> GetInstructionsFromFile(string path, int step)
+        public static List<string> GetInstructionsFromFile(string path)
         {
             List<string> instructionsList = new List<string>();
             StringBuilder currentInstruction = new StringBuilder();

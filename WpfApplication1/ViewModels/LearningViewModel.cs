@@ -75,13 +75,21 @@ namespace WpfApplication1.ViewModels
                 {
                     case "Przeszukiwanie wszerz":
                         this.CanvasItems = GetRandomGraphFromList(graphsList, 0);
-
-                        //this.ComboBoxItems = new ObservableCollection<ComboboxElement>( (_algorithm as BFS).NodesQueue );
+                        this.IsNodeNamesControlVisible = true;
+                        this.IsNodeNamesControlEnabled = true;
+                        this.CanMarkNodesBlack = true;
 
                         this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
                         this.ComboBoxItems.Add( new ComboboxElement(0) );
 
-                        _algorithm = new BFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
+                        _algorithm = new BFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems );
+                        break;
+
+                    case "Przeszukiwanie w głąb":
+                        this.CanvasItems = GetRandomGraphFromList(graphsList, 1);
+                        this.CanMarkNodesBlack = true;
+
+                        _algorithm = new DFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes() );
                         break;
                 }
 
@@ -112,12 +120,15 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
 
+        private bool _canEdgesAnimate { get; set; } = false;
+        private bool _canMarkNodesBlack { get; set; } = false;
         private bool _isStopButtonVisible { get; set; } = false;
-        private bool _isNodeNamesControlVisible { get; set; } = true;
-        private bool _isNodeNamesControlEnabled { get; set; } = true;
+        private bool _isNodeNamesControlVisible { get; set; } = false;
+        private bool _isNodeNamesControlEnabled { get; set; } = false;
+
         private string _instruction;
 
-        private readonly string GRAPH_PATH = Path.GetFullPath("../../Resources/Graphs/EncryptedData.huu");
+        private readonly string GRAPH_PATH = Path.GetFullPath("../../Resources/Graphs/LearningData.huu");
         private readonly IDialogService _dialogService;
         
         private ObservableCollection<CanvasControlBase> _canvasItems = new ObservableCollection<CanvasControlBase>();
@@ -128,6 +139,24 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
 
+        public bool CanMarkNodesBlack
+        {
+            get { return _canMarkNodesBlack; }
+            set
+            {
+                _canMarkNodesBlack = value;
+                RaisePropertyChanged("CanMarkNodesBlack");
+            }
+        }
+        public bool CanEdgesAnimate
+        {
+            get { return _canEdgesAnimate; }
+            set
+            {
+                _canEdgesAnimate = value;
+                RaisePropertyChanged("CanEdgesAnimate");
+            }
+        }
         public bool IsStopButtonVisible
         {
             get { return _isStopButtonVisible; }
@@ -205,6 +234,12 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
 
+        /// <summary>
+        /// Gets random graph from list.
+        /// </summary>
+        /// <param name="graphsList">List of graphs.</param>
+        /// <param name="algorithmID">ID of algorithm for which graph is valid.</param>
+        /// <returns>Collection of nodes and canvas rectangles.</returns>
         private ObservableCollection<CanvasControlBase> GetRandomGraphFromList(List<Graph> graphsList, byte algorithmID)
         {
             List<Graph> compatibileGraphsList = graphsList

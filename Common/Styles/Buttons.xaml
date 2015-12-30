@@ -287,7 +287,8 @@
                                                     Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" >
 
                                     <controls:NodeControl.ContextMenu>
-                                        <ContextMenu behav:ContextMenuBehaviour.ContextMenuOpenedCommand="{Binding Path=PlacementTarget.Tag.ContextMenuOpened, RelativeSource={RelativeSource Self}}">
+                                        <ContextMenu behav:ContextMenuBehaviour.ContextMenuOpenedCommand="{Binding Path=PlacementTarget.Tag.ContextMenuOpened, RelativeSource={RelativeSource Self}}"
+                                                     Visibility="{Binding Path=PlacementTarget.Tag.CanMarkNodesBlack, RelativeSource={RelativeSource Self}, Converter={StaticResource BoolToVisibilityConverter}}">
                                             <!--Opened="asdf">-->
                                             <MenuItem Header="Oznacz/Odznacz wierzchołek jako przetworzony"
                                                       Command="{Binding Path=PlacementTarget.Tag.MarkNodeBlack, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"

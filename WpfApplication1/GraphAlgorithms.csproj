@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="Models\Algorithms\AlgorithmBase.cs" />
     <Compile Include="Models\Algorithms\BFS.cs" />
+    <Compile Include="Models\Algorithms\DFS.cs" />
     <Compile Include="Models\FileHelper.cs" />
     <Compile Include="ViewModels\EditNodeValueViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
@@ -201,6 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Instructions\BFS.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Instructions\DFS.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

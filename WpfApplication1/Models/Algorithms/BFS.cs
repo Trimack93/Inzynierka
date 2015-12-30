@@ -17,7 +17,7 @@ namespace WpfApplication1.Models.Algorithms
         {
             string filePath = Path.Combine(INSTRUCTIONS_PATH, "BFS.txt");
 
-            this.Instructions = FileHelper.GetInstructionsFromFile(filePath, 0);
+            this.Instructions = FileHelper.GetInstructionsFromFile(filePath);
             this.NodesQueue = queue;
 
             RefreshCorrectLists();
@@ -41,7 +41,7 @@ namespace WpfApplication1.Models.Algorithms
                 string rootNodeName = CorrectNodesList.Single(n => n.Value.ToString() == "0").Name;         // Name of node which value is 0 (root node)
 
                 // First value in queue must be the root node
-                if (NodesQueue.Count == 0 || NodesQueue[0].SelectedValue.Name != rootNodeName)
+                if (NodesQueue.Count == 0 || NodesQueue.Count > 2 || NodesQueue[0].SelectedValue?.Name != rootNodeName)
                     return false;
 
                 foreach (Node node in NodesList)

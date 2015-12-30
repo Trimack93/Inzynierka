@@ -102,6 +102,7 @@
     <Compile Include="Utilities\Converters\BoolToDirectionConverter.cs" />
     <Compile Include="Utilities\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utilities\Converters\CenterBorderGapMaskConverter.cs" />
+    <Compile Include="Utilities\Converters\NodeToBoolConverter.cs" />
     <Compile Include="Utilities\Converters\StringToNewlineStringConverter.cs" />
     <Compile Include="Utilities\Converters\ThicknessToFontWeigthConverter.cs" />
     <Compile Include="Utilities\CustomXmlSerializer.cs" />

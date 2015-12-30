@@ -99,7 +99,8 @@
 
                         <DataTemplate DataType="{x:Type model:CanvasEdge}">
                             <controls:EdgeControl X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"
-                                                  Edge="{Binding Edge}" CanFireMouseOverEvents="True"
+                                                  Edge="{Binding Edge}"
+                                                  CanFireMouseOverEvents="{Binding DataContext.CanEdgesAnimate, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
                                                   Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                         </DataTemplate>
                     </ItemsControl.Resources>

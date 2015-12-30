@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <conv:StringToNewlineStringConverter x:Key="StringToNewlineStringConverter" />
             <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <conv:NodeToBoolConverter x:Key="NodeToBoolConverter" />
 
             <!-- Common styles used by every project in the solution -->
             <ResourceDictionary.MergedDictionaries>

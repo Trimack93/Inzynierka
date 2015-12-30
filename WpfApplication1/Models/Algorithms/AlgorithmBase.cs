@@ -54,7 +54,7 @@ namespace WpfApplication1.Models.Algorithms
             StepCount--;
         }
 
-        public string GetCurrentInstruction()
+        public virtual string GetCurrentInstruction()
         {
             if (StepCount < Instructions.Count)
                 return Instructions[StepCount];

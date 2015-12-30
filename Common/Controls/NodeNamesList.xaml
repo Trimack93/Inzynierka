@@ -47,7 +47,7 @@
                     </ComboBox.ItemTemplate>
                     <ComboBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Usuń" IsEnabled="{Binding IsValueChosen}"
+                            <MenuItem Header="Usuń" IsEnabled="{Binding SelectedValue, Converter={StaticResource NodeToBoolConverter}}"
                                       Command="{Binding Path=PlacementTarget.Tag.ContextMenuItemDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}"
                                       CommandParameter="{Binding}" />
                         </ContextMenu>
