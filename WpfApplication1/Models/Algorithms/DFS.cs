@@ -33,7 +33,8 @@ namespace WpfApplication1.Models.Algorithms
         public override bool Step()
         {
             base.Step();
-            
+
+            bool isReturningBack = false;
             List<Node> algorithmNodesList = new List<Node>();                               // List of nodes on which algorithm will be performed
 
             // Clone correct nodes from beginning of the step into new list
@@ -81,6 +82,8 @@ namespace WpfApplication1.Models.Algorithms
 
                         if (CompareWithActualNodes(algorithmNodesList) == false)
                             return false;
+
+                        isReturningBack = true;
                     }
                 }
                 // Node with highest step value is in format "x/y"
@@ -119,6 +122,8 @@ namespace WpfApplication1.Models.Algorithms
 
                             if (CompareWithActualNodes(algorithmNodesList) == false)
                                 return false;
+
+                            isReturningBack = true;
                         }
                     }
 
@@ -163,8 +168,11 @@ namespace WpfApplication1.Models.Algorithms
                 return false;
             }
 
-            // TODO: Set actual instruction index
-            _currentInstructionIndex++;
+            //// If user is returning back on visited nodes, another instruction will be shown
+            if (isReturningBack)
+                _currentInstructionIndex = 2;
+            else
+                _currentInstructionIndex = 1;
 
             // If all nodes are processed, finish algorithm
             if ( this.NodesList.All( n => n.Color == Brushes.Black) )
