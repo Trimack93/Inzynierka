@@ -14,12 +14,6 @@ namespace WpfApplication1.Models.Algorithms
         {
             this.EdgesList = edges;
             this.NodesList = nodes;
-
-            //foreach (Edge edge in edges)
-            //    this.CorrectEdgesList.Add( edge.Clone() );
-            
-            //foreach (Node node in nodes)
-            //    this.CorrectNodesList.Add( node.Clone() );
         }
 
         //----------------------------------
@@ -29,16 +23,15 @@ namespace WpfApplication1.Models.Algorithms
 
         protected List<Edge> EdgesList { get; set; }
         protected List<Node> NodesList { get; set; }
-
         protected List<string> Instructions { get; set; }
-
-        // Lists of edges and nodes not impured by user's actions
-        public List<Edge> CorrectEdgesList { get; set; } = new List<Edge>();
-        public List<Node> CorrectNodesList { get; set; } = new List<Node>();
 
         //----------------------------------
 
         public bool IsFinished { get; set; } = false;
+
+        // Lists of edges and nodes not impured by user's actions
+        public List<Edge> CorrectEdgesList { get; set; } = new List<Edge>();
+        public List<Node> CorrectNodesList { get; set; } = new List<Node>();
 
         //----------------------------------
 
@@ -74,6 +67,23 @@ namespace WpfApplication1.Models.Algorithms
 
             foreach (Node node in this.NodesList)
                 this.CorrectNodesList.Add(node.Clone());
+        }
+
+        /// <summary>
+        /// Compares nodes in the list against actual nodes in the graph.
+        /// </summary>
+        /// <returns>True, if nodes are the same, otherwise false.</returns>
+        protected bool CompareWithActualNodes(List<Node> algorithmNodesList)
+        {
+            foreach (Node node in this.NodesList)
+            {
+                Node correctNode = algorithmNodesList.Single(n => n.ID == node.ID);
+
+                if (node.Value.ToString() != correctNode.Value.ToString() || node.Color.Color != correctNode.Color.Color)     // One can't simply compare SolidColorBrush (reference type :<)
+                    return false;
+            }
+
+            return true;
         }
     }
 }

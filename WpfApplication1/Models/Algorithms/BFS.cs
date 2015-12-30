@@ -43,14 +43,9 @@ namespace WpfApplication1.Models.Algorithms
                 // First value in queue must be the root node
                 if (NodesQueue.Count == 0 || NodesQueue.Count > 2 || NodesQueue[0].SelectedValue?.Name != rootNodeName)
                     return false;
-
-                foreach (Node node in NodesList)
-                {
-                    Node correctNode = CorrectNodesList.Single(n => n.ID == node.ID);
-
-                    if (node.Value != correctNode.Value)
-                        return false;
-                }
+                
+                if ( CompareWithActualNodes(CorrectNodesList) == false )
+                    return false;
 
                 Node observableRootNode = NodesList.Single(n => n.Name == rootNodeName);
                 observableRootNode.Color = Brushes.Gray;
@@ -76,13 +71,8 @@ namespace WpfApplication1.Models.Algorithms
                 nodeNeighbours.ForEach(n => n.Value = ( Int32.Parse(blackNode.Value.ToString()) ) + 1);
                 
                 // Compare correctly processed graph with actual one
-                foreach (Node node in NodesList)
-                {
-                    Node correctNode = algorithmNodesList.Single(n => n.ID == node.ID);
-
-                    if (node.Value.ToString() != correctNode.Value.ToString() || node.Color.Color != correctNode.Color.Color)     // One can't simply compare SolidColorBrush (reference type :<)
-                        return false;
-                }
+                if ( CompareWithActualNodes(algorithmNodesList) == false)
+                    return false;
 
                 //--------------------
                 // Nodes are vaild, time to check the queue
