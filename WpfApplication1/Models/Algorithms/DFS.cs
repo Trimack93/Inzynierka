@@ -26,7 +26,7 @@ namespace WpfApplication1.Models.Algorithms
 
         //----------------------------------
 
-        private int _currentInstructionIndex { get; set; }
+        protected int _currentInstructionIndex { get; set; }
 
         //----------------------------------
 
@@ -61,8 +61,6 @@ namespace WpfApplication1.Models.Algorithms
                     // If node has white neighbours
                     if (whiteNeighbours.Count > 0)
                     {
-                        //Node highSeqRealNode = GraphHelper.GetNodeWithHighestStep(this.NodesList);
-
                         if (whiteNeighbours.Any(n => n.ID == highSeqRealNode.ID) == false)
                             return false;
                         else
@@ -100,8 +98,6 @@ namespace WpfApplication1.Models.Algorithms
                         // If previous node has white neighbours, check if user picked one of them
                         if (whiteNeighbours.Count > 0)
                         {
-                            //Node highSeqRealNode = GraphHelper.GetNodeWithHighestStep(this.NodesList);
-
                             if (whiteNeighbours.Any(n => n.ID == highSeqRealNode.ID) == false)
                                 return false;
                             else
@@ -158,8 +154,6 @@ namespace WpfApplication1.Models.Algorithms
                 else
                     return false;
 
-                //highSeqNode = GraphHelper.GetNodeWithHighestStep(algorithmNodesList);
-
                 if ( highSeqRealNode.Value.ToString().EndsWith("/") )
                     highSeqRealNode.Color = Brushes.Gray;
             }
@@ -185,10 +179,12 @@ namespace WpfApplication1.Models.Algorithms
 
         public override string GetCurrentInstruction()
         {
-            if (_currentInstructionIndex < Instructions.Count)
-                return Instructions[_currentInstructionIndex];
-            else
-                return Instructions[Instructions.Count - 1];
+            //if (_currentInstructionIndex < Instructions.Count)
+            //    return Instructions[_currentInstructionIndex];
+            //else
+            //    return Instructions[Instructions.Count - 1];
+
+            return Instructions[_currentInstructionIndex];
         }
     }
 }

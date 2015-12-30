@@ -1,0 +1,43 @@
+﻿# Witaj w algorytmie sortowania topologicznego!
+
+By móc posortować topologicznie wierzchołki, najpierw potrzeba poznać ich czasy przetworzenia. Pomoże nam w tym algorytm przeszukiwania w głąb.
+ 
+Wierzchołek, od którego rozpoczyna się działanie algorytmu, posiada wartość "1/".
+Wartość ta oznacza krok, w którym odwiedzony został wierzchołek.
+
+W pierwszym kroku należy wybrać jednego s sąsiadów wierzchołka startowego i wyznaczyć jego wartość (tutaj będzie to krok 2, czyli "2/").
+Wierzchołek ten będzie nowym wierzchołkiem startowym.
+
+Po wykonaniu powyższej czynności zakończ sekwencję.
+
+------------------------------
+Aby zmienić wartość wierzchołka, wystarczy kliknąć go lewym przyciskiem myszy.
+
+
+# Jeśli wybrany wierzchołek posiada nieodwiedzonych (białych) sąsiadów, wybierz jednego z nich i wyznacz jego nową wartość.
+
+Jeśli nie istnieją tacy sąsiedzi, rozpoczyna się powrót w górę drzewa. Zmień etykietę czasową aktualnego wierzchołka na "x/x+1" i oznacz go jako przetworzony.
+
+
+------------------------------
+Aby oznaczyć wierzchołek jako przetworzony, kliknij go prawym przyciskiem myszy i wybierz stosowną opcję.
+
+
+# Wracaj po odwiedzonych wierzchołkach, z każdym krokiem aktualizując etykietę czasową aktualnego wierzchołka na ".../Seq" i oznaczając go jako przetworzony.
+
+Gdy w drodze powrotnej napotkasz wierzchołek posiadający jednego lub więcej białych sąsiadów, wówczas wybierz jednego z nich jako kolejny punkt startowy, ustawiając mu wartość "Seq/".
+
+Jeśli wróciłeś na początek drzewa, a graf nadal posiada nieodwiedzone wierzchołki, wybierz losowo jeden z nich, wyznaczając jego wartość.
+
+Gdy wszystkie wierzchołki zostaną przetworzone, pojawi się nowa kontrolka...
+------------------------------
+Seq oznacza numer aktualnej sekwencji (aktualny krok obliczeń).
+
+
+# Wszystkie wierzchołki zostały przetworzone!
+
+Pod przyciskiem "Zakończ sekwencję" pojawiła się nowa kontrolka.
+
+Wypełnij kolejkę, wybierając po kolei wierzchołki grafu, począwszy od najpóźniej przetworzonego.
+
+Gdy kolejka zostanie ułożona poprawnie, algorytm zostanie ukończony.

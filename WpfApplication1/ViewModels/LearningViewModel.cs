@@ -91,6 +91,15 @@ namespace WpfApplication1.ViewModels
 
                         _algorithm = new DFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes() );
                         break;
+
+                    case "Sortowanie topologiczne":
+                        this.CanvasItems = GetRandomGraphFromList(graphsList, 2);
+                        this.CanMarkNodesBlack = true;
+
+                        this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
+
+                        _algorithm = new TopologicalSort( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems );
+                        break;
                 }
 
                 this.Instruction = _algorithm?.GetCurrentInstruction();
@@ -302,13 +311,26 @@ namespace WpfApplication1.ViewModels
 
             if (isSequenceGood)
             {
-                this.Instruction = _algorithm.GetCurrentInstruction();
+                if (_algorithm is TopologicalSort && (_algorithm as TopologicalSort).isSortingNodes)
+                {
+                    this.IsNodeNamesControlEnabled = true;
+                    this.IsNodeNamesControlVisible = true;
 
-                if (_algorithm.IsFinished && learningWindow != null)
+                    //this.ComboBoxItems.Add(new ComboboxElement(0));
+
+                    (_algorithm as TopologicalSort).SetLastInstruction();
+
+                    //return;
+                }
+
+                this.Instruction = _algorithm.GetCurrentInstruction();
+                
+                if (_algorithm.IsFinished)
                 {
                     MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    learningWindow.Close();
+                    if (learningWindow != null)
+                        learningWindow.Close();
                 }
             }
             else

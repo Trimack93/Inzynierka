@@ -124,14 +124,7 @@ namespace Common.Utilities
                 .ToList();
 
             try
-            {
-                // If all values are in format x/, just remove the slash and process pure integers
-                if (nodeValues.All(v => v.EndsWith("/")))
-                {
-                    return nodesList
-                        .Single(n => n.Value.ToString() == nodeValues.Max());
-                }
-                
+            {                
                 List<int> leftValues = new List<int>(nodeValues.Count);
                 List<int> rightValues = new List<int>(nodeValues.Count);
 
@@ -174,6 +167,35 @@ namespace Common.Utilities
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets list of nodes' processed time values.
+        /// </summary>
+        /// <param name="nodesList">List of nodes.</param>
+        /// <returns>List of nodes' processed time values.</returns>
+        public static List<int> GetListOfNodesProcessedTimes(List<Node> nodesList)
+        {
+            List<string> nodeValues = nodesList
+                .Where( n => n != null )
+                .Where( n => n.Value.ToString() != "" )
+                .Select( n => n.Value.ToString() )
+                .ToList();
+
+            List<int> rightValues = new List<int>(nodeValues.Count);
+
+            for (int i = 0; i < nodeValues.Count; i++)
+            {
+                int slashIndex = nodeValues[i].IndexOf('/');
+                int count = nodeValues[i].Length - slashIndex;                      // Number of characters to delete
+                
+                string rightValue = nodeValues[i].Remove(0, slashIndex + 1);
+
+                rightValues.Add(rightValue != "" ?
+                    Int32.Parse(rightValue) : 0);
+            }
+
+            return rightValues;
         }
 
         /// <summary>
