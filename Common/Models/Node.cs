@@ -153,5 +153,26 @@ namespace Common.Models
 
             return newNode;
         }
+
+        /// <summary>
+        /// Get value of this node as an integer number.
+        /// </summary>
+        /// <returns>Value of node as integer number.</returns>
+        public int GetIntegerValue()
+        {
+            if (this.Value == null)
+                return -1;
+
+            if (this.Value.ToString() == "∞")
+                return int.MaxValue;
+
+            int value;
+            bool success = Int32.TryParse(this.Value.ToString(), out value);
+
+            if (success)
+                return value;
+
+            return -1;
+        }
     }
 }

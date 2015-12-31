@@ -28,6 +28,81 @@ namespace Common.Utilities
         }
 
         /// <summary>
+        /// Get the edge pointing from node1 to node2.
+        /// </summary>
+        /// <param name="node1">First node, beginning of the edge.</param>
+        /// <param name="node2">Second node, end of the edge.</param>
+        /// <returns>Edge pointing from first node to second.</returns>
+        public static Edge GetConnectingEdge(Node node1, Node node2)
+        {
+            List<Edge> edgesBetween = GraphHelper.GetListOfEdges(node1, node2);
+
+            Edge connectingEdge = edgesBetween
+                .SingleOrDefault(e => e.NodesID[0] == node1.ID);
+
+            return connectingEdge;
+        }
+
+        /// <summary>
+        /// Gets list of white nodes with smallest value amongst provided list.
+        /// </summary>
+        /// <param name="nodesList">List of nodes.</param>
+        /// <returns>list of nodes with smallest value.</returns>
+        public static List<Node> GetSmallestWhiteNodes(List<Node> nodesList)
+        {
+            //List<string> nodeValues = nodesList
+            //    .Where( n => n.Color == Brushes.Transparent )
+            //    .Select( n => n?.Value.ToString() )
+            //    .ToList();
+
+            //List<int> nodeValuesInt = new List<int>(nodeValues.Count);
+
+            //foreach (string value in nodeValues)
+            //{
+            //    int intValue;
+
+            //    if (value == "∞")
+            //        intValue = int.MaxValue;
+            //    else
+            //        intValue = Int32.Parse(value);
+
+            //    nodeValuesInt.Add(intValue);
+            //}
+
+            //int smallestValue = nodeValuesInt.Min();
+            
+            List<int> nodeValuesInt = nodesList
+                .Where( n => n.Color == Brushes.Transparent )
+                .Select( n => n.GetIntegerValue() )
+                .ToList();
+
+            int smallestValue = nodeValuesInt.Min();
+
+            return nodesList
+                .Where( n => n?.Value.ToString() == smallestValue.ToString() )
+                .ToList();
+        }
+
+        /// <summary>
+        /// Gets list of black nodes with highest value amongst provided list.
+        /// </summary>
+        /// <param name="nodesList">List of nodes.</param>
+        /// <returns>list of black nodes with highest value.</returns>
+        public static List<Node> GetHighestBlackNodes(List<Node> nodesList)
+        {
+            List<int> nodeValuesInt = nodesList
+                .Where( n => n.Color == Brushes.Black )
+                .Select( n => n.GetIntegerValue() )
+                .ToList();
+
+            int highestValue = nodeValuesInt.Max();
+
+            return nodesList
+                .Where( n => n?.Value.ToString() == highestValue.ToString() )
+                .ToList();
+        }
+
+        /// <summary>
         /// Gets nodes to which this node is directed to.
         /// </summary>
         /// <param name="nodesList">List of nodes.</param>

@@ -1,3 +1,24 @@
-﻿# Pierwsza instrukcja
+﻿# Witaj w algorytmie Dijkstry!
 
-# Druga instrukcja
+
+Oznacz wierzchołek o najmniejszej wartości jako obecnie przetwarzany.
+Następnie oblicz odległości od jego sąsiadów na podstawie wag krawędzi.
+
+
+
+
+
+
+------------------------------
+Aby zmienić wartość wierzchołka, wystarczy kliknąć go lewym przyciskiem myszy.
+
+Aby oznaczyć wierzchołek jako przetworzony, kliknij go prawym przyciskiem myszy i wybierz stosowną opcję.
+
+# Wybierz następny nieprzetworzony wierzchołek, którego wartość jest najmniejsza. Oznacz go jako aktualnie przetwarzany.
+
+Następnie dokonaj relaksacji wszystkich krawędzi łączących obecny wierzchołek z jego sąsiadami.
+
+Technika relaksacji polega na zaktualizowaniu odległości wewnątrz sąsiedniego wierzchołka, gdy suma odległości aktualnego wierzchołka i krawędzi ich łączącej jest mniejsza niż obecna.
+
+
+Algorytm zakończy się, gdy wszystkie wierzchołki zostaną przetworzone.
