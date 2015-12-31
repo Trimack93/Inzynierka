@@ -100,6 +100,13 @@ namespace WpfApplication1.ViewModels
 
                         _algorithm = new TopologicalSort( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems );
                         break;
+
+                    case "Algorytm Dijkstry":
+                        this.CanvasItems = GetRandomGraphFromList(graphsList, 5);
+                        this.CanMarkNodesBlack = true;
+
+                        _algorithm = new Dijkstra( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes() );
+                        break;
                 }
 
                 this.Instruction = _algorithm?.GetCurrentInstruction();
