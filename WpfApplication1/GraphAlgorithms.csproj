@@ -107,6 +107,7 @@
     <Compile Include="Models\Algorithms\BFS.cs" />
     <Compile Include="Models\Algorithms\DFS.cs" />
     <Compile Include="Models\Algorithms\Dijkstra.cs" />
+    <Compile Include="Models\Algorithms\Kruskal.cs" />
     <Compile Include="Models\Algorithms\TopologicalSort.cs" />
     <Compile Include="Models\FileHelper.cs" />
     <Compile Include="Models\ChooseAlgorithmButton.cs" />
@@ -216,6 +217,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Instructions\Dijkstra.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Instructions\Kruskal.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -301,13 +301,9 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <!--<DataTrigger Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True">
-                            <Setter TargetName="kontrolka" Property="NodeColor" Value="BurlyWood" />
-                            <Setter TargetName="kontrolka" Property="NodeThickness" Value="2.5" />
-                        </DataTrigger>-->
-
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CanMarkNodesBlack}" Value="True" />
                                 <Condition Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True" />
                                 <Condition Binding="{Binding ElementName=kontrolka, Path=DataContext.Node.Color}" Value="Transparent" />
                             </MultiDataTrigger.Conditions>
@@ -318,6 +314,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CanMarkNodesBlack}" Value="True" />
                                 <Condition Binding="{Binding ElementName=kontrolka, Path=IsMouseOver}" Value="True" />
                                 <Condition Binding="{Binding ElementName=kontrolka, Path=DataContext.Node.Color}" Value="Gray" />
                             </MultiDataTrigger.Conditions>

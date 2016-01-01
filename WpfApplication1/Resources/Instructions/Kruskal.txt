@@ -1,0 +1,3 @@
+﻿# Witaj w algorytmie Kruskala!
+
+# Druga instrukcja

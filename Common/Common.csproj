@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Utilities\Behaviours\CanvasBehaviour.cs" />
     <Compile Include="Utilities\Behaviours\ContextMenuBehaviour.cs" />
+    <Compile Include="Utilities\Behaviours\EdgeControlBehaviour.cs" />
     <Compile Include="Utilities\Behaviours\EventBehaviourFactory.cs" />
     <Compile Include="Utilities\Behaviours\NodeControlBehaviour.cs" />
     <Compile Include="Utilities\CanvasItemsCollectionExtensions.cs" />

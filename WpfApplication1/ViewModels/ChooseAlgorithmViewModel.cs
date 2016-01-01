@@ -31,7 +31,8 @@ namespace WpfApplication1.ViewModels
             this._dialogService = new DialogService(null, typeLocator);
 
             this.WindowTitle = windowName + " - wybierz algorytm";
-            this.ChooseAlgorithmButtons[0].IsEnabled = false;
+            this.ChooseAlgorithmButtons[4].IsEnabled = false;
+            this.ChooseAlgorithmButtons[6].IsEnabled = false;
         }
 
         // Custom graph mode

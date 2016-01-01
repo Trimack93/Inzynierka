@@ -676,8 +676,8 @@ namespace GraphGenerator.ViewModels
 
                     //----------------
 
-                    //string dataPath = Path.GetFullPath("../../CustomGraphs/Data.huu");
-                    //string encryptedDataPath = Path.GetFullPath("../../CustomGraphs/EncryptedData.huu");
+                    //string dataPath = Path.GetFullPath("../../CustomGraphs/Prawdziwe algorytmy - learning/Data.huu");
+                    //string encryptedDataPath = Path.GetFullPath("../../CustomGraphs/Prawdziwe algorytmy - learning/EncryptedData.huu");
 
                     //plainXml = File.ReadAllText(dataPath);
                     //encryptedXml = StringEncryption.Encrypt(plainXml, "Yaranaika?");

@@ -274,6 +274,13 @@ namespace WpfApplication1.ViewModels
                     _algorithm = new TopologicalSort(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
                     break;
 
+                case "Algorytm Kruskala":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 3);
+                    this.CanEdgesAnimate = true;
+
+                    _algorithm = new Kruskal(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
+                    break;
+
                 case "Algorytm Dijkstry":
                     this.CanvasItems = GetRandomGraphFromList(graphsList, 5);
                     this.CanMarkNodesBlack = true;
@@ -416,6 +423,26 @@ namespace WpfApplication1.ViewModels
                 MessageBox.Show("Wierzchołek jest już przetworzony, po co zmieniać jego wartość?", "Co czynisz, studencie", MessageBoxButton.OK, MessageBoxImage.Question);
         }
 
+        void EdgeClickedExecute(RoutedEventArgs p)
+        {
+            Edge edge = (p.Source as EdgeControl).Edge;
+
+            if (edge.Color == Brushes.Black)
+            {
+                edge.Color = Brushes.LimeGreen;
+                edge.Thickness = 3;
+            }
+            else
+            {
+                edge.Color = Brushes.Black;
+                edge.Thickness = 2;
+            }
+        }
+
+        //----------------------------------
+
+        bool CanClickNode() { return this.CanMarkNodesBlack; }
+
         //----------------------------------
 
         public ICommand EndSequenceClick
@@ -429,12 +456,17 @@ namespace WpfApplication1.ViewModels
         }
         public ICommand NodeClicked
         {
-            get { return new RelayCommand<RoutedEventArgs>(p => NodeClickedExecute(p)); }
+            get { return new RelayCommand<RoutedEventArgs>( p => NodeClickedExecute(p), CanClickNode); }
         }
 
         public ICommand MarkNodeBlack
         {
             get { return new RelayCommand<int>( param => MarkNodeBlackExecute(param) ); }
+        }
+        
+        public ICommand EdgeClicked
+        {
+            get { return new RelayCommand<RoutedEventArgs>(p => EdgeClickedExecute(p)); }
         }
     }
 }
