@@ -24,6 +24,12 @@
         <Setter Property="Foreground" Value="Snow" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Background}" Value="LightGray">
+                <Setter Property="Foreground" Value="Black" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="ChooseModeTextblockStyle" TargetType="{x:Type TextBlock}">

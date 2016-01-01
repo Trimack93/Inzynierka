@@ -3,11 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:WpfApplication1.ViewModels"
         xmlns:local="clr-namespace:WpfApplication1.Views"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        md:DialogServiceViews.IsRegistered="True"
         mc:Ignorable="d"
-        Title="Wybierz algorytm" Width="1024" Height="640" Background="RoyalBlue"
+        Name="ChooseAlgorithmWindow"
+        Width="1024" Height="640" Background="RoyalBlue"
+        Title="{Binding WindowTitle}" Visibility="{Binding IsWindowVisible}"
         WindowStartupLocation="CenterScreen">
 
+    <Window.DataContext>
+        <vm:ChooseAlgorithmViewModel />
+    </Window.DataContext>
+    
     <Window.Resources>
 
         <Style x:Key="ChooseAlgorithmButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseButtonStyle}">
@@ -15,7 +24,22 @@
             <Setter Property="Height" Value="165" />
             <Setter Property="Background" Value="LimeGreen" />
             <Setter Property="Padding" Value="0,0,0,10" />
-            <EventSetter Event="Click" Handler="AlgorithmButton_Click" />
+            <Setter Property="Command" Value="{Binding ElementName=ChooseAlgorithmWindow, Path=DataContext.AlgorithmClick}" />
+
+            <Setter Property="CommandParameter">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource BindingParamsConverter}">
+                        <Binding ElementName="ChooseAlgorithmWindow" />
+                        <Binding RelativeSource="{RelativeSource Self}" Path="Content.Children[1].Text"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>                
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="LightGray" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
         
     </Window.Resources>
@@ -36,57 +60,63 @@
 
         <StackPanel Grid.Row="2">
             <TextBlock Text="Wybierz algorytm:" FontFamily="Calibri" FontSize="20" Foreground="Cornsilk" HorizontalAlignment="Center" Margin="0,0,0,15" />
-            
-            <StackPanel HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
+
+            <StackPanel HorizontalAlignment="Center" DataContext="{Binding ChooseAlgorithmButtons}">
+                <StackPanel.Resources>
+                    <Style TargetType="Button" BasedOn="{StaticResource ChooseAlgorithmButtonStyle}" />
+                    <Style TargetType="Image" BasedOn="{StaticResource ChooseModeImageStyle}" />
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                </StackPanel.Resources>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" >
+                    <Button IsEnabled="{Binding [0].IsEnabled}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/1.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Przeszukiwanie wszerz" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/1.png" />
+                            <TextBlock Text="{Binding [0].AlgorithmName}" />
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
+                    <Button IsEnabled="{Binding [1].IsEnabled}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/2.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Przeszukiwanie w głąb" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/2.png" />
+                            <TextBlock Text="{Binding [1].AlgorithmName}" />
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
+                    <Button IsEnabled="{Binding [2].IsEnabled}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/3.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Sortowanie topologiczne" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/3.png" />
+                            <TextBlock Text="{Binding [2].AlgorithmName}" />
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}">
+                    <Button IsEnabled="{Binding [3].IsEnabled}">
                         <Grid>
-                            <Image Source="/Resources/4.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Algorytm Kruskala" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/4.png" />
+                            <TextBlock Text="{Binding [3].AlgorithmName}" />
                         </Grid>
                     </Button>
                 </StackPanel>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
+                    <Button IsEnabled="{Binding [4].IsEnabled}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/5.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Wykrywanie dwudzielności" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/5.png" />
+                            <TextBlock Text="{Binding [4].AlgorithmName}" />
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}" Margin="0,0,50,0">
+                    <Button IsEnabled="{Binding [5].IsEnabled}" Margin="0,0,50,0">
                         <Grid>
-                            <Image Source="/Resources/6.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Algorytm Dijkstry" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/6.png" />
+                            <TextBlock Text="{Binding [5].AlgorithmName}" />
                         </Grid>
                     </Button>
 
-                    <Button Style="{StaticResource ChooseAlgorithmButtonStyle}">
+                    <Button IsEnabled="{Binding [6].IsEnabled}">
                         <Grid>
-                            <Image Source="/Resources/7.png" Style="{StaticResource ChooseAlgorithmImageStyle}" />
-                            <TextBlock Text="Algorytm Bellmana-Forda" Style="{StaticResource ChooseAlgorithmTextblockStyle}" />
+                            <Image Source="/Resources/7.png" />
+                            <TextBlock Text="{Binding [6].AlgorithmName}" />
                         </Grid>
                     </Button>
                 </StackPanel>
@@ -94,7 +124,8 @@
         </StackPanel>
 
         <StackPanel Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
-            <Button Content="Powrót" Height="25" Width="80" Click="ReturnButton_Click" Background="Orange" VerticalAlignment="Center" Margin="10,0,0,10" TextBlock.FontWeight="DemiBold" Style="{StaticResource BaseButtonStyle}" />
+            <Button Content="Powrót" Height="25" Width="80" VerticalAlignment="Center" Margin="10,0,0,10"
+                    Background="Orange" TextBlock.FontWeight="DemiBold" Command="{Binding ReturnClick}" Style="{StaticResource BaseButtonStyle}" />
         </StackPanel>
     </Grid>
 </Window>

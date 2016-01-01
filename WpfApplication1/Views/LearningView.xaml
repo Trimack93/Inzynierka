@@ -117,7 +117,9 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Width="250" Height="350" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-28,0,0">
+                    <StackPanel Grid.Row="0" Width="250" Height="350" Margin="0,-28,0,0" Visibility="{Binding AreInstructionsVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        
                         <TextBlock Text="Instrukcje" FontWeight="Bold" FontSize="16" Foreground="DodgerBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
                         <Line X1="15" Y1="10" X2="235" Y2="10" Stroke="Gold" StrokeThickness="1.5" />
 

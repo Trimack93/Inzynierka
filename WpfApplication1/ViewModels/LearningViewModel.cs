@@ -21,7 +21,7 @@ using WpfApplication1.Views;
 
 namespace WpfApplication1.ViewModels
 {
-    public class LearningViewModel : BaseNotifyPropertyChanged
+    public class LearningViewModel : BaseNotifyPropertyChanged, IModalDialogViewModel
     {
         public LearningViewModel()
         {
@@ -70,44 +70,8 @@ namespace WpfApplication1.ViewModels
                 {
                     graphsList = (List<Graph>)xmlSerializer.Deserialize(reader);
                 }
-
-                switch (this.AlgorithmName)
-                {
-                    case "Przeszukiwanie wszerz":
-                        this.CanvasItems = GetRandomGraphFromList(graphsList, 0);
-                        this.IsNodeNamesControlVisible = true;
-                        this.IsNodeNamesControlEnabled = true;
-                        this.CanMarkNodesBlack = true;
-
-                        this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
-                        this.ComboBoxItems.Add( new ComboboxElement(0) );
-
-                        _algorithm = new BFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems );
-                        break;
-
-                    case "Przeszukiwanie w głąb":
-                        this.CanvasItems = GetRandomGraphFromList(graphsList, 1);
-                        this.CanMarkNodesBlack = true;
-
-                        _algorithm = new DFS( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes() );
-                        break;
-
-                    case "Sortowanie topologiczne":
-                        this.CanvasItems = GetRandomGraphFromList(graphsList, 2);
-                        this.CanMarkNodesBlack = true;
-
-                        this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
-
-                        _algorithm = new TopologicalSort( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems );
-                        break;
-
-                    case "Algorytm Dijkstry":
-                        this.CanvasItems = GetRandomGraphFromList(graphsList, 5);
-                        this.CanMarkNodesBlack = true;
-
-                        _algorithm = new Dijkstra( CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes() );
-                        break;
-                }
+                
+                InitializeAlgorithmFromGraph(graphsList);
 
                 this.Instruction = _algorithm?.GetCurrentInstruction();
 
@@ -138,6 +102,7 @@ namespace WpfApplication1.ViewModels
 
         private bool _canEdgesAnimate { get; set; } = false;
         private bool _canMarkNodesBlack { get; set; } = false;
+        private bool _areInstructionsVisible { get; set; } = true;
         private bool _isStopButtonVisible { get; set; } = false;
         private bool _isNodeNamesControlVisible { get; set; } = false;
         private bool _isNodeNamesControlEnabled { get; set; } = false;
@@ -145,13 +110,13 @@ namespace WpfApplication1.ViewModels
         private string _instruction;
 
         private readonly string GRAPH_PATH = Path.GetFullPath("../../Resources/Graphs/LearningData.huu");
-        private readonly IDialogService _dialogService;
+        protected IDialogService _dialogService;
         
         private ObservableCollection<CanvasControlBase> _canvasItems = new ObservableCollection<CanvasControlBase>();
         private ObservableCollection<ComboboxElement> _comboBoxItems;
         private List<int> oldGrayNodes = new List<int>();                                   // Contains ID of nodes which were gray before changing their color to black
 
-        private AlgorithmBase _algorithm { get; set; }
+        protected AlgorithmBase _algorithm { get; set; }
 
         //----------------------------------
 
@@ -171,6 +136,15 @@ namespace WpfApplication1.ViewModels
             {
                 _canEdgesAnimate = value;
                 RaisePropertyChanged("CanEdgesAnimate");
+            }
+        }
+        public bool AreInstructionsVisible
+        {
+            get { return _areInstructionsVisible; }
+            set
+            {
+                _areInstructionsVisible = value;
+                RaisePropertyChanged("AreInstructionsVisible");
             }
         }
         public bool IsStopButtonVisible
@@ -210,7 +184,7 @@ namespace WpfApplication1.ViewModels
         public ObservableCollection<CanvasControlBase> CanvasItems
         {
             get { return _canvasItems; }
-            private set
+            protected set
             {
                 _canvasItems = value;
 
@@ -221,7 +195,7 @@ namespace WpfApplication1.ViewModels
         public ObservableCollection<ComboboxElement> ComboBoxItems
         {
             get { return _comboBoxItems; }
-            private set
+            protected set
             {
                 _comboBoxItems = value;
 
@@ -236,8 +210,9 @@ namespace WpfApplication1.ViewModels
         public int CanvasWidth { get { return 726; } }
         public int CanvasHeight { get { return 660; } }
         public int RectangleSize { get { return 66; } }
+        public bool? DialogResult { get { return true; } }
 
-        public string AlgorithmName { get; private set; }
+        public string AlgorithmName { get; protected set; }
         public string Instruction
         {
             get { return _instruction; }
@@ -256,7 +231,7 @@ namespace WpfApplication1.ViewModels
         /// <param name="graphsList">List of graphs.</param>
         /// <param name="algorithmID">ID of algorithm for which graph is valid.</param>
         /// <returns>Collection of nodes and canvas rectangles.</returns>
-        private ObservableCollection<CanvasControlBase> GetRandomGraphFromList(List<Graph> graphsList, byte algorithmID)
+        protected ObservableCollection<CanvasControlBase> GetRandomGraphFromList(List<Graph> graphsList, byte algorithmID)
         {
             List<Graph> compatibileGraphsList = graphsList
                 .Where(g => g.AlgorithmsSupported[algorithmID] == true)
@@ -265,6 +240,47 @@ namespace WpfApplication1.ViewModels
             int randomIndex = new Random().Next(compatibileGraphsList.Count);
 
             return compatibileGraphsList[randomIndex].CanvasGraph;
+        }
+
+        protected void InitializeAlgorithmFromGraph(List<Graph> graphsList)
+        {
+            switch (this.AlgorithmName)
+            {
+                case "Przeszukiwanie wszerz":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 0);
+                    this.IsNodeNamesControlVisible = true;
+                    this.IsNodeNamesControlEnabled = true;
+                    this.CanMarkNodesBlack = true;
+
+                    this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
+                    this.ComboBoxItems.Add(new ComboboxElement(0));
+
+                    _algorithm = new BFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
+                    break;
+
+                case "Przeszukiwanie w głąb":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 1);
+                    this.CanMarkNodesBlack = true;
+
+                    _algorithm = new DFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
+                    break;
+
+                case "Sortowanie topologiczne":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 2);
+                    this.CanMarkNodesBlack = true;
+
+                    this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
+
+                    _algorithm = new TopologicalSort(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
+                    break;
+
+                case "Algorytm Dijkstry":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 5);
+                    this.CanMarkNodesBlack = true;
+
+                    _algorithm = new Dijkstra(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
+                    break;
+            }
         }
 
         private void ReturnGraphToValidState()

@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+using Common.Models;
+using Common.Utilities;
+
 namespace WpfApplication1.Views
 {
     /// <summary>
@@ -41,15 +44,40 @@ namespace WpfApplication1.Views
 
         private void CustomGraphButton_Click(object sender, RoutedEventArgs e)
         {
-            string path = Path.GetFullPath("../../Resources/Graphs");
+            string path = Path.GetFullPath("../../../GraphGenerator/CustomGraphs");
 
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Custom graph files (*.huu)|*.huu";
             dlg.InitialDirectory = path;
             
-            bool? result = dlg.ShowDialog();
+            if ( dlg.ShowDialog() == true )
+            {
+                try
+                {
+                    List<Graph> graphsList;
 
-            MessageBox.Show("Czy plik został otwarty: " + result.ToString());
+                    CustomXmlSerializer xmlSerializer = new CustomXmlSerializer(typeof(List<Graph>));
+
+                    string encryptedXml = File.ReadAllText(dlg.FileName);
+                    string plainXml = StringEncryption.Decrypt(encryptedXml, "Yaranaika?");
+
+                    using (StringReader reader = new StringReader(plainXml))
+                    {
+                        graphsList = (List<Graph>)xmlSerializer.Deserialize(reader);
+                    }
+
+                    this.Hide();
+
+                    ChooseAlgorithmView algorithmView = new ChooseAlgorithmView(graphsList[0]);               // First graph is always user graph
+                    algorithmView.ShowDialog();
+
+                    this.Show();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Wystąpił nieoczekiwny błąd.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)

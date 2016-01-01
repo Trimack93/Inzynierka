@@ -23,6 +23,10 @@ namespace WpfApplication1
             string typeName = viewModelType.Name;
             string viewTypeName = typeName.Replace("ViewModel", "View");
 
+            // As for now, custom graph mode has the same view as learning mode
+            if (viewTypeName == "CustomGraphView")
+                viewTypeName = "LearningView";
+
             string viewModelNamespace = viewModelType.FullName;
             string viewNamespace = viewModelNamespace.Replace("ViewModels." + typeName, "Views." + viewTypeName);
 
