@@ -1,3 +1,17 @@
 ﻿# Witaj w algorytmie Kruskala!
 
-# Druga instrukcja
+Wyobraź sobie, że każdy wierzchołek w grafie jest odrębnym lasem. Na każdy z tych lasów składa się jedno drzewo - jest to właśnie ten wierzchołek.
+
+Twoim zadaniem jest tak umiejętne połączenie wierzchołków, aby wszystkie drzewa znajdowały się w jednym lesie.
+
+Wierzchołki łączysz, klikając łączącą je krawędź.
+
+Na początek wybierz krawędź o najmniejszej wadze. Gdy już to zrobisz, zakończ sekwencję.
+
+# Gdy krawędź łącząca wierzchołki jest pokolorowana na zielono, oznacza to, że wierzchołki te należą do tego samego lasu.
+
+Algorytm ten nie dopuszcza istnienia cykli w grafie. Oznacza to, że nie możesz połączyć dwóch wierzchołków należących do tego samego lasu. Dlatego na każdym kroku miej przed oczami cały graf - wierzchołki nie muszą być połączone bezpośrednio, by należeć do tego samego lasu.
+
+Wybierz krawędź o najmniejszej wadze, łączącą dwa różne lasy.
+
+Gdy wszystkie wierzchołki będą należały do jednego lasu, zakończ sekwencję ponownie, nie zmieniając nic więcej - wówczas algorytm dobiegnie końca.

@@ -28,19 +28,17 @@ namespace Common.Controls
             // TODO: Change to triggers (or not)
             this.MouseEnter += (sender, e) =>
             {
-                if (Edge.Value != null && CanFireMouseOverEvents && Edge.Color != Brushes.LimeGreen)
+                if (Edge.Value != null && CanFireMouseOverEvents && Edge.Color.Color != Colors.LimeGreen)
                 {
                     this.Edge.Thickness = 3;
-                    this.ValueTextblock.FontWeight = FontWeights.Bold;
                 }
             };
 
             this.MouseLeave += (sender, e) =>
             {
-                if (Edge.Value != null && CanFireMouseOverEvents && Edge.Color != Brushes.LimeGreen)
+                if (Edge.Value != null && CanFireMouseOverEvents && Edge.Color.Color != Colors.LimeGreen)
                 {
                     this.Edge.Thickness = 2;
-                    this.ValueTextblock.FontWeight = FontWeights.Normal;
                 }
             };
         }

@@ -39,4 +39,15 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="EdgeValueTextblockStyle" TargetType="{x:Type TextBlock}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Edge.Thickness}" Value="2">
+                <Setter Property="TextBlock.FontWeight" Value="Normal" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Edge.Thickness}" Value="3">
+                <Setter Property="TextBlock.FontWeight" Value="Bold" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

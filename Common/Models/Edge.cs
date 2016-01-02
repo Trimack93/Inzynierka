@@ -111,6 +111,27 @@ namespace Common.Models
             return newEdge;
         }
 
+        /// <summary>
+        /// Get value of this edge as an integer number.
+        /// </summary>
+        /// <returns>Value of edge as integer number.</returns>
+        public int GetIntegerValue()
+        {
+            if (this.Value == null)
+                return -1;
+
+            if (this.Value.ToString() == "∞")
+                return int.MaxValue;
+
+            int value;
+            bool success = Int32.TryParse(this.Value.ToString(), out value);
+
+            if (success)
+                return value;
+
+            return -1;
+        }
+
         //---------------------------------
         // While serializing object into XML, it's hashcode is also preserved.
         // After reboot of the application, object hashcodes change and default Equals method fails.

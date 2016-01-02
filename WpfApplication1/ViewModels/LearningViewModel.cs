@@ -309,6 +309,7 @@ namespace WpfApplication1.ViewModels
 
                 edge.Value = correctEdge.Value;
                 edge.Color = correctEdge.Color;
+                edge.Thickness = correctEdge.Thickness;
             }
 
             // If algorithm is BFS, the queue of nodes also needs to be refreshed (user could mess up there a lot)
@@ -427,7 +428,7 @@ namespace WpfApplication1.ViewModels
         {
             Edge edge = (p.Source as EdgeControl).Edge;
 
-            if (edge.Color == Brushes.Black)
+            if (edge.Color.Color == Colors.Black)
             {
                 edge.Color = Brushes.LimeGreen;
                 edge.Thickness = 3;
@@ -442,6 +443,7 @@ namespace WpfApplication1.ViewModels
         //----------------------------------
 
         bool CanClickNode() { return this.CanMarkNodesBlack; }
+        bool CanClickEdge() { return this.CanEdgesAnimate; }
 
         //----------------------------------
 
@@ -458,15 +460,15 @@ namespace WpfApplication1.ViewModels
         {
             get { return new RelayCommand<RoutedEventArgs>( p => NodeClickedExecute(p), CanClickNode); }
         }
+        public ICommand EdgeClicked
+        {
+            get { return new RelayCommand<RoutedEventArgs>(p => EdgeClickedExecute(p), CanClickEdge); }
+        }
 
         public ICommand MarkNodeBlack
         {
             get { return new RelayCommand<int>( param => MarkNodeBlackExecute(param) ); }
         }
         
-        public ICommand EdgeClicked
-        {
-            get { return new RelayCommand<RoutedEventArgs>(p => EdgeClickedExecute(p)); }
-        }
     }
 }

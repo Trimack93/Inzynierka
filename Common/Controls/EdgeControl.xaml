@@ -15,7 +15,7 @@
     </UserControl.Resources>
 
     <Canvas>
-        <TextBlock Text="{Binding Edge.Value, NotifyOnTargetUpdated=True}" Name="ValueTextblock" TargetUpdated="ValueTextblock_TargetUpdated" />
+        <TextBlock Text="{Binding Edge.Value, NotifyOnTargetUpdated=True}" Name="ValueTextblock" TargetUpdated="ValueTextblock_TargetUpdated" Style="{StaticResource EdgeValueTextblockStyle}" />
 
         <!-- Transparent Shadow of Arrow which artificially enlarges control's hitbox
              Truly genius idea of M.M. -->

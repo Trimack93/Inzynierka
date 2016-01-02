@@ -111,6 +111,7 @@
     <Compile Include="Models\Algorithms\TopologicalSort.cs" />
     <Compile Include="Models\FileHelper.cs" />
     <Compile Include="Models\ChooseAlgorithmButton.cs" />
+    <Compile Include="Models\NodesForest.cs" />
     <Compile Include="ViewModels\ChooseAlgorithmViewModel.cs" />
     <Compile Include="ViewModels\CustomGraphViewModel.cs" />
     <Compile Include="ViewModels\EditNodeValueViewModel.cs" />
