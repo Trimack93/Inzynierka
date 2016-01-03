@@ -71,7 +71,7 @@ namespace Common.Utilities
                 n.Value.ToString().All(Char.IsLetter) );
         }
 
-        // Przeszukiwanie w szerz
+        // Przeszukiwanie wszerz
         public bool AreNodesWithNames()
         {
             return nodesList.All(n => n.Name.Length > 0);

@@ -102,10 +102,16 @@ namespace WpfApplication1.Models.Algorithms
         /// <returns>List of longest green edges.</returns>
         private List<Edge> GetLongestEdges(List<Edge> edgesList)
         {
-            int maxValue = edgesList
+            List<int> greenEdgesValues = edgesList
                 .Where(e => e.Color == Brushes.LimeGreen)
                 .Select(e => e.GetIntegerValue())
-                .Max();
+                .ToList();
+
+            // If there are no green edges in graph, return empty list
+            if (greenEdgesValues.Count == 0)
+                return new List<Edge>();
+
+            int maxValue = greenEdgesValues.Max();
 
             return edgesList
                 .Where(e => e.GetIntegerValue() == maxValue)

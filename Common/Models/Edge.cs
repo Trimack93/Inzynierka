@@ -102,7 +102,7 @@ namespace Common.Models
             newEdge.Value = this.Value;
             newEdge.Thickness = this.Thickness;
             newEdge.IsBidirectional = this.IsBidirectional;
-            newEdge.Color = new SolidColorBrush(this.Color.Color);
+            newEdge.Color = this.Color;
             newEdge.SerializedColor = newEdge.Color.Color;
 
             foreach (int ID in NodesID)
