@@ -720,7 +720,13 @@ namespace GraphGenerator.ViewModels
 
                     using (StringReader reader = new StringReader(plainXml))
                     {
-                        Graph graph = ((List<Graph>)xmlSerializer.Deserialize(reader))[0];
+                        List<Graph> graphsList = ( (List<Graph>) xmlSerializer.Deserialize(reader) );
+
+                        if (graphsList.Count != 1)
+                            throw new Exception("W pliku powinien być dokładnie jeden graf.");
+
+                        //Graph graph = ((List<Graph>)xmlSerializer.Deserialize(reader))[0];
+                        Graph graph = graphsList[0];
 
                         //this.CanvasItems.Clear();
                         this.CanvasItems = graph.CanvasGraph;

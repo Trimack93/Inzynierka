@@ -66,6 +66,9 @@ namespace WpfApplication1.Views
                         graphsList = (List<Graph>)xmlSerializer.Deserialize(reader);
                     }
 
+                    if (graphsList.Count != 1)
+                        throw new Exception("W pliku powinien być dokładnie jeden graf.");
+
                     this.Hide();
 
                     ChooseAlgorithmView algorithmView = new ChooseAlgorithmView(graphsList[0]);               // First graph is always user graph
@@ -75,7 +78,7 @@ namespace WpfApplication1.Views
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Wystąpił nieoczekiwny błąd.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Wystąpił błąd podczas wczytywania pliku. Upewnij się, że nie jest on uszkodzony.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:WpfApplication1.Views"
         mc:Ignorable="d"
         Title="Algorytmy grafowe - projekt inżynierski" Width="1024" Height="768" Background="RoyalBlue"
+        Name="MainWindowView"
         WindowStartupLocation="CenterScreen">
 
     <Grid>

@@ -135,7 +135,9 @@ namespace WpfApplication1.ViewModels
                 dialogViewModel = new CustomGraphViewModel(algorithmName, _graph);
             }
 
-            _dialogService.ShowDialog(this, dialogViewModel);
+            if (dialogViewModel.DialogResult == true)
+                _dialogService.ShowDialog(this, dialogViewModel);
+
             currentWindow.Close();
         }
 

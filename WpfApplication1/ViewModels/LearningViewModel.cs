@@ -74,12 +74,14 @@ namespace WpfApplication1.ViewModels
                 InitializeAlgorithmFromGraph(graphsList);
 
                 this.Instruction = _algorithm?.GetCurrentInstruction();
-
+                                
                 RaisePropertyChanged("CanvasNodes");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Wystąpil błąd: " + ex.Message, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Wystąpil nieoczekiwany błąd. Upewnij się, że pliki danych nie są uszkodzone.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                this.DialogResult = false;
 
                 // Get the learning view window from static property and close it
                 var openedWindows = App.Current.Windows;
@@ -93,8 +95,9 @@ namespace WpfApplication1.ViewModels
                         break;
                     }
                 }
-                                                                                                                        // Can't close a window which practically wasn't opened yet. 
-                currentWindow.Loaded += new RoutedEventHandler((sender, e) => { (sender as Window).Close(); });         // So let's add closing handler to its Loaded event. (ProjektBD experience~ )
+                
+                if (currentWindow != null)                                                                                  // Can't close a window which practically wasn't opened yet. 
+                    currentWindow.Loaded += new RoutedEventHandler((sender, e) => { (sender as Window).Close(); });         // So let's add closing handler to its Loaded event. (ProjektBD experience~ )
             }
         }
 
@@ -210,7 +213,7 @@ namespace WpfApplication1.ViewModels
         public int CanvasWidth { get { return 726; } }
         public int CanvasHeight { get { return 660; } }
         public int RectangleSize { get { return 66; } }
-        public bool? DialogResult { get { return true; } }
+        public bool? DialogResult { get; set; } = true;
 
         public string AlgorithmName { get; protected set; }
         public string Instruction
