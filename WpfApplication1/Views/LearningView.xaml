@@ -154,6 +154,7 @@
 
                         <Button Content="STOP" Width="80" Height="80"
                                 FontWeight="Bold" FontSize="20" BorderThickness="3" Background="Orange"
+                                Command="{Binding StopButtonClick}" CommandParameter="{Binding ElementName=LearningWindow}"
                                 Visibility="{Binding IsStopButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource CenteredButtonStyle}" />
                     </StackPanel>
 

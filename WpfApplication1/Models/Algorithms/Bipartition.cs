@@ -26,18 +26,24 @@ namespace WpfApplication1.Models.Algorithms
 
         public override bool Step()
         {
-            if ( AreNeighboursWithDifferentParity() == false )
+            if ( this.StepCount > 0 && AreNeighboursWithDifferentParity() == false )
                 return false;
 
             return base.Step();
         }
 
+        /// <summary>
+        /// Checks if all the neighbours of current node have different parity than it.
+        /// </summary>
+        /// <returns>True, if all neighbours are of different parity, otherwise false.</returns>
         public bool AreNeighboursWithDifferentParity()
         {
-            if (this.CorrectNodesQueue.Count == 0)
-                return false;
-
             Node firstNode = this.CorrectNodesQueue[0].SelectedValue;
+
+            // If first node even from the correct queue is null, that means user tried to stop algorithm at the very beginning. So let's fail him
+            if (firstNode == null)
+                return true;
+
             int firstNodeModuloResult = firstNode.GetIntegerValue() % 2;
 
             List<int> neighboursValuesList = GraphHelper.GetConnectedNodes(this.CorrectNodesList, firstNode)
@@ -46,7 +52,46 @@ namespace WpfApplication1.Models.Algorithms
                                                 .ToList();
 
             return neighboursValuesList
-                .All( value => value % 2 != firstNodeModuloResult );
+                .All( value => value % 2 != firstNodeModuloResult );        // returns true even if sequence is empty
+        }
+
+        public override string GetCurrentInstruction()
+        {
+            if (StepCount < Instructions.Count - 1)
+                return Instructions[StepCount];
+
+            return Instructions[2];
+        }
+
+        public string GetLastInstruction()
+        {
+            return Instructions.Last();
+        }
+
+        public static bool AreQueuesCorrect(ObservableCollection<ComboboxElement> queue1, ObservableCollection<ComboboxElement> queue2, List<Node> nodesList)
+        {
+            var firstQueueDistinct = queue1
+                .Where(el => el.SelectedValue != null)
+                .GroupBy(el => el.SelectedValue.Name)
+                .Select(group => group.First())
+                .ToList();
+
+            var secondQueueDistinct = queue2
+                .Where(el => el.SelectedValue != null)
+                .GroupBy(el => el.SelectedValue.Name)
+                .Select(group => group.First())
+                .ToList();
+
+            if (firstQueueDistinct.Count + secondQueueDistinct.Count != nodesList.Count)
+                return false;
+
+            bool firstQueueIsValid = firstQueueDistinct
+                .All(el => el.SelectedValue.GetIntegerValue() % 2 == 0);
+
+            bool secondQueueIsValid = secondQueueDistinct
+                .All(el => el.SelectedValue.GetIntegerValue() % 2 == 1);
+
+            return firstQueueIsValid && secondQueueIsValid;
         }
     }
 }

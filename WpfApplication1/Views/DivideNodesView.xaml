@@ -1,0 +1,50 @@
+﻿<Window x:Class="WpfApplication1.Views.DivideNodesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1.Views"
+        xmlns:vm="clr-namespace:WpfApplication1.ViewModels"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
+        mc:Ignorable="d"
+        Title="Podział wierzchołków na podzbiory" Height="350" Width="350"
+        Background="RoyalBlue" WindowStartupLocation="CenterOwner">
+
+    <Window.DataContext>
+        <vm:DivideNodesViewModel />
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Podział wierzchołków" FontSize="18" FontFamily="Times New Roman" Foreground="Snow"
+                   Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0" />
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,15">
+            <TextBlock Text="Zbiór pierwszy:" FontSize="12" FontFamily="Times New Roman" Foreground="Snow" HorizontalAlignment="Center" />
+
+            <controls:NodeNamesList Width="300" ElementWidth="40" NodesList="{Binding DataContext.NodesList, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
+                                                ComboBoxEnabled="True"
+                                                ElementsList="{Binding DataContext.FirstQueue, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}" />
+        </StackPanel>
+                
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center">
+            <TextBlock Text="Zbiór drugi:" FontSize="12" FontFamily="Times New Roman" Foreground="Snow" HorizontalAlignment="Center" />
+            
+            <controls:NodeNamesList Width="300" ElementWidth="40" NodesList="{Binding DataContext.NodesList, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
+                                                ComboBoxEnabled="True"
+                                                ElementsList="{Binding DataContext.SecondQueue, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}" />
+        </StackPanel>
+
+        <Button Content="Zatwierdź" Background="LimeGreen" IsDefault="True" Style="{StaticResource BaseButtonStyle}"
+                Grid.Row="5" Width="70" Height="40" VerticalAlignment="Center" Margin="0,0,0,15"
+                Command="{Binding OkClick}" />
+    </Grid>
+</Window>

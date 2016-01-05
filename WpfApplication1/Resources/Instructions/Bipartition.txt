@@ -28,6 +28,11 @@ Jeśli wierzchołek nie łączy się z żadnymi sąsiadami, wystarczy oznaczyć 
 
 Nie musisz ponownie obliczać odległości szarych sąsiadów.
 
-Jeśli jakikolwiek sąsiad posiada taką samą parzystość jak obecny wierzchołek, wówczas graf nie jest dwudzielny. Naciśnij STOP.
+Jeśli jakikolwiek sąsiad posiada taką samą parzystość jak wierzchołek startowy, wówczas graf nie jest dwudzielny. Naciśnij STOP.
 
 Gdy w kolejce nie pozostanie ani jeden wierzchołek, otworzy się nowe okno, w którym podzielisz wierzchołki na dwie grupy.
+
+
+# Podziel wierzchołki na dwa zbiory: w pierwszym niech znajdą się wszystkie te, których wartości są parzyste, w drugim zaś nieparzyste.
+
+Jeśli poprawnie wykonasz zadanie, algorytm zakończy się.

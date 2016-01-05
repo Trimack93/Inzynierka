@@ -364,7 +364,16 @@ namespace WpfApplication1.ViewModels
                 
                 if (_algorithm.IsFinished)
                 {
-                    MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (_algorithm is Bipartition)
+                    {
+                        this.Instruction = (_algorithm as Bipartition).GetLastInstruction();
+
+                        DivideNodesViewModel viewModel = new DivideNodesViewModel(_algorithm.CorrectNodesList);
+                        _dialogService.ShowDialog(this, viewModel);
+                    }
+
+                    MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
 
                     if (learningWindow != null)
                         learningWindow.Close();
@@ -376,6 +385,22 @@ namespace WpfApplication1.ViewModels
 
                 ReturnGraphToValidState();
                 _algorithm.DecrementStep();
+            }
+        }
+
+        void StopButtonClickExecute(Window learningWindow)
+        {
+            if ((_algorithm as Bipartition).AreNeighboursWithDifferentParity() == false)
+            {
+                MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                if (learningWindow != null)
+                    learningWindow.Close();
+            }
+            else
+            {
+                MessageBox.Show("Brak podstaw do stwierdzenia braku dwudzielności. Przeanalizuj dokładnie wartości sąsiadów aktualnego wierzchołka.", "Błąd",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -456,6 +481,10 @@ namespace WpfApplication1.ViewModels
         public ICommand EndSequenceClick
         {
             get { return new RelayCommand<Window>(param => EndSequenceClickExecute(param)); }
+        }
+        public ICommand StopButtonClick
+        {
+            get { return new RelayCommand<Window>(param => StopButtonClickExecute(param)); }
         }
 
         public ICommand ContextMenuOpened

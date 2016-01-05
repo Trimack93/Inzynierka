@@ -87,6 +87,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DivideNodesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditNodeValueView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +119,7 @@
     <Compile Include="Models\NodesForest.cs" />
     <Compile Include="ViewModels\ChooseAlgorithmViewModel.cs" />
     <Compile Include="ViewModels\CustomGraphViewModel.cs" />
+    <Compile Include="ViewModels\DivideNodesViewModel.cs" />
     <Compile Include="ViewModels\EditNodeValueViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -122,6 +127,9 @@
     </Compile>
     <Compile Include="Views\ChooseAlgorithmView.xaml.cs">
       <DependentUpon>ChooseAlgorithmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DivideNodesView.xaml.cs">
+      <DependentUpon>DivideNodesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditNodeValueView.xaml.cs">
       <DependentUpon>EditNodeValueView.xaml</DependentUpon>
