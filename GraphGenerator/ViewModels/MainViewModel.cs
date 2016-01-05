@@ -113,6 +113,7 @@ namespace GraphGenerator.ViewModels
                 return;
             }
 
+            bool areNodesWithDifferentCharNames = _graphCompatibility.AreNodesWithDifferentCharNames();
             bool areNodesWithCharValuesOnly = _graphCompatibility.AreNodesWithCharValuesOnly();
             bool areNodesWithNames = _graphCompatibility.AreNodesWithNames();
             bool isGraphDirected = _graphCompatibility.IsGraphDirected();
@@ -123,15 +124,15 @@ namespace GraphGenerator.ViewModels
             bool areNodesOneAndEmpties = _graphCompatibility.AreNodesOneAndEmpties();
 
             // Breadth-first search
-            Colors[0] = areEdgesEmpty && areNodesZeroAndInfinites && areNodesWithNames ?
+            Colors[0] = areNodesWithDifferentCharNames && areEdgesEmpty && areNodesZeroAndInfinites && areNodesWithNames ?
                 Brushes.Green : Brushes.Red;
 
             // Depth-first search
-            Colors[1] = areEdgesEmpty && areNodesOneAndEmpties ?
+            Colors[1] = areNodesWithDifferentCharNames && areEdgesEmpty && areNodesOneAndEmpties ?
                 Brushes.Green : Brushes.Red;
 
             // Topological sorting
-            Colors[2] = areEdgesEmpty && areNodesOneAndEmpties && isGraphDirected ?
+            Colors[2] = areNodesWithDifferentCharNames && areEdgesEmpty && areNodesOneAndEmpties && isGraphDirected ?
                 Brushes.Green : Brushes.Red;
 
             // Kruskal's algorithm
@@ -139,15 +140,15 @@ namespace GraphGenerator.ViewModels
                 Brushes.Green : Brushes.Red;
 
             // Bipartite graph detecting
-            Colors[4] = areEdgesEmpty && areNodesZeroAndInfinites && !isGraphDirected ?
+            Colors[4] = areNodesWithDifferentCharNames && areEdgesEmpty && areNodesZeroAndInfinites && !isGraphDirected ?
                 Brushes.Green : Brushes.Red;
 
             // Dijkstra's algorithm
-            Colors[5] = areEdgesNonNegative && areNodesZeroAndInfinites && isGraphDirected ?
+            Colors[5] = areNodesWithDifferentCharNames && areEdgesNonNegative && areNodesZeroAndInfinites && isGraphDirected ?
                 Brushes.Green : Brushes.Red;
 
             // Bellman–Ford algorithm
-            Colors[6] = areEdgesWithIntValues && areNodesZeroAndInfinites && isGraphDirected ?
+            Colors[6] = areNodesWithDifferentCharNames && areEdgesWithIntValues && areNodesZeroAndInfinites && isGraphDirected ?
                 Brushes.Green : Brushes.Red;
 
             RaisePropertyChanged("CanSaveGraph");

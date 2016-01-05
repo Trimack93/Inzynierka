@@ -35,7 +35,7 @@ namespace WpfApplication1.Models.Algorithms
         /// <summary>
         /// Checks if all the neighbours of current node have different parity than it.
         /// </summary>
-        /// <returns>True, if all neighbours are of different parity, otherwise false.</returns>
+        /// <returns>True, if all neighbours have different parity, otherwise false.</returns>
         public bool AreNeighboursWithDifferentParity()
         {
             Node firstNode = this.CorrectNodesQueue[0].SelectedValue;

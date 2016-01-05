@@ -63,6 +63,20 @@ namespace Common.Utilities
         }
 
         //-------------------------
+
+        public bool AreNodesWithDifferentCharNames()
+        {
+            List<string> nodeNames = nodesList
+                .Select(n => n.Name)
+                .ToList();
+            
+            bool areAllChar = nodeNames
+                .All(name => name.All(Char.IsLetter));
+
+            bool areAllDistinct = nodeNames.Distinct().Count() == nodeNames.Count;
+
+            return areAllChar && areAllDistinct;
+        }
         
         // Kruskal
         public bool AreNodesWithCharValuesOnly()

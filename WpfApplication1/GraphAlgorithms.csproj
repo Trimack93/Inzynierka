@@ -108,6 +108,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Algorithms\AlgorithmBase.cs" />
+    <Compile Include="Models\Algorithms\BellmanFord.cs" />
     <Compile Include="Models\Algorithms\BFS.cs" />
     <Compile Include="Models\Algorithms\Bipartition.cs" />
     <Compile Include="Models\Algorithms\DFS.cs" />
@@ -233,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Instructions\Bipartition.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Instructions\BellmanFord.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

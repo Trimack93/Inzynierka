@@ -105,6 +105,7 @@ namespace WpfApplication1.ViewModels
 
         private bool _canEdgesAnimate { get; set; } = false;
         private bool _canMarkNodesBlack { get; set; } = false;
+        private bool _canClickNodes { get; set; } = false;
         private bool _areInstructionsVisible { get; set; } = true;
         private bool _isStopButtonVisible { get; set; } = false;
         private bool _isNodeNamesControlVisible { get; set; } = false;
@@ -130,6 +131,15 @@ namespace WpfApplication1.ViewModels
             {
                 _canMarkNodesBlack = value;
                 RaisePropertyChanged("CanMarkNodesBlack");
+            }
+        }
+        public bool CanClickNodes
+        {
+            get { return _canClickNodes; }
+            set
+            {
+                _canClickNodes = value;
+                RaisePropertyChanged("CanClickNodes");
             }
         }
         public bool CanEdgesAnimate
@@ -248,6 +258,7 @@ namespace WpfApplication1.ViewModels
                     this.IsNodeNamesControlVisible = true;
                     this.IsNodeNamesControlEnabled = true;
                     this.CanMarkNodesBlack = true;
+                    this.CanClickNodes = true;
 
                     this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
                     this.ComboBoxItems.Add(new ComboboxElement(0));
@@ -258,6 +269,7 @@ namespace WpfApplication1.ViewModels
                 case "Przeszukiwanie w głąb":
                     this.CanvasItems = GetRandomGraphFromList(graphsList, 1);
                     this.CanMarkNodesBlack = true;
+                    this.CanClickNodes = true;
 
                     _algorithm = new DFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
                     break;
@@ -265,6 +277,7 @@ namespace WpfApplication1.ViewModels
                 case "Sortowanie topologiczne":
                     this.CanvasItems = GetRandomGraphFromList(graphsList, 2);
                     this.CanMarkNodesBlack = true;
+                    this.CanClickNodes = true;
 
                     this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
 
@@ -284,18 +297,33 @@ namespace WpfApplication1.ViewModels
                     this.IsNodeNamesControlVisible = true;
                     this.IsNodeNamesControlEnabled = true;
                     this.CanMarkNodesBlack = true;
+                    this.CanClickNodes = true;
 
                     this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
                     this.ComboBoxItems.Add( new ComboboxElement(0) );
 
-                    _algorithm = new Bipartition(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);         // Change! wariwariwarinagasenaide
+                    _algorithm = new Bipartition(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
                     break;
 
                 case "Algorytm Dijkstry":
                     this.CanvasItems = GetRandomGraphFromList(graphsList, 5);
                     this.CanMarkNodesBlack = true;
+                    this.CanClickNodes = true;
 
                     _algorithm = new Dijkstra(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
+                    break;
+
+                case "Algorytm Bellmana-Forda":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 6);
+                    this.IsNodeNamesControlVisible = true;
+                    this.IsNodeNamesControlEnabled = true;
+                    this.CanClickNodes = true;
+
+                    this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
+                    this.ComboBoxItems.Add(new ComboboxElement(0));
+
+                    _algorithm = new BellmanFord(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);
+
                     break;
             }
         }
@@ -359,6 +387,9 @@ namespace WpfApplication1.ViewModels
 
                     (_algorithm as TopologicalSort).SetLastInstruction();
                 }
+
+                if (_algorithm is BellmanFord)
+                    this.IsNodeNamesControlEnabled = false;
 
                 this.Instruction = _algorithm.GetCurrentInstruction();
                 
@@ -473,7 +504,7 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
 
-        bool CanClickNode() { return this.CanMarkNodesBlack; }
+        bool CanClickNode() { return this.CanClickNodes; }
         bool CanClickEdge() { return this.CanEdgesAnimate; }
 
         //----------------------------------
