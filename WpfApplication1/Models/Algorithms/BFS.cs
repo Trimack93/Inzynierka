@@ -133,7 +133,7 @@ namespace WpfApplication1.Models.Algorithms
 
         //----------------------------------
 
-        private new void RefreshCorrectLists()
+        protected new void RefreshCorrectLists()
         {
             base.RefreshCorrectLists();
 

@@ -1,0 +1,33 @@
+﻿# Witaj w algorytmie wykrywania dwudzielności!
+
+W wykryciu dwudzielności grafu pomoże nam algorytm przeszukiwania wszerz.
+ 
+Wierzchołek, od którego rozpoczyna się działanie algorytmu, posiada wartość 0.
+
+W pierwszym kroku wystarczy jedynie przepisać go do kolejki wierzchołków.
+
+Po wykonaniu powyższej czynności zakończ sekwencję.
+
+
+# Gdy wierzchołek startowy został wybrany, następnym krokiem jest obliczenie odległości jego sąsiadów.
+
+Ustaw wartość (StartNode.Value + 1) każdemu wierzchołkowi, do którego skierowany jest wierzchołek startowy.
+Następnie dodaj te wierzchołki do kolejki (kolejność nie ma znaczenia).
+Ostatnim krokiem jest oznaczenie wierzchołka startowego jako przetworzonego.
+
+Wierzchołki odwiedzone, ale jeszcze nie przetworzone, oznaczone są na szaro.
+------------------------------
+Aby zmienić wartość wierzchołka, wystarczy kliknąć go lewym przyciskiem myszy.
+Aby oznaczyć wierzchołek jako przetworzony, kliknij go prawym przyciskiem myszy i wybierz stosowną opcję.
+
+
+# Wierzchołkiem startowym jest teraz pierwszy wierzchołek w kolejce (licząc od lewej).
+
+Oblicz odległości jego sąsiadów, przepisz ich do kolejki i oznacz wierzchołek startowy jako przetworzony.
+Jeśli wierzchołek nie łączy się z żadnymi sąsiadami, wystarczy oznaczyć go jako przetworzony.
+
+Nie musisz ponownie obliczać odległości szarych sąsiadów.
+
+Jeśli jakikolwiek sąsiad posiada taką samą parzystość jak obecny wierzchołek, wówczas graf nie jest dwudzielny. Naciśnij STOP.
+
+Gdy w kolejce nie pozostanie ani jeden wierzchołek, otworzy się nowe okno, w którym podzielisz wierzchołki na dwie grupy.

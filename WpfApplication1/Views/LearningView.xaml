@@ -24,7 +24,8 @@
         <!-- Can't move it to Styles, because image path from there will be different - during runtime it works, but designer can't resolve this -->
         <Style x:Key="EndSequenceButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="ToolTipService.ShowDuration" Value="12000"/>
-            <Setter Property="Grid.Row" Value="2" />
+            <Setter Property="Margin" Value="80,0,0,0" />
+            
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -48,11 +49,10 @@
                                 <Setter TargetName="border" Property="BorderThickness" Value="3" />
                                 <Setter TargetName="border" Property="BorderBrush" Value="Gold" />
                             </Trigger>
-
-                            <!-- Correct button position when no additional controls are present -->
-                            <DataTrigger Binding="{Binding IsAdditionalControlVisible}" Value="False">
-                                <Setter Property="Grid.Row" Value="4" />
-                                <Setter Property="Margin" Value="0,0,0,40" />
+                            
+                            <!-- Correct button position when STOP button is visible -->
+                            <DataTrigger Binding="{Binding IsStopButtonVisible}" Value="True">
+                                <Setter Property="Margin" Value="0,0,20,0" />
                             </DataTrigger>
                         </ControlTemplate.Triggers>
 
@@ -60,7 +60,22 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <Style x:Key="StackPanelStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Grid.Row" Value="2" />
+
+            <Style.Triggers>
+                
+                <!-- Correct StackPanel position when nodes queue is hidden -->
+                <DataTrigger Binding="{Binding IsNodeNamesControlVisible}" Value="False">
+                    <Setter Property="Grid.Row" Value="4" />
+                    <Setter Property="Margin" Value="0,0,0,40" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -129,12 +144,18 @@
                                    FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="10,10,10,0" TextAlignment="Justify" />
                     </StackPanel>
 
-                    <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
-                            Command="{Binding EndSequenceClick}" CommandParameter="{Binding ElementName=LearningWindow}"
-                            ToolTip="Po naciśnięciu tego przycisku zakończysz obecnie wykonywaną sekwencję.\n
-                            Spowoduje to sprawdzenie, czy wykonałeś wszystkie kroki zgodnie z wybranym algorytmem.\n
-                            W przypadku wykrycia nieprawidłowości zostaniesz o tym poinformowany, a graf zostanie przywrócony do postaci,\n
-                            w jakiej znajdował się na początku sekwencji." />
+                    <StackPanel Style="{StaticResource StackPanelStyle}">
+                        <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
+                                Command="{Binding EndSequenceClick}" CommandParameter="{Binding ElementName=LearningWindow}"
+                                ToolTip="Po naciśnięciu tego przycisku zakończysz obecnie wykonywaną sekwencję.\n
+                                Spowoduje to sprawdzenie, czy wykonałeś wszystkie kroki zgodnie z wybranym algorytmem.\n
+                                W przypadku wykrycia nieprawidłowości zostaniesz o tym poinformowany, a graf zostanie przywrócony do postaci,\n
+                                w jakiej znajdował się na początku sekwencji." />
+
+                        <Button Content="STOP" Width="80" Height="80"
+                                FontWeight="Bold" FontSize="20" BorderThickness="3" Background="Orange"
+                                Visibility="{Binding IsStopButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource CenteredButtonStyle}" />
+                    </StackPanel>
 
                     <StackPanel Grid.Row="4" Visibility="{Binding IsNodeNamesControlVisible, Converter={StaticResource BoolToVisibilityConverter}}" >
                         <TextBlock Text="Kolejka wierzchołków:" Foreground="Snow" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,15" />
@@ -143,10 +164,6 @@
                                                 ComboBoxEnabled="{Binding DataContext.IsNodeNamesControlEnabled, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}"
                                                 ElementsList="{Binding DataContext.ComboBoxItems, RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}}" />
                     </StackPanel>
-
-                    <Button Content="STOP" Width="80" Height="80" Grid.Row="4" 
-                            FontWeight="Bold" FontSize="20" BorderThickness="3" Background="Orange"
-                            Visibility="{Binding IsStopButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource CenteredButtonStyle}" />
 
                     <StackPanel Orientation="Horizontal" Grid.Row="6" HorizontalAlignment="Center">
                         <Button Content="O PROGRAMIE" TextBlock.FontWeight="DemiBold" Background="LimeGreen" Click="AboutButton_Click"

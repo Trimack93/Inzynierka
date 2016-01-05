@@ -157,7 +157,6 @@ namespace WpfApplication1.ViewModels
             {
                 _isStopButtonVisible = value;
                 RaisePropertyChanged("IsStopButtonVisible");
-                RaisePropertyChanged("IsAdditionalControlVisible");
             }
         }
         public bool IsNodeNamesControlVisible
@@ -167,7 +166,6 @@ namespace WpfApplication1.ViewModels
             {
                 _isNodeNamesControlVisible = value;
                 RaisePropertyChanged("IsNodeNamesControlVisible");
-                RaisePropertyChanged("IsAdditionalControlVisible");
             }
         }
         public bool IsNodeNamesControlEnabled
@@ -178,10 +176,6 @@ namespace WpfApplication1.ViewModels
                 _isNodeNamesControlEnabled = value;
                 RaisePropertyChanged("IsNodeNamesControlEnabled");
             }
-        }
-        public bool IsAdditionalControlVisible
-        {
-            get { return IsStopButtonVisible || IsNodeNamesControlVisible; }
         }
 
         public ObservableCollection<CanvasControlBase> CanvasItems
@@ -284,6 +278,19 @@ namespace WpfApplication1.ViewModels
                     _algorithm = new Kruskal(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
                     break;
 
+                case "Wykrywanie dwudzielności":
+                    this.CanvasItems = GetRandomGraphFromList(graphsList, 4);
+                    this.IsStopButtonVisible = true;
+                    this.IsNodeNamesControlVisible = true;
+                    this.IsNodeNamesControlEnabled = true;
+                    this.CanMarkNodesBlack = true;
+
+                    this.ComboBoxItems = new ObservableCollection<ComboboxElement>();
+                    this.ComboBoxItems.Add( new ComboboxElement(0) );
+
+                    _algorithm = new Bipartition(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes(), this.ComboBoxItems);         // Change! wariwariwarinagasenaide
+                    break;
+
                 case "Algorytm Dijkstry":
                     this.CanvasItems = GetRandomGraphFromList(graphsList, 5);
                     this.CanMarkNodesBlack = true;
@@ -350,11 +357,7 @@ namespace WpfApplication1.ViewModels
                     this.IsNodeNamesControlEnabled = true;
                     this.IsNodeNamesControlVisible = true;
 
-                    //this.ComboBoxItems.Add(new ComboboxElement(0));
-
                     (_algorithm as TopologicalSort).SetLastInstruction();
-
-                    //return;
                 }
 
                 this.Instruction = _algorithm.GetCurrentInstruction();

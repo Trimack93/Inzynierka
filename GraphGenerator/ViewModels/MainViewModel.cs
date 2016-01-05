@@ -139,7 +139,7 @@ namespace GraphGenerator.ViewModels
                 Brushes.Green : Brushes.Red;
 
             // Bipartite graph detecting
-            Colors[4] = areEdgesEmpty && !isGraphDirected ?
+            Colors[4] = areEdgesEmpty && areNodesZeroAndInfinites && !isGraphDirected ?
                 Brushes.Green : Brushes.Red;
 
             // Dijkstra's algorithm

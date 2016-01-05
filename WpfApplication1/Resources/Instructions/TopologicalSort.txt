@@ -1,7 +1,7 @@
 ﻿# Witaj w algorytmie sortowania topologicznego!
 
 By móc posortować topologicznie wierzchołki, najpierw potrzeba poznać ich czasy przetworzenia. Pomoże nam w tym algorytm przeszukiwania w głąb.
- 
+
 Wierzchołek, od którego rozpoczyna się działanie algorytmu, posiada wartość "1/".
 Wartość ta oznacza krok, w którym odwiedzony został wierzchołek.
 
