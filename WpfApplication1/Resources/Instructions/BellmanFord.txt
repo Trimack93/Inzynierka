@@ -1,3 +1,22 @@
 ﻿# Witaj w algorytmie Bellmana-Forda!
 
-# Druga instrukcja
+
+Pierwszym krokiem, jakim musisz wykonać, jest wybranie kolejności relaksacji wierzchołków. Wybierz w kolejce poniżej wszystkie wierzchołki widoczne na grafie (kolejność zasadniczo nie ma znaczenia).
+
+Gdy skończysz, zakończ sekwencję.
+
+
+# Teraz, gdy lista jest już wypełniona, rozpocznij relaksację wierzchołków, rozpoczynając od tego znajdującego się najbardziej po lewej.
+
+Technika relaksacji polega na zaktualizowaniu odległości wewnątrz sąsiedniego wierzchołka, gdy suma odległości aktualnego wierzchołka i krawędzi ich łączącej jest mniejsza niż obecna.
+
+Im wierzchołek w kolejce jest bardziej na lewo, tym wyższy ma priorytet. Podczas relaksacji rozpoczynaj od sąsiadów o najwyższym priorytecie.
+
+Jeśli aktualny wierzchołek ma wartość ∞, nie ma sensu relaksować jego sąsiadów.
+
+
+# Algorytm kończy się po osiągnięciu |V| - 1 pętli, gdzię |V| = ilość wierzchołków w grafie.
+
+Teraz musisz określić, czy graf posiada ujemne cykle. Aby tego dokonać, zwyczajnie wykonaj relaksację wszystkich wierzchołków jeszcze raz. Jeśli choć raz zaktualizowałeś wartość wierzchołka, oznacza to, że graf posiada ujemne cykle. Naciśnij wówczas przycisk STOP.
+
+Jeśli nie zaktualizowałeś wartości żadnego z wierzchołków - otrzymany graf nie posiada ujemnych cykli. Gdy zakończysz sekwencję, algorytm dobiegnie końca.

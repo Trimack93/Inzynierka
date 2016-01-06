@@ -388,10 +388,18 @@ namespace WpfApplication1.ViewModels
                     (_algorithm as TopologicalSort).SetLastInstruction();
                 }
 
+                this.Instruction = _algorithm.GetCurrentInstruction();
+
                 if (_algorithm is BellmanFord)
+                {
                     this.IsNodeNamesControlEnabled = false;
 
-                this.Instruction = _algorithm.GetCurrentInstruction();
+                    if ((_algorithm as BellmanFord).IsLastStep)
+                    {
+                        this.IsStopButtonVisible = true;
+                        this.Instruction = (_algorithm as BellmanFord).GetLastInstruction();
+                    }
+                }
                 
                 if (_algorithm.IsFinished)
                 {
@@ -421,18 +429,37 @@ namespace WpfApplication1.ViewModels
 
         void StopButtonClickExecute(Window learningWindow)
         {
-            if ((_algorithm as Bipartition).AreNeighboursWithDifferentParity() == false)
+            if (_algorithm is Bipartition)
             {
-                MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                if ( (_algorithm as Bipartition).AreNeighboursWithDifferentParity() == false )
+                {
+                    MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                if (learningWindow != null)
-                    learningWindow.Close();
+                    if (learningWindow != null)
+                        learningWindow.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Brak podstaw do stwierdzenia braku dwudzielności. Przeanalizuj dokładnie wartości sąsiadów aktualnego wierzchołka.", "Błąd",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+
+            else if (_algorithm is BellmanFord)
             {
-                MessageBox.Show("Brak podstaw do stwierdzenia braku dwudzielności. Przeanalizuj dokładnie wartości sąsiadów aktualnego wierzchołka.", "Błąd",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                if ( (_algorithm as BellmanFord).IsGraphWithoutNegativeCycle() == false )
+                {
+                    MessageBox.Show("Gratulacje, algorytm został zakończony!\nZa chwilę nastąpi przejście do głównego menu...", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    if (learningWindow != null)
+                        learningWindow.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Jesteś pewny, że w grafie istnieje ujemny cykl?", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+
         }
 
         void ContextMenuOpenedExecute(RoutedEventArgs e)
