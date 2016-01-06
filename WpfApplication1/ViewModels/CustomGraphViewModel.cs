@@ -17,9 +17,9 @@ namespace WpfApplication1.ViewModels
     {
         public CustomGraphViewModel(string algorithmName, Graph graph)
         {
-            //this.AreInstructionsVisible = false;
             this.AlgorithmName = algorithmName;
-            
+            this.LoadGraphs = GetRandomGraphFromList;
+
             try
             {
                 Func<INotifyPropertyChanged, Type> typeLocator = (t) => App.GetViewClassTypeLocalizer(t);

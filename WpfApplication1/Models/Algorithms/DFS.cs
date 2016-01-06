@@ -67,9 +67,6 @@ namespace WpfApplication1.Models.Algorithms
                         {
                             Node selectedNeighbour = whiteNeighbours.Single(n => n.ID == highSeqRealNode.ID);
                             GraphHelper.SetNodeVisitedTime(selectedNeighbour, this.StepCount + 1);
-
-                            if (CompareWithActualNodes(algorithmNodesList) == false)
-                                return false;
                         }
                     }
                     // If not, its value changes from "x/" to "x/x+1"
@@ -77,9 +74,6 @@ namespace WpfApplication1.Models.Algorithms
                     {
                         GraphHelper.SetNodeProcessedTime(highSeqNode, this.StepCount + 1);              // Algorithm step count is always 1 number behind the timeflow
                         highSeqNode.Color = Brushes.Black;
-
-                        if (CompareWithActualNodes(algorithmNodesList) == false)
-                            return false;
 
                         isReturningBack = true;
                     }
@@ -104,9 +98,6 @@ namespace WpfApplication1.Models.Algorithms
                             {
                                 Node selectedNeighbour = whiteNeighbours.Single(n => n.ID == highSeqRealNode.ID);
                                 GraphHelper.SetNodeVisitedTime(selectedNeighbour, this.StepCount + 1);
-
-                                if (CompareWithActualNodes(algorithmNodesList) == false)
-                                    return false;
                             }
                         }
 
@@ -115,9 +106,6 @@ namespace WpfApplication1.Models.Algorithms
                         {
                             GraphHelper.SetNodeProcessedTime(previousNode, this.StepCount + 1);
                             previousNode.Color = Brushes.Black;
-
-                            if (CompareWithActualNodes(algorithmNodesList) == false)
-                                return false;
 
                             isReturningBack = true;
                         }
@@ -140,9 +128,6 @@ namespace WpfApplication1.Models.Algorithms
                             {
                                 Node selectedNeighbour = randomWhiteNodes.Single(n => n.ID == highSeqRealNode.ID);
                                 GraphHelper.SetNodeVisitedTime(selectedNeighbour, this.StepCount + 1);
-
-                                if (CompareWithActualNodes(algorithmNodesList) == false)
-                                    return false;
                             }
                         }
 
@@ -152,6 +137,9 @@ namespace WpfApplication1.Models.Algorithms
                     }
                 }
                 else
+                    return false;
+
+                if (CompareWithActualNodes(algorithmNodesList) == false)
                     return false;
 
                 if ( highSeqRealNode.Value.ToString().EndsWith("/") )

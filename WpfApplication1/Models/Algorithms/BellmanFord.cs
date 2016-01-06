@@ -60,7 +60,7 @@ namespace WpfApplication1.Models.Algorithms
                 bool result = RelaxNeighbours(algorithmNodesList, node);
 
                 // If this is the last step of algorithm and still something got relaxed, it means that there is negative cycle in graph
-                if (this.IsLastStep && result == false)
+                if (result == false)
                     return false;
             }
 
@@ -135,11 +135,11 @@ namespace WpfApplication1.Models.Algorithms
         }
 
         /// <summary>
-        /// Relax neighbour edges of provided node. Method gets into consideration element positions in queue.
+        /// Relax neighbour edges of provided node. Method gets into consideration elements position in queue.
         /// </summary>
         /// <param name="algorithmNodesList">Full list of nodes.</param>
         /// <param name="node">Node which neighbour edges will be relaxed.</param>
-        /// <returns> True, if  </returns>
+        /// <returns> False, if anything got relaxed in last step of algorithm, otherwise true. </returns>
         private bool RelaxNeighbours(List<Node> algorithmNodesList, Node node)
         {
             // If node value is infinity, relaxation doesn't have any sense

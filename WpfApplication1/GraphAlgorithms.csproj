@@ -118,6 +118,7 @@
     <Compile Include="Models\FileHelper.cs" />
     <Compile Include="Models\ChooseAlgorithmButton.cs" />
     <Compile Include="Models\NodesForest.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ChooseAlgorithmViewModel.cs" />
     <Compile Include="ViewModels\CustomGraphViewModel.cs" />
     <Compile Include="ViewModels\DivideNodesViewModel.cs" />
