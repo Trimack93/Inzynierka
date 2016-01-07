@@ -53,7 +53,7 @@ namespace WpfApplication1.Models.Algorithms
 
                 // There should be max one node which exists in both smallestNodesList and smallestRealNodesList.
                 Node smallestNode = smallestNodesList
-                    .SingleOrDefault(node => smallestRealNodesList
+                    .SingleOrDefault(node => smallestRealNodesList                       // bug here
                                         .Exists(n => n.ID == node.ID));
 
                 if (smallestNode != null)

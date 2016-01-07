@@ -135,7 +135,7 @@ namespace WpfApplication1.ViewModels
                     break;
 
                 case "Przeszukiwanie w głąb":
-                    _secondPageAlgorithm = new DFS(CanvasItems.GetAllEdges(), CanvasItems.GetAllNodes());
+                    _secondPageAlgorithm = new DFS(secondPage.Graph.GetAllEdges(), secondPage.Graph.GetAllNodes());
                     break;
 
                 case "Sortowanie topologiczne":
@@ -239,7 +239,7 @@ namespace WpfApplication1.ViewModels
                 {
                     for (int i = 0; i < _firstPageNodesList.Count; i++)
                     {
-                        Node realNode = nodesList.Single(n => n.ID == _firstPageNodesList[i].SelectedValue.ID);
+                        Node realNode = nodesList.SingleOrDefault(n => n.ID == _firstPageNodesList[i].SelectedValue?.ID);
 
                         this.ComboBoxItems[i].SelectedValue = realNode;
                     }
@@ -254,6 +254,12 @@ namespace WpfApplication1.ViewModels
                     }
                 }
 
+                if (_algorithm is BFS)
+                {
+                    this.IsNodeNamesControlEnabled = true;
+                    this.IsNodeNamesControlVisible = true;
+                }
+
                 if (_algorithm is TopologicalSort && (_algorithm as TopologicalSort).isSortingNodes)
                 {
                     this.IsNodeNamesControlEnabled = true;
@@ -262,7 +268,9 @@ namespace WpfApplication1.ViewModels
 
                 if (_algorithm is BellmanFord)
                 {
-                    if ((_algorithm as BellmanFord).NodesQueue.Count > 0)
+                    this.IsNodeNamesControlVisible = true;
+
+                    if ((_algorithm as BellmanFord).NodesQueue.Where(n => n.SelectedValue != null).Count() == _algorithm.CorrectNodesList.Count)
                         this.IsNodeNamesControlEnabled = false;
                     else
                         this.IsNodeNamesControlEnabled = true;
@@ -300,9 +308,13 @@ namespace WpfApplication1.ViewModels
                     if (_algorithm is Bipartition)
                     {
                         DivideNodesViewModel viewModel = new DivideNodesViewModel(_algorithm.CorrectNodesList, false);
+                        bool? result = _dialogService.ShowDialog(this, viewModel);
 
-                        if ( _dialogService.ShowDialog(this, viewModel) == false )
+                        if (result == false)
+                        {
                             FailStudentAndClose(examWindow);
+                            return;
+                        }
                     }
 
                     FinishAlgorithm(examWindow);

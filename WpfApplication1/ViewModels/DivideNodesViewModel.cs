@@ -91,9 +91,9 @@ namespace WpfApplication1.ViewModels
             }
             else
             {
-                MessageBox.Show("Zbiory nie zostały wybrane poprawnie. Nie zdałeś.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("Zbiory nie zostały wybrane poprawnie. Nie zdałeś.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                this.dialogResult = false;
+                this.DialogResult = false;
             }
         }
 
