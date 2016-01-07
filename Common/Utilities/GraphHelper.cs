@@ -80,6 +80,7 @@ namespace Common.Utilities
 
             return nodesList
                 .Where( n => n?.Value.ToString() == smallestValue.ToString() )
+                .Where( n => n?.Color == Brushes.Transparent )
                 .ToList();
         }
 
@@ -99,6 +100,7 @@ namespace Common.Utilities
 
             return nodesList
                 .Where( n => n?.Value.ToString() == highestValue.ToString() )
+                .Where( n => n?.Color == Brushes.Black )
                 .ToList();
         }
 

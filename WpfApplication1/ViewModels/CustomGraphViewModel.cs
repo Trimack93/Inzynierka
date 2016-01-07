@@ -18,6 +18,7 @@ namespace WpfApplication1.ViewModels
         public CustomGraphViewModel(string algorithmName, Graph graph)
         {
             this.AlgorithmName = algorithmName;
+            this.AreInstructionsVisible = true;
             this.LoadGraphs = GetRandomGraphFromList;
 
             try

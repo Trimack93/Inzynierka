@@ -26,8 +26,7 @@ namespace WpfApplication1.ViewModels
         public LearningViewModel() : base("../../Resources/Graphs/LearningData.huu")
         {
             this.AlgorithmName = "[Nazwa algorytmu]";
-            //this.AreInstructionsVisible = true;
-            this.IsExamPanelVisible = true;
+            this.AreInstructionsVisible = true;
 
             //int columnsCount = this.CanvasWidth / this.RectangleSize;
             //int rowsCount = this.CanvasHeight / this.RectangleSize;
