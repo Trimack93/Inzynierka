@@ -166,7 +166,7 @@ namespace WpfApplication1.ViewModels
 
         private void FailStudentAndClose(Window examWindow)
         {
-            MessageBox.Show("Popełniłeś błąd! Do zobaczenia.", "Caban rzecze", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Popełniłeś błąd! Egzamin zostanie zakończony.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
 
             if (examWindow != null)
                 examWindow.Close();

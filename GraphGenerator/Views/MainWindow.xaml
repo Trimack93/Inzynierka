@@ -48,10 +48,10 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <controls:InterfaceButton ImageSource="/Resources/NodeButton.png" Title="Wierzchołek" Margin="0,0,10,0"
+                        <controls:InterfaceButton ImageSource="/Resources/NodeButton.png" Title="Wierzchołek" Margin="0,0,10,0" ToolTip="Naciśnij, aby przejść w tryb dodawania wierzchołka."
                                                   Command="{Binding AddNodeClick}" Background="{Binding NodeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" />
 
-                        <controls:InterfaceButton ImageSource="/Resources/EdgeButton.png" Title="Krawędź"
+                        <controls:InterfaceButton ImageSource="/Resources/EdgeButton.png" Title="Krawędź" ToolTip="Naciśnij, aby przejść w tryb dodawania krawędzi."
                                                   Command="{Binding AddEdgeClick}" Background="{Binding EdgeButtonIsPressed, Converter={StaticResource ButtonBackgroundConverter}}" />
                     </StackPanel>
 
@@ -95,11 +95,11 @@
                         </Grid>
                     </GroupBox>
 
-                    <controls:InterfaceButton ImageSource="/Resources/SaveButton.png" Title="Zapisz" Background="Gold" Grid.Row="5" 
-                                              Command="{Binding SaveGraph}" IsEnabled="{Binding CanSaveGraph}"/>
+                    <controls:InterfaceButton ImageSource="/Resources/SaveButton.png" Title="Zapisz" Background="Gold" Grid.Row="5"
+                                              ToolTip="Naciśnij, aby zapisać graf do pliku." Command="{Binding SaveGraph}" IsEnabled="{Binding CanSaveGraph}"/>
 
                     <controls:InterfaceButton ImageSource="/Resources/OpenButton.png" Title="Otwórz" Background="Gold" Grid.Row="6" Margin="0,10,0,0"
-                                              Command="{Binding LoadGraph}"/>
+                                              ToolTip="Naciśnij, aby wczytać istniejący graf z pliku." Command="{Binding LoadGraph}"/>
                 </Grid>
 
                 <!--<Canvas Background="LightGray" Grid.Column="1" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Margin="0,0,15,0">
