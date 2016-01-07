@@ -33,9 +33,13 @@ namespace WpfApplication1.ViewModels
         protected bool _canEdgesAnimate { get; set; } = false;
         protected bool _canMarkNodesBlack { get; set; } = false;
         protected bool _canClickNodes { get; set; } = false;
+
         protected bool _isStopButtonVisible { get; set; } = false;
         protected bool _isNodeNamesControlVisible { get; set; } = false;
         protected bool _isNodeNamesControlEnabled { get; set; } = false;
+
+        protected bool _areInstructionsVisible { get; set; } = false;
+        protected bool _isExamPanelVisible { get; set; } = false;
 
         protected readonly string GRAPH_PATH;
         protected IDialogService _dialogService;
@@ -53,6 +57,15 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
 
+        public bool CanEdgesAnimate
+        {
+            get { return _canEdgesAnimate; }
+            set
+            {
+                _canEdgesAnimate = value;
+                RaisePropertyChanged("CanEdgesAnimate");
+            }
+        }
         public bool CanMarkNodesBlack
         {
             get { return _canMarkNodesBlack; }
@@ -71,15 +84,7 @@ namespace WpfApplication1.ViewModels
                 RaisePropertyChanged("CanClickNodes");
             }
         }
-        public bool CanEdgesAnimate
-        {
-            get { return _canEdgesAnimate; }
-            set
-            {
-                _canEdgesAnimate = value;
-                RaisePropertyChanged("CanEdgesAnimate");
-            }
-        }
+
         public bool IsStopButtonVisible
         {
             get { return _isStopButtonVisible; }
@@ -105,6 +110,25 @@ namespace WpfApplication1.ViewModels
             {
                 _isNodeNamesControlEnabled = value;
                 RaisePropertyChanged("IsNodeNamesControlEnabled");
+            }
+        }
+
+        public bool AreInstructionsVisible
+        {
+            get { return _areInstructionsVisible; }
+            set
+            {
+                _areInstructionsVisible = value;
+                RaisePropertyChanged("AreInstructionsVisible");
+            }
+        }
+        public bool IsExamPanelVisible
+        {
+            get { return _isExamPanelVisible; }
+            set
+            {
+                _isExamPanelVisible = value;
+                RaisePropertyChanged("IsExamPanelVisible");
             }
         }
 

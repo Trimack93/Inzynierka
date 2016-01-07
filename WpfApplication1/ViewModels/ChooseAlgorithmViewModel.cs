@@ -126,7 +126,7 @@ namespace WpfApplication1.ViewModels
             }
             else if ( this.WindowTitle.StartsWith("Tryb egzaminu") )
             {
-                dialogViewModel = new LearningViewModel(algorithmName);               // ExamViewModel in future
+                dialogViewModel = new ExamViewModel(algorithmName);
             }
             else if ( this.WindowTitle.StartsWith("Tryb grafu niestandardowego") )
             {

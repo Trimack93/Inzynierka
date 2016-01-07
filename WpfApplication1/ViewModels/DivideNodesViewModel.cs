@@ -22,9 +22,10 @@ namespace WpfApplication1.ViewModels
             SecondQueue.Add( new ComboboxElement(0) );
         }
 
-        public DivideNodesViewModel(List<Node> nodesList)
+        public DivideNodesViewModel(List<Node> nodesList, bool canAcceptFailure = true)
         {
             this.NodesList = nodesList;
+            this.CanAcceptFailure = canAcceptFailure;
 
             FirstQueue.Add( new ComboboxElement(0) );
             SecondQueue.Add( new ComboboxElement(0) );
@@ -33,6 +34,8 @@ namespace WpfApplication1.ViewModels
         //----------------------------------
         
         private bool? dialogResult = false;
+        private bool CanAcceptFailure;
+
         private ObservableCollection<ComboboxElement> _firstQueue = new ObservableCollection<ComboboxElement>();
         private ObservableCollection<ComboboxElement> _secondQueue = new ObservableCollection<ComboboxElement>();
 
@@ -74,8 +77,10 @@ namespace WpfApplication1.ViewModels
         void OkClickExecute()
         {
             if ( Bipartition.AreQueuesCorrect(this.FirstQueue, this.SecondQueue, NodesList) )
+            {
                 this.DialogResult = true;
-            else
+            }
+            else if (CanAcceptFailure)
             {
                 MessageBox.Show("Zbiory nie zostały wybrane poprawnie. Spróbuj ponownie.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -83,6 +88,12 @@ namespace WpfApplication1.ViewModels
                 this.SecondQueue.Clear();
                 FirstQueue.Add( new ComboboxElement(0) );
                 SecondQueue.Add( new ComboboxElement(0) );
+            }
+            else
+            {
+                MessageBox.Show("Zbiory nie zostały wybrane poprawnie. Nie zdałeś.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                this.dialogResult = false;
             }
         }
 

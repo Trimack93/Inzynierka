@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication1.Models.Algorithms
 {
-    public class Bipartition : BFS
+    public class Bipartition : BFS, IAlgorithmWithQueue
     {
         public Bipartition(List<Edge> edges, List<Node> nodes, ObservableCollection<ComboboxElement> queue) : base(edges, nodes, queue)
         {

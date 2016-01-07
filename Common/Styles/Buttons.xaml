@@ -10,6 +10,7 @@
     <Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="ToolTipService.ShowDuration" Value="12000" />
         <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="BorderBrush" Value="Black" />
         <!-- Default value for BorderThickness, can be overriden in external style setter because of TemplateBinding -->
         <Setter Property="Template">
             <Setter.Value>
@@ -17,7 +18,7 @@
                     <Border Name="border"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
-                            BorderBrush="Black"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" />
                     </Border>
@@ -86,6 +87,66 @@
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
+    <Style x:Key="ExamPageButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CenteredButtonStyle}">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Snow" />
+        <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="TextBlock.FontSize" Value="20" />
+        <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+    </Style>
+
+    <!-- ;_; -->
+    <Style x:Key="ExamPage1ButtonStyle" TargetType="Button" BasedOn="{StaticResource ExamPageButtonStyle}">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                    <Condition Binding="{Binding ExamPages[0].IsPassed}" Value="False" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="BorderBrush" Value="Gold" />
+                <Setter Property="BorderThickness" Value="3" />
+            </MultiDataTrigger>
+            
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                    <Condition Binding="{Binding ExamPages[0].IsPassed}" Value="True" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="BorderBrush" Value="Red" />
+                <Setter Property="BorderThickness" Value="3" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ;_;2 -->
+    <Style x:Key="ExamPage2ButtonStyle" TargetType="Button" BasedOn="{StaticResource ExamPageButtonStyle}">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                    <Condition Binding="{Binding ExamPages[1].IsPassed}" Value="False" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="BorderBrush" Value="Gold" />
+                <Setter Property="BorderThickness" Value="3" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
+                    <Condition Binding="{Binding ExamPages[1].IsPassed}" Value="True" />
+                </MultiDataTrigger.Conditions>
+
+                <Setter Property="BorderBrush" Value="Red" />
+                <Setter Property="BorderThickness" Value="3" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="ChooseHorizontalAlignmentButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
@@ -105,7 +166,7 @@
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding ElementName=AddNodeWindow, Path=DataContext.Node.CanChangeHorizontalAlignment}" Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=DataContext.Node.CanChangeHorizontalAlignment}" Value="False" />
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True" />
                             </MultiDataTrigger.Conditions>
 

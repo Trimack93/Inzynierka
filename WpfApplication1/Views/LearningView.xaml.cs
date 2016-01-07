@@ -20,9 +20,10 @@ namespace WpfApplication1.Views
     /// </summary>
     public partial class LearningView : Window
     {
-        private LearningViewModel _viewModel;
+        //private LearningViewModel _viewModel;
         public LearningView()
         {
+            //this.DataContext = new ExamViewModel();
             InitializeComponent();
         }
 
@@ -30,8 +31,8 @@ namespace WpfApplication1.Views
         {
             InitializeComponent();
 
-            _viewModel = new LearningViewModel(algorithmName);
-            base.DataContext = _viewModel;
+            //_viewModel = new LearningViewModel(algorithmName);
+            //base.DataContext = _viewModel;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

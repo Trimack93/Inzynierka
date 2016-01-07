@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication1.Models.Algorithms
 {
-    public class TopologicalSort : DFS
+    public class TopologicalSort : DFS, IAlgorithmWithQueue
     {
         public TopologicalSort(List<Edge> edges, List<Node> nodes, ObservableCollection<ComboboxElement> queue) : base(edges, nodes)
         {

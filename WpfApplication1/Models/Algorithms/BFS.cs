@@ -11,7 +11,7 @@ using System.Windows.Media;
 
 namespace WpfApplication1.Models.Algorithms
 {
-    public class BFS : AlgorithmBase
+    public class BFS : AlgorithmBase, IAlgorithmWithQueue
     {
         public BFS(List<Edge> edges, List<Node> nodes, ObservableCollection<ComboboxElement> queue) : base(edges, nodes)
         {

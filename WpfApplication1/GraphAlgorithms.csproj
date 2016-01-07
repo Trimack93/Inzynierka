@@ -113,8 +113,10 @@
     <Compile Include="Models\Algorithms\Bipartition.cs" />
     <Compile Include="Models\Algorithms\DFS.cs" />
     <Compile Include="Models\Algorithms\Dijkstra.cs" />
+    <Compile Include="Models\Algorithms\IAlgorithmWithQueue.cs" />
     <Compile Include="Models\Algorithms\Kruskal.cs" />
     <Compile Include="Models\Algorithms\TopologicalSort.cs" />
+    <Compile Include="Models\ExamPage.cs" />
     <Compile Include="Models\FileHelper.cs" />
     <Compile Include="Models\ChooseAlgorithmButton.cs" />
     <Compile Include="Models\NodesForest.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="ViewModels\CustomGraphViewModel.cs" />
     <Compile Include="ViewModels\DivideNodesViewModel.cs" />
     <Compile Include="ViewModels\EditNodeValueViewModel.cs" />
+    <Compile Include="ViewModels\ExamViewModel.cs" />
     <Compile Include="ViewModels\LearningViewModel.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>

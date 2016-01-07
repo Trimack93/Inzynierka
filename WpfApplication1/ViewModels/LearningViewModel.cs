@@ -26,6 +26,8 @@ namespace WpfApplication1.ViewModels
         public LearningViewModel() : base("../../Resources/Graphs/LearningData.huu")
         {
             this.AlgorithmName = "[Nazwa algorytmu]";
+            //this.AreInstructionsVisible = true;
+            this.IsExamPanelVisible = true;
 
             //int columnsCount = this.CanvasWidth / this.RectangleSize;
             //int rowsCount = this.CanvasHeight / this.RectangleSize;
@@ -52,6 +54,8 @@ namespace WpfApplication1.ViewModels
 
         public LearningViewModel(string algorithmName) : base("../../Resources/Graphs/LearningData.huu")
         {
+            this.AreInstructionsVisible = true;
+
             try
             {
                 Func<INotifyPropertyChanged, Type> typeLocator = (t) => App.GetViewClassTypeLocalizer(t);
@@ -88,20 +92,10 @@ namespace WpfApplication1.ViewModels
 
         //----------------------------------
         
-        private bool _areInstructionsVisible { get; set; } = true;
         private string _instruction { get; set; }
 
         //----------------------------------
         
-        public bool AreInstructionsVisible
-        {
-            get { return _areInstructionsVisible; }
-            set
-            {
-                _areInstructionsVisible = value;
-                RaisePropertyChanged("AreInstructionsVisible");
-            }
-        }
         public string Instruction
         {
             get { return _instruction; }
@@ -261,7 +255,6 @@ namespace WpfApplication1.ViewModels
                     MessageBox.Show("Jesteś pewny, że w grafie istnieje ujemny cykl?", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
         }
     }
 }

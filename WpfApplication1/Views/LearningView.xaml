@@ -144,6 +144,24 @@
                                    FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="Snow" Margin="10,10,10,0" TextAlignment="Justify" />
                     </StackPanel>
 
+                    <StackPanel Grid.Row="0" Width="250" Height="350" Margin="0,-28,0,0" Visibility="{Binding IsExamPanelVisible, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                        <TextBlock Text="Egzamin" FontWeight="Bold" FontSize="16" Foreground="DodgerBlue" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" />
+                        <Line X1="15" Y1="10" X2="235" Y2="10" Stroke="Gold" StrokeThickness="1.5" />
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
+                            <Button Content="1" Margin="0,0,30,0" Style="{StaticResource ExamPage1ButtonStyle}"
+                                    Foreground="{Binding PageColors[0]}" Command="{Binding PageClick}" CommandParameter="1" />
+
+                            <Button Content="2" Style="{StaticResource ExamPage2ButtonStyle}"
+                                    Foreground="{Binding PageColors[1]}" Command="{Binding PageClick}" CommandParameter="2" />
+                        </StackPanel>
+
+                        <TextBlock FontSize="11" TextWrapping="Wrap" HorizontalAlignment="Center" Foreground="SeaShell" Margin="10,0,10,0" TextAlignment="Justify"
+                                   Text="{Binding ExamInfo, Converter={StaticResource StringToNewlineStringConverter}}"/>
+                    </StackPanel>
+
                     <StackPanel Style="{StaticResource StackPanelStyle}">
                         <Button Width="126" Height="158" Style="{StaticResource EndSequenceButtonStyle}"
                                 Command="{Binding EndSequenceClick}" CommandParameter="{Binding ElementName=LearningWindow}"

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace WpfApplication1.Models.Algorithms
 {
-    public class BellmanFord : AlgorithmBase
+    public class BellmanFord : AlgorithmBase, IAlgorithmWithQueue
     {
         public BellmanFord(List<Edge> edges, List<Node> nodes, ObservableCollection<ComboboxElement> queue) : base(edges, nodes)
         {
